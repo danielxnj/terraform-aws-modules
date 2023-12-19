@@ -8,7 +8,6 @@ variable "default_action" {
   type        = string
   default     = "block"
   description = "Specifies that AWS WAF should allow requests by default. Possible values: `allow`, `block`."
-  nullable    = false
   validation {
     condition     = contains(["allow", "block"], var.default_action)
     error_message = "Allowed values: `allow`, `block`."
@@ -29,7 +28,6 @@ variable "custom_response_body" {
       Valid values are `TEXT_PLAIN`, `TEXT_HTML`, or `APPLICATION_JSON`.
   DOC
   default     = []
-  nullable    = false
 }
 
 variable "scope" {
@@ -40,7 +38,6 @@ variable "scope" {
     Possible values are `CLOUDFRONT` or `REGIONAL`.
     To work with CloudFront, you must also specify the region us-east-1 (N. Virginia) on the AWS provider.
   DOC
-  nullable    = false
   validation {
     condition     = contains(["CLOUDFRONT", "REGIONAL"], var.scope)
     error_message = "Allowed values: `CLOUDFRONT`, `REGIONAL`."
@@ -988,7 +985,6 @@ variable "redacted_fields" {
     single_header:
       The list of names of the query headers to redact.
   DOC
-  nullable    = false
 }
 
 variable "logging_filter" {
@@ -1026,7 +1022,6 @@ variable "association_resource_arns" {
     Instead, you should use the `web_acl_id` property on the `cloudfront_distribution` resource.
     For more details, refer to https://docs.aws.amazon.com/waf/latest/APIReference/API_AssociateWebACL.html
   DOC
-  nullable    = false
 }
 
 variable "default_block_response" {
