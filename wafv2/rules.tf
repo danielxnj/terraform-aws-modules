@@ -111,13 +111,13 @@ resource "aws_wafv2_web_acl" "default" {
         dynamic "custom_response" {
           for_each = var.default_block_response
           content {
-            custom_response_body_key = custom_response_body.value.key
-            response_code            = custom_response_body.value.response_code
+            custom_response_body_key = custom_response.value.key
+            response_code            = custom_response.value.response_code
             dynamic "response_header" {
-              for_each = lookup(custom_response_body.value, "response_header", null) != null ? [1] : []
+              for_each = lookup(custom_response.value, "response_header", null) != null ? [1] : []
               content {
-                name  = custom_response_body.value.response_header.name
-                value = custom_response_body.value.response_header.value
+                name  = custom_response.value.response_header.name
+                value = custom_response.value.response_header.value
               }
             }
           }
