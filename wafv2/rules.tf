@@ -160,7 +160,7 @@ resource "aws_wafv2_web_acl" "default" {
           content {}
         }
         dynamic "count" {
-          for_each = rule.value.action == "count" ? [1] : []
+          for_each = rule.value.action == "count" ? [true] : []
           content {}
         }
       }
@@ -175,22 +175,22 @@ resource "aws_wafv2_web_acl" "default" {
         }
       }
 
-      dynamic "captcha_config" {
-        for_each = lookup(rule.value, "captcha_config", null) != null ? rule.value.captcha_config : []
+      # dynamic "captcha_config" {
+      #   for_each = lookup(rule.value, "captcha_config", null) != null ? rule.value.captcha_config : []
 
-        content {
-          immunity_time_property {
-            immunity_time = captcha_config.value.immunity_time_property.immunity_time
-          }
-        }
-      }
+      #   content {
+      #     immunity_time_property {
+      #       immunity_time = captcha_config.value.immunity_time_property.immunity_time
+      #     }
+      #   }
+      # }
 
-      dynamic "rule_label" {
-        for_each = lookup(rule.value, "rule_label", null) != null ? ule.value.rule_label : []
-        content {
-          name = rule_label.value
-        }
-      }
+      # dynamic "rule_label" {
+      #   for_each = lookup(rule.value, "rule_label", null) != null ? ule.value.rule_label : []
+      #   content {
+      #     name = rule_label.value
+      #   }
+      # }
 
       statement {
         #   dynamic "managed_rule_group_statement" {
