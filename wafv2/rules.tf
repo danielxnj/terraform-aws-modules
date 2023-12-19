@@ -152,15 +152,34 @@ resource "aws_wafv2_web_acl" "default" {
 
       action {
         dynamic "allow" {
-          for_each = rule.value.action == "allow" ? [true] : []
+          for_each = lookup(rule.value, "action", null) == "allow" ? [1] : []
           content {}
         }
         dynamic "block" {
-          for_each = rule.value.action == "block" ? [true] : []
+          for_each = lookup(rule.value, "action", null) == "block" ? [1] : []
           content {}
         }
         dynamic "count" {
-          for_each = rule.value.action == "count" ? [true] : []
+          for_each = lookup(rule.value, "action", null) == "count" ? [1] : []
+          content {}
+        }
+        dynamic "captcha" {
+          for_each = lookup(rule.value, "action", null) == "captcha" ? [1] : []
+          content {}
+        }
+        dynamic "challenge" {
+          for_each = lookup(rule.value, "action", null) == "challenge" ? [1] : []
+          content {}
+        }
+      }
+
+      override_action {
+        dynamic "count" {
+          for_each = lookup(rule.value, "override_action", null) == "count" ? [1] : []
+          content {}
+        }
+        dynamic "none" {
+          for_each = lookup(rule.value, "override_action", null) != "count" ? [1] : []
           content {}
         }
       }
