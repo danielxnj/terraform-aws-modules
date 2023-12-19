@@ -16,10 +16,7 @@ variable "default_action" {
 }
 
 variable "custom_response_body" {
-  type = map(object({
-    content      = string
-    content_type = string
-  }))
+  type = list(any)
 
   description = <<-DOC
     Defines custom response bodies that can be referenced by custom_response actions.
@@ -31,7 +28,7 @@ variable "custom_response_body" {
       Content Type of Response Body.
       Valid values are `TEXT_PLAIN`, `TEXT_HTML`, or `APPLICATION_JSON`.
   DOC
-  default     = {}
+  default     = []
   nullable    = false
 }
 
@@ -51,11 +48,7 @@ variable "scope" {
 }
 
 variable "visibility_config" {
-  type = object({
-    cloudwatch_metrics_enabled = bool
-    metric_name                = string
-    sampled_requests_enabled   = bool
-  })
+  type        = list(any)
   description = <<-DOC
     Defines and enables Amazon CloudWatch metrics and web request sample collection.
 
@@ -66,7 +59,7 @@ variable "visibility_config" {
     sampled_requests_enabled:
       Whether AWS WAF should store a sampling of the web requests that match the rules.
   DOC
-  nullable    = false
+  default     = []
 }
 
 variable "token_domains" {
@@ -1037,10 +1030,14 @@ variable "association_resource_arns" {
 }
 
 variable "default_block_response" {
-  type        = string
-  default     = null
+  type        = list(any)
+  default     = []
   description = <<-DOC
     A HTTP response code that is sent when default block action is used. Only takes effect if default_action is set to `block`.
   DOC
-  nullable    = true
+}
+
+variable "rules" {
+  type    = list(any)
+  default = []
 }
