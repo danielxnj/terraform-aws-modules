@@ -211,90 +211,93 @@ resource "aws_wafv2_web_acl" "default" {
         }
       }
 
-      statement {
-        dynamic "managed_rule_group_statement" {
-          for_each = lookup(rule.value, "managed_rule_group_statement", null) != null ? rule.value.managed_rule_group_statement : []
+      dynamic "statement" {
+        for_each = lookup(rule.value, "statement", null) != null ? rule.value.statement : []
+        content {
+          dynamic "managed_rule_group_statement" {
+            for_each = lookup(statement.value, "managed_rule_group_statement", null) != null ? statement.value.managed_rule_group_statement : []
 
-          content {
-            name        = managed_rule_group_statement.value.name
-            vendor_name = managed_rule_group_statement.value.vendor_name
-            version     = managed_rule_group_statement.value.version
+            content {
+              name        = managed_rule_group_statement.value.name
+              vendor_name = managed_rule_group_statement.value.vendor_name
+              version     = managed_rule_group_statement.value.version
 
-            dynamic "rule_action_override" {
-              for_each = lookup(managed_rule_group_statement.value, "rule_action_override", null) != null ? [1] : []
-              content {
-                name = managed_rule_group_statement.value.name
-                action_to_use {
-                  dynamic "allow" {
-                    for_each = managed_rule_group_statement.value.action == "allow" ? [1] : []
-                    content {
-                      dynamic "custom_request_handling" {
-                        for_each = lookup(managed_rule_group_statement.value, "custom_request_handling", null) != null ? [1] : []
-                        content {
-                          insert_header {
-                            name  = managed_rule_group_statement.value.custom_request_handling.insert_header.name
-                            value = managed_rule_group_statement.value.custom_request_handling.insert_header.value
-                          }
-                        }
-                      }
-                    }
-                  }
-                  dynamic "block" {
-                    for_each = managed_rule_group_statement.value.action == "block" ? [1] : []
-                    content {
-                      dynamic "custom_response" {
-                        for_each = lookup(managed_rule_group_statement.value, "custom_response", null) != null ? [1] : []
-                        content {
-                          response_code            = managed_rule_group_statement.value.custom_response.response_code
-                          custom_response_body_key = lookup(managed_rule_group_statement.value.custom_response, "custom_response_body_key", null)
-                          dynamic "response_header" {
-                            for_each = lookup(managed_rule_group_statement.value.custom_response, "response_header", null) != null ? [1] : []
-                            content {
-                              name  = managed_rule_group_statement.value.custom_response.response_header.name
-                              value = managed_rule_group_statement.value.custom_response.response_header.value
+              dynamic "rule_action_override" {
+                for_each = lookup(managed_rule_group_statement.value, "rule_action_override", null) != null ? [1] : []
+                content {
+                  name = managed_rule_group_statement.value.name
+                  action_to_use {
+                    dynamic "allow" {
+                      for_each = managed_rule_group_statement.value.action == "allow" ? [1] : []
+                      content {
+                        dynamic "custom_request_handling" {
+                          for_each = lookup(managed_rule_group_statement.value, "custom_request_handling", null) != null ? [1] : []
+                          content {
+                            insert_header {
+                              name  = managed_rule_group_statement.value.custom_request_handling.insert_header.name
+                              value = managed_rule_group_statement.value.custom_request_handling.insert_header.value
                             }
                           }
                         }
                       }
                     }
-                  }
-                  dynamic "count" {
-                    for_each = managed_rule_group_statement.value.action == "count" ? [1] : []
-                    content {
-                      dynamic "custom_request_handling" {
-                        for_each = lookup(managed_rule_group_statement.value, "custom_request_handling", null) != null ? [1] : []
-                        content {
-                          insert_header {
-                            name  = managed_rule_group_statement.value.custom_request_handling.insert_header.name
-                            value = managed_rule_group_statement.value.custom_request_handling.insert_header.value
+                    dynamic "block" {
+                      for_each = managed_rule_group_statement.value.action == "block" ? [1] : []
+                      content {
+                        dynamic "custom_response" {
+                          for_each = lookup(managed_rule_group_statement.value, "custom_response", null) != null ? [1] : []
+                          content {
+                            response_code            = managed_rule_group_statement.value.custom_response.response_code
+                            custom_response_body_key = lookup(managed_rule_group_statement.value.custom_response, "custom_response_body_key", null)
+                            dynamic "response_header" {
+                              for_each = lookup(managed_rule_group_statement.value.custom_response, "response_header", null) != null ? [1] : []
+                              content {
+                                name  = managed_rule_group_statement.value.custom_response.response_header.name
+                                value = managed_rule_group_statement.value.custom_response.response_header.value
+                              }
+                            }
                           }
                         }
                       }
                     }
-                  }
-                  dynamic "captcha" {
-                    for_each = managed_rule_group_statement.value.action == "captcha" ? [1] : []
-                    content {
-                      dynamic "custom_request_handling" {
-                        for_each = lookup(managed_rule_group_statement.value, "custom_request_handling", null) != null ? [1] : []
-                        content {
-                          insert_header {
-                            name  = managed_rule_group_statement.value.custom_request_handling.insert_header.name
-                            value = managed_rule_group_statement.value.custom_request_handling.insert_header.value
+                    dynamic "count" {
+                      for_each = managed_rule_group_statement.value.action == "count" ? [1] : []
+                      content {
+                        dynamic "custom_request_handling" {
+                          for_each = lookup(managed_rule_group_statement.value, "custom_request_handling", null) != null ? [1] : []
+                          content {
+                            insert_header {
+                              name  = managed_rule_group_statement.value.custom_request_handling.insert_header.name
+                              value = managed_rule_group_statement.value.custom_request_handling.insert_header.value
+                            }
                           }
                         }
                       }
                     }
-                  }
-                  dynamic "challenge" {
-                    for_each = managed_rule_group_statement.value.action == "challenge" ? [1] : []
-                    content {
-                      dynamic "custom_request_handling" {
-                        for_each = lookup(managed_rule_group_statement.value, "custom_request_handling", null) != null ? [1] : []
-                        content {
-                          insert_header {
-                            name  = managed_rule_group_statement.value.custom_request_handling.insert_header.name
-                            value = managed_rule_group_statement.value.custom_request_handling.insert_header.value
+                    dynamic "captcha" {
+                      for_each = managed_rule_group_statement.value.action == "captcha" ? [1] : []
+                      content {
+                        dynamic "custom_request_handling" {
+                          for_each = lookup(managed_rule_group_statement.value, "custom_request_handling", null) != null ? [1] : []
+                          content {
+                            insert_header {
+                              name  = managed_rule_group_statement.value.custom_request_handling.insert_header.name
+                              value = managed_rule_group_statement.value.custom_request_handling.insert_header.value
+                            }
+                          }
+                        }
+                      }
+                    }
+                    dynamic "challenge" {
+                      for_each = managed_rule_group_statement.value.action == "challenge" ? [1] : []
+                      content {
+                        dynamic "custom_request_handling" {
+                          for_each = lookup(managed_rule_group_statement.value, "custom_request_handling", null) != null ? [1] : []
+                          content {
+                            insert_header {
+                              name  = managed_rule_group_statement.value.custom_request_handling.insert_header.name
+                              value = managed_rule_group_statement.value.custom_request_handling.insert_header.value
+                            }
                           }
                         }
                       }
@@ -302,67 +305,67 @@ resource "aws_wafv2_web_acl" "default" {
                   }
                 }
               }
-            }
-            dynamic "managed_rule_group_configs" {
-              for_each = lookup(managed_rule_group_statement.value, "managed_rule_group_configs", null) != null ? managed_rule_group_statement.value.managed_rule_group_configs : []
+              dynamic "managed_rule_group_configs" {
+                for_each = lookup(managed_rule_group_statement.value, "managed_rule_group_configs", null) != null ? managed_rule_group_statement.value.managed_rule_group_configs : []
 
-              content {
-                dynamic "aws_managed_rules_bot_control_rule_set" {
-                  for_each = lookup(managed_rule_group_configs.value, "aws_managed_rules_bot_control_rule_set", null) != null ? [1] : []
-                  content {
-                    inspection_level = managed_rule_group_configs.value.aws_managed_rules_bot_control_rule_set.inspection_level
+                content {
+                  dynamic "aws_managed_rules_bot_control_rule_set" {
+                    for_each = lookup(managed_rule_group_configs.value, "aws_managed_rules_bot_control_rule_set", null) != null ? [1] : []
+                    content {
+                      inspection_level = managed_rule_group_configs.value.aws_managed_rules_bot_control_rule_set.inspection_level
+                    }
                   }
-                }
 
-                dynamic "aws_managed_rules_atp_rule_set" {
-                  for_each = lookup(managed_rule_group_configs.value, "aws_managed_rules_atp_rule_set", null) != null ? [1] : []
-                  content {
-                    enable_regex_in_path = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set, "enable_regex_in_path", null)
-                    login_path           = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.login_path
+                  dynamic "aws_managed_rules_atp_rule_set" {
+                    for_each = lookup(managed_rule_group_configs.value, "aws_managed_rules_atp_rule_set", null) != null ? [1] : []
+                    content {
+                      enable_regex_in_path = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set, "enable_regex_in_path", null)
+                      login_path           = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.login_path
 
-                    dynamic "request_inspection" {
-                      for_each = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set, "request_inspection", null) != null ? [1] : []
-                      content {
-                        payload_type = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.request_inspection.payload_type
-                        username_field {
-                          identifier = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.request_inspection.username_field.identifier
-                        }
-                        password_field {
-                          identifier = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.request_inspection.password_field.identifier
+                      dynamic "request_inspection" {
+                        for_each = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set, "request_inspection", null) != null ? [1] : []
+                        content {
+                          payload_type = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.request_inspection.payload_type
+                          username_field {
+                            identifier = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.request_inspection.username_field.identifier
+                          }
+                          password_field {
+                            identifier = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.request_inspection.password_field.identifier
+                          }
                         }
                       }
-                    }
-                    dynamic "response_inspection" {
-                      for_each = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set, "response_inspection", null) != null ? [1] : []
-                      content {
-                        dynamic "body_contains" {
-                          for_each = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection, "body_contains", null) != null ? [1] : []
-                          content {
-                            failure_strings = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.body_contains.failure_strings
-                            success_strings = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.body_contains.success_strings
+                      dynamic "response_inspection" {
+                        for_each = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set, "response_inspection", null) != null ? [1] : []
+                        content {
+                          dynamic "body_contains" {
+                            for_each = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection, "body_contains", null) != null ? [1] : []
+                            content {
+                              failure_strings = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.body_contains.failure_strings
+                              success_strings = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.body_contains.success_strings
+                            }
                           }
-                        }
-                        dynamic "header" {
-                          for_each = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection, "header", null) != null ? [1] : []
-                          content {
-                            failure_values = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.header.failure_values
-                            name           = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.header.name
-                            success_values = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.header.success_values
+                          dynamic "header" {
+                            for_each = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection, "header", null) != null ? [1] : []
+                            content {
+                              failure_values = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.header.failure_values
+                              name           = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.header.name
+                              success_values = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.header.success_values
+                            }
                           }
-                        }
-                        dynamic "json" {
-                          for_each = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection, "json", null) != null ? [1] : []
-                          content {
-                            failure_values = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.json.failure_values
-                            identifier     = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.json.identifier
-                            success_values = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.json.success_values
+                          dynamic "json" {
+                            for_each = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection, "json", null) != null ? [1] : []
+                            content {
+                              failure_values = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.json.failure_values
+                              identifier     = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.json.identifier
+                              success_values = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.json.success_values
+                            }
                           }
-                        }
-                        dynamic "status_code" {
-                          for_each = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection, "status_code", null) != null ? [1] : []
-                          content {
-                            failure_codes = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.status_code.failure_codes
-                            success_codes = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.status_code.success_codes
+                          dynamic "status_code" {
+                            for_each = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection, "status_code", null) != null ? [1] : []
+                            content {
+                              failure_codes = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.status_code.failure_codes
+                              success_codes = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.status_code.success_codes
+                            }
                           }
                         }
                       }
