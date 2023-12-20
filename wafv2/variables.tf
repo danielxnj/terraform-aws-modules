@@ -1032,12 +1032,12 @@ variable "default_block_response" {
   DOC
 }
 
-# variable "rules" {
-#   type    = list(any)
-#   default = []
-# }
-
 variable "rules" {
+  type    = list(any)
+  default = []
+}
+
+variable "rulesa" {
   type = list(object({
     name     = string
     priority = number
