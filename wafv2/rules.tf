@@ -259,11 +259,11 @@ resource "aws_wafv2_web_acl" "default" {
                         for_each = lookup(and_statement.value, "statement", null) != null ? and_statement.value.statement : []
                         content {
                           dynamic "not_statement" {
-                            for_each = lookup(and_statement.value, "statement", null) != null ? and_statement.value.statement : []
+                            for_each = lookup(statement.value, "not_statement", null) != null ? statement.value.not_statement : []
                             content {
                               statement {
                                 dynamic "byte_match_statement" {
-                                  for_each = lookup(scope_down_statement.value, "byte_match_statement", null) != null ? scope_down_statement.value.byte_match_statement : []
+                                  for_each = lookup(not_statement.value.statement[0], "byte_match_statement", null) != null ? not_statement.value.statement[0].byte_match_statement : []
                                   content {
                                     positional_constraint = lookup(byte_match_statement.value, "positional_constraint", null)
                                     search_string         = byte_match_statement.value.search_string
