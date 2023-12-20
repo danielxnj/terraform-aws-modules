@@ -99,28 +99,17 @@ resource "aws_wafv2_web_acl" "default" {
   token_domains = var.token_domains
   tags          = var.tags
 
-  default_action {
-    dynamic "allow" {
-      for_each = var.default_action == "allow" ? [true] : []
-      content {}
-    }
+  dynamic "default_action" {
+    for_each = var.default_action
+    content {
+      dynamic "allow" {
+        for_each = default_action.value == "allow" ? [true] : []
+        content {}
+      }
 
-    dynamic "block" {
-      for_each = var.default_action == "block" ? [true] : []
-      content {
-        dynamic "custom_response" {
-          for_each = var.default_block_response
-          content {
-            custom_response_body_key = custom_response.value.key
-            response_code            = custom_response.value.response_code
-            dynamic "response_header" {
-              for_each = lookup(custom_response.value, "response_header", null) != null ? [1] : []
-              content {
-                name  = custom_response.value.response_header.name
-                value = custom_response.value.response_header.value
-              }
-            }
-          }
+      dynamic "block" {
+        for_each = default_action.value == "block" ? [true] : []
+        content {
         }
       }
     }
@@ -150,37 +139,50 @@ resource "aws_wafv2_web_acl" "default" {
       name     = rule.value.name
       priority = rule.value.priority
 
-      action {
-        dynamic "allow" {
-          for_each = lookup(rule.value, "action", null) == "allow" ? [1] : []
-          content {}
-        }
-        dynamic "block" {
-          for_each = lookup(rule.value, "action", null) == "block" ? [1] : []
-          content {}
-        }
-        dynamic "count" {
-          for_each = lookup(rule.value, "action", null) == "count" ? [1] : []
-          content {}
-        }
-        dynamic "captcha" {
-          for_each = lookup(rule.value, "action", null) == "captcha" ? [1] : []
-          content {}
-        }
-        dynamic "challenge" {
-          for_each = lookup(rule.value, "action", null) == "challenge" ? [1] : []
-          content {}
+      dynamic "action" {
+        for_each = lookup(rule.value, "action", null) != null ? rule.value.action : []
+        content {
+          dynamic "allow" {
+            for_each = action.value.allow
+            content {
+            }
+          }
+          dynamic "block" {
+            for_each = action.value.block
+            content {
+            }
+          }
+          dynamic "count" {
+            for_each = action.value.count
+            content {
+            }
+          }
+          dynamic "captcha" {
+            for_each = action.value.captcha
+            content {
+            }
+          }
+          dynamic "challenge" {
+            for_each = action.value.challenge
+            content {
+            }
+          }
         }
       }
 
-      override_action {
-        dynamic "count" {
-          for_each = lookup(rule.value, "override_action", null) == "count" ? [1] : []
-          content {}
-        }
-        dynamic "none" {
-          for_each = lookup(rule.value, "override_action", null) != "count" ? [1] : []
-          content {}
+      dynamic "override_action" {
+        for_each = lookup(rule.value, "override_action", null) != null ? rule.value.override_action : []
+        content {
+          dynamic "count" {
+            for_each = override_action.value.count
+            content {
+            }
+          }
+          dynamic "none" {
+            for_each = override_action.value.none
+            content {
+            }
+          }
         }
       }
 
@@ -382,74 +384,6 @@ resource "aws_wafv2_web_acl" "default" {
                   }
                 }
               }
-              # dynamic "managed_rule_group_configs" {
-              #   for_each = lookup(managed_rule_group_statement.value, "managed_rule_group_configs", null) != null ? managed_rule_group_statement.value.managed_rule_group_configs : []
-
-              #   content {
-              #     dynamic "aws_managed_rules_bot_control_rule_set" {
-              #       for_each = lookup(managed_rule_group_configs.value, "aws_managed_rules_bot_control_rule_set", null) != null ? [1] : []
-              #       content {
-              #         inspection_level = managed_rule_group_configs.value.aws_managed_rules_bot_control_rule_set.inspection_level
-              #       }
-              #     }
-
-              #     dynamic "aws_managed_rules_atp_rule_set" {
-              #       for_each = lookup(managed_rule_group_configs.value, "aws_managed_rules_atp_rule_set", null) != null ? [1] : []
-              #       content {
-              #         enable_regex_in_path = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set, "enable_regex_in_path", null)
-              #         login_path           = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.login_path
-
-              #         dynamic "request_inspection" {
-              #           for_each = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set, "request_inspection", null) != null ? [1] : []
-              #           content {
-              #             payload_type = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.request_inspection.payload_type
-              #             username_field {
-              #               identifier = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.request_inspection.username_field.identifier
-              #             }
-              #             password_field {
-              #               identifier = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.request_inspection.password_field.identifier
-              #             }
-              #           }
-              #         }
-              #         dynamic "response_inspection" {
-              #           for_each = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set, "response_inspection", null) != null ? [1] : []
-              #           content {
-              #             dynamic "body_contains" {
-              #               for_each = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection, "body_contains", null) != null ? [1] : []
-              #               content {
-              #                 failure_strings = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.body_contains.failure_strings
-              #                 success_strings = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.body_contains.success_strings
-              #               }
-              #             }
-              #             dynamic "header" {
-              #               for_each = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection, "header", null) != null ? [1] : []
-              #               content {
-              #                 failure_values = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.header.failure_values
-              #                 name           = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.header.name
-              #                 success_values = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.header.success_values
-              #               }
-              #             }
-              #             dynamic "json" {
-              #               for_each = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection, "json", null) != null ? [1] : []
-              #               content {
-              #                 failure_values = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.json.failure_values
-              #                 identifier     = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.json.identifier
-              #                 success_values = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.json.success_values
-              #               }
-              #             }
-              #             dynamic "status_code" {
-              #               for_each = lookup(managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection, "status_code", null) != null ? [1] : []
-              #               content {
-              #                 failure_codes = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.status_code.failure_codes
-              #                 success_codes = managed_rule_group_configs.value.aws_managed_rules_atp_rule_set.response_inspection.status_code.success_codes
-              #               }
-              #             }
-              #           }
-              #         }
-              #       }
-              #     }
-              #   }
-              # }
             }
           }
         }
