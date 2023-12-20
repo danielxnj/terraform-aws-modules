@@ -25,19 +25,6 @@ resource "aws_iam_instance_profile" "default" {
   tags     = try(each.value.tags, {})
 }
 
-
-# resource "aws_iam_role_policy_attachment" "default" {
-#   count      = module.this.enabled && var.policy_document_count > 0 ? 1 : 0
-#   role       = join("", aws_iam_role.default.*.name)
-#   policy_arn = join("", aws_iam_policy.default.*.arn)
-# }
-
-# locals {
-#   policy_name_to_arn_map = {
-#     for arn in var.managed_policy_arns : "${var.role_name}_${reverse(split("/", arn))[0]}" => arn
-#   }
-# }
-
 resource "aws_iam_role_policy_attachment" "managed" {
   for_each   = var.enabled ? { for k, v in var.managed_policy_arns : "${var.role_name}_${k}" => v } : {}
   role       = join("", aws_iam_role.default.*.name)
