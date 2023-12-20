@@ -39,7 +39,7 @@ locals {
 }
 
 resource "aws_iam_role_policy_attachment" "managed" {
-  for_each   = var.enabled ? local.policy_name_to_arn_map : {}
+  for_each   = var.enabled ? toset(var.managed_policy_arns) : {}
   role       = join("", aws_iam_role.default.*.name)
   policy_arn = each.value
 }
