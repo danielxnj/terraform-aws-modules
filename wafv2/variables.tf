@@ -1042,39 +1042,39 @@ variable "rules" {
     name     = string
     priority = number
     statement = list(object({
-      and_statement              = list(string)
-      byte_match_statement       = list(string)
-      geo_match_statement        = list(string)
-      ip_set_reference_statement = list(string)
-      label_match_statement      = list(string)
+      and_statement              = list(any)
+      byte_match_statement       = list(any)
+      geo_match_statement        = list(any)
+      ip_set_reference_statement = list(any)
+      label_match_statement      = list(any)
       managed_rule_group_statement = list(object({
-        managed_rule_group_configs = list(string)
+        managed_rule_group_configs = list(any)
         name                       = string
         rule_action_override = list(object({
           action_to_use = list(object({
-            allow     = list(string)
-            block     = list(string)
-            captcha   = list(string)
-            challenge = list(string)
+            allow     = list(any)
+            block     = list(any)
+            captcha   = list(any)
+            challenge = list(any)
             count = list(object({
-              custom_request_handling = list(string)
+              custom_request_handling = list(any)
             }))
           }))
           name = string
         }))
-        scope_down_statement = list(string)
+        scope_down_statement = list(any)
         vendor_name          = string
         version              = string
       }))
-      not_statement                         = list(string)
-      or_statement                          = list(string)
-      rate_based_statement                  = list(string)
-      regex_match_statement                 = list(string)
-      regex_pattern_set_reference_statement = list(string)
-      rule_group_reference_statement        = list(string)
-      size_constraint_statement             = list(string)
-      sqli_match_statement                  = list(string)
-      xss_match_statement                   = list(string)
+      not_statement                         = list(any)
+      or_statement                          = list(any)
+      rate_based_statement                  = list(any)
+      regex_match_statement                 = list(any)
+      regex_pattern_set_reference_statement = list(any)
+      rule_group_reference_statement        = list(any)
+      size_constraint_statement             = list(any)
+      sqli_match_statement                  = list(any)
+      xss_match_statement                   = list(any)
     }))
     visibility_config = list(object({
       cloudwatch_metrics_enabled = bool
