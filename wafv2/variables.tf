@@ -1032,7 +1032,114 @@ variable "default_block_response" {
   DOC
 }
 
+# variable "rules" {
+#   type    = list(any)
+#   default = []
+# }
+
 variable "rules" {
-  type    = list(any)
-  default = []
+  type = list(object({
+    action         = optional(list(string))
+    captcha_config = optional(list(string))
+    name           = optional(string)
+    override_action = optional(list(object({
+      count = optional(list(string))
+      none  = optional(list(object({})))
+    })))
+    priority   = optional(number)
+    rule_label = optional(list(string))
+    statement = optional(list(object({
+      and_statement = optional(list(string))
+      byte_match_statement = optional(list(object({
+        field_to_match = optional(list(object({
+          all_query_arguments   = optional(list(string))
+          body                  = optional(list(string))
+          cookies               = optional(list(string))
+          headers               = optional(list(string))
+          ja3_fingerprint       = optional(list(string))
+          json_body             = optional(list(string))
+          method                = optional(list(string))
+          query_string          = optional(list(string))
+          single_header         = optional(list(string))
+          single_query_argument = optional(list(string))
+          uri_path              = optional(list(object({})))
+        })))
+        positional_constraint = optional(string)
+        search_string         = optional(string)
+        text_transformation = optional(list(object({
+          priority = optional(number)
+          type     = optional(string)
+        })))
+      })))
+      geo_match_statement        = optional(list(string))
+      ip_set_reference_statement = optional(list(string))
+      label_match_statement      = optional(list(string))
+      managed_rule_group_statement = optional(list(object({
+        managed_rule_group_configs = optional(list(string))
+        name                       = optional(string)
+        rule_action_override = optional(list(object({
+          action_to_use = optional(list(object({
+            allow     = optional(list(string))
+            block     = optional(list(string))
+            captcha   = optional(list(string))
+            challenge = optional(list(string))
+            count = optional(list(object({
+              custom_request_handling = optional(list(string))
+            })))
+          })))
+          name = optional(string)
+        })))
+        scope_down_statement = optional(list(object({
+          and_statement = optional(list(string))
+          byte_match_statement = optional(list(object({
+            field_to_match = optional(list(object({
+              all_query_arguments   = optional(list(string))
+              body                  = optional(list(string))
+              cookies               = optional(list(string))
+              headers               = optional(list(string))
+              ja3_fingerprint       = optional(list(string))
+              json_body             = optional(list(string))
+              method                = optional(list(string))
+              query_string          = optional(list(string))
+              single_header         = optional(list(string))
+              single_query_argument = optional(list(string))
+              uri_path              = optional(list(object({})))
+            })))
+            positional_constraint = optional(string)
+            search_string         = optional(string)
+            text_transformation = optional(list(object({
+              priority = optional(number)
+              type     = optional(string)
+            })))
+          })))
+          geo_match_statement                   = optional(list(string))
+          ip_set_reference_statement            = optional(list(string))
+          label_match_statement                 = optional(list(string))
+          not_statement                         = optional(list(string))
+          or_statement                          = optional(list(string))
+          regex_match_statement                 = optional(list(string))
+          regex_pattern_set_reference_statement = optional(list(string))
+          size_constraint_statement             = optional(list(string))
+          sqli_match_statement                  = optional(list(string))
+          xss_match_statement                   = optional(list(string))
+        })))
+        vendor_name = optional(string)
+        version     = optional(string)
+      })))
+      not_statement                         = optional(list(string))
+      or_statement                          = optional(list(string))
+      rate_based_statement                  = optional(list(string))
+      regex_match_statement                 = optional(list(string))
+      regex_pattern_set_reference_statement = optional(list(string))
+      rule_group_reference_statement        = optional(list(string))
+      size_constraint_statement             = optional(list(string))
+      sqli_match_statement                  = optional(list(string))
+      xss_match_statement                   = optional(list(string))
+    })))
+    visibility_config = optional(list(object({
+      cloudwatch_metrics_enabled = optional(bool)
+      metric_name                = optional(string)
+      sampled_requests_enabled   = optional(bool)
+    })))
+  }))
 }
