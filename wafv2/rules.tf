@@ -223,7 +223,9 @@ resource "aws_wafv2_web_acl" "default" {
               version     = lookup(managed_rule_group_statement.value, "version", "") != "" ? managed_rule_group_statement.value.version : null
 
               scope_down_statement {
-
+                geo_match_statement {
+                  country_codes = ["US", "NL"]
+                }
               }
 
               # dynamic "rule_action_override" {
