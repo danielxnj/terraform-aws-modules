@@ -231,7 +231,7 @@ resource "aws_wafv2_web_acl" "default" {
                     content {
 
                       dynamic "allow" {
-                        for_each = action_to_use.value.action.allow
+                        for_each = action_to_use.value.allow
                         content {
                           dynamic "custom_request_handling" {
                             for_each = allow.value.custom_request_handling
@@ -245,7 +245,7 @@ resource "aws_wafv2_web_acl" "default" {
                         }
                       }
                       dynamic "block" {
-                        for_each = action_to_use.value.action.block
+                        for_each = action_to_use.value.block
                         content {
                           dynamic "custom_response" {
                             for_each = block.value.custom_response
@@ -264,7 +264,7 @@ resource "aws_wafv2_web_acl" "default" {
                         }
                       }
                       dynamic "count" {
-                        for_each = action_to_use.value.action.count
+                        for_each = action_to_use.value.count
                         content {
                           dynamic "custom_request_handling" {
                             for_each = count.value.custom_request_handling
@@ -278,7 +278,7 @@ resource "aws_wafv2_web_acl" "default" {
                         }
                       }
                       dynamic "captcha" {
-                        for_each = action_to_use.value.action.captcha
+                        for_each = action_to_use.value.captcha
                         content {
                           dynamic "custom_request_handling" {
                             for_each = captcha.value.custom_request_handling
@@ -292,7 +292,7 @@ resource "aws_wafv2_web_acl" "default" {
                         }
                       }
                       dynamic "challenge" {
-                        for_each = action_to_use.value.action.challenge
+                        for_each = action_to_use.value.challenge
                         content {
                           dynamic "custom_request_handling" {
                             for_each = challenge.value.custom_request_handling
