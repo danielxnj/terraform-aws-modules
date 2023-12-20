@@ -245,8 +245,8 @@ resource "aws_wafv2_web_acl" "default" {
                       dynamic "text_transformation" {
                         for_each = lookup(byte_match_statement.value, "text_transformation", null) != null ? byte_match_statement.value.text_transformation : []
                         content {
-                          priority = text_transformation.priority
-                          type     = text_transformation.value
+                          priority = text_transformation.value.priority
+                          type     = text_transformation.value.type
                         }
                       }
                     }
