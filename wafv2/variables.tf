@@ -1032,54 +1032,33 @@ variable "default_block_response" {
   DOC
 }
 
+# variable "rules" {
+#   type    = list(any)
+#   default = []
+# }
+
 variable "rules" {
-  type    = list(any)
+  type = list(object({
+    name     = string
+    priority = number
+    statement = list(object({
+      and_statement                         = optional(list(any))
+      byte_match_statement                  = optional(list(any))
+      geo_match_statement                   = optional(list(any))
+      ip_set_reference_statement            = optional(list(any))
+      label_match_statement                 = optional(list(any))
+      managed_rule_group_statement          = optional(list(any))
+      not_statement                         = optional(list(any))
+      or_statement                          = optional(list(any))
+      rate_based_statement                  = optional(list(any))
+      regex_match_statement                 = optional(list(any))
+      regex_pattern_set_reference_statement = optional(list(any))
+      rule_group_reference_statement        = optional(list(any))
+      size_constraint_statement             = optional(list(any))
+      sqli_match_statement                  = optional(list(any))
+      xss_match_statement                   = optional(list(any))
+    }))
+    visibility_config = list(any)
+  }))
   default = []
 }
-
-# variable "rulesa" {
-#   type = list(object({
-#     name     = string
-#     priority = number
-#     statement = list(object({
-#       and_statement              = list(any)
-#       byte_match_statement       = list(any)
-#       geo_match_statement        = list(any)
-#       ip_set_reference_statement = list(any)
-#       label_match_statement      = list(any)
-#       managed_rule_group_statement = list(object({
-#         managed_rule_group_configs = list(any)
-#         name                       = string
-#         rule_action_override = list(object({
-#           action_to_use = list(object({
-#             allow     = list(any)
-#             block     = list(any)
-#             captcha   = list(any)
-#             challenge = list(any)
-#             count = list(object({
-#               custom_request_handling = list(any)
-#             }))
-#           }))
-#           name = string
-#         }))
-#         scope_down_statement = list(any)
-#         vendor_name          = string
-#         version              = string
-#       }))
-#       not_statement                         = list(any)
-#       or_statement                          = list(any)
-#       rate_based_statement                  = list(any)
-#       regex_match_statement                 = list(any)
-#       regex_pattern_set_reference_statement = list(any)
-#       rule_group_reference_statement        = list(any)
-#       size_constraint_statement             = list(any)
-#       sqli_match_statement                  = list(any)
-#       xss_match_statement                   = list(any)
-#     }))
-#     visibility_config = list(object({
-#       cloudwatch_metrics_enabled = bool
-#       metric_name                = string
-#       sampled_requests_enabled   = bool
-#     }))
-#   }))
-# }
