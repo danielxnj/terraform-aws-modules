@@ -33,9 +33,9 @@ variable "policy_document_count" {
 }
 
 variable "managed_policy_arns" {
-  type        = set(string)
+  type        = map(any)
   description = "List of managed policies to attach to created role"
-  default     = []
+  default     = {}
 }
 
 variable "max_session_duration" {
