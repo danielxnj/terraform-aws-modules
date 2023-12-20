@@ -983,22 +983,8 @@ variable "redacted_fields" {
 }
 
 variable "logging_filter" {
-  type = object({
-    default_behavior = string
-    filter = list(object({
-      behavior    = string
-      requirement = string
-      condition = list(object({
-        action_condition = optional(object({
-          action = string
-        }), null)
-        label_name_condition = optional(object({
-          label_name = string
-        }), null)
-      }))
-    }))
-  })
-  default     = null
+  type        = list(any)
+  default     = []
   description = <<-DOC
     A configuration block that specifies which web requests are kept in the logs and which are dropped.
     You can filter on the rule action and on the web request labels that were applied by matching rules during web ACL evaluation.
@@ -1069,3 +1055,10 @@ variable "rules" {
 #   }))
 #   default = []
 # }
+
+
+variable "ip_sets" {
+  type        = list(any)
+  default     = []
+  description = "A list of IP Set configuration objects."
+}

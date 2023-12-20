@@ -54,13 +54,13 @@ resource "aws_wafv2_web_acl_logging_configuration" "default" {
   }
 
   dynamic "logging_filter" {
-    for_each = var.logging_filter != null ? [true] : []
+    for_each = var.logging_filter
 
     content {
-      default_behavior = var.logging_filter.default_behavior
+      default_behavior = logging_filter.value.default_behavior
 
       dynamic "filter" {
-        for_each = var.logging_filter.filter
+        for_each = logging_filter.value.filter
 
         content {
           behavior    = filter.value.behavior

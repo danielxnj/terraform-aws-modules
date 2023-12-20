@@ -22,13 +22,13 @@ module "ip_set_label" {
 }
 
 resource "aws_wafv2_ip_set" "default" {
-  for_each = local.ip_sets
+  for_each = var.ip_sets
 
-  name               = module.ip_set_label[each.key].id
+  name               = each.value.name
   description        = lookup(each.value, "description", null)
   scope              = var.scope
   ip_address_version = each.value.ip_address_version
   addresses          = each.value.addresses
 
-  tags = module.this.tags
+  tags = each.value.tags
 }
