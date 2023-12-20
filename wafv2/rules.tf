@@ -222,6 +222,38 @@ resource "aws_wafv2_web_acl" "default" {
               vendor_name = managed_rule_group_statement.value.vendor_name
               version     = lookup(managed_rule_group_statement.value, "version", "") != "" ? managed_rule_group_statement.value.version : null
 
+
+              dynamic "scope_down_statement" {
+                for_each = lookup(managed_rule_group_statement.value, "scope_down_statement", null) != null ? managed_rule_group_statement.value.scope_down_statement : []
+
+                content {
+                  dynamic "byte_match_statement" {
+                    for_each = lookup(scope_down_statement.value, "byte_match_statement", null) != null ? scope_down_statement.value.byte_match_statement : []
+
+                    content {
+                      positional_constraint = lookup(byte_match_statement.value, "positional_constraint", null)
+                      search_string         = byte_match_statement.value.search_string
+                      dynamic "field_to_match" {
+                        for_each = lookup(byte_match_statement.value, "field_to_match", null) != null ? byte_match_statement.value.field_to_match : []
+                        content {
+                          dynamic "uri_path" {
+                            for_each = lookup(field_to_match.value, "uri_path", null) != null ? [1] : []
+                            content {}
+                          }
+                        }
+                      }
+                      dynamic "text_transformation" {
+                        for_each = lookup(byte_match_statement.value, "text_transformation", null) != null ? byte_match_statement.value.text_transformation : []
+                        content {
+                          priority = text_transformation.priority
+                          type     = text_transformation.value
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+
               dynamic "rule_action_override" {
                 for_each = lookup(managed_rule_group_statement.value, "rule_action_override", null) != null ? managed_rule_group_statement.value.rule_action_override : []
                 content {
