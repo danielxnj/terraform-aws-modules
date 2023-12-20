@@ -5,13 +5,8 @@ variable "description" {
 }
 
 variable "default_action" {
-  type        = string
-  default     = "block"
+  type        = list(any)
   description = "Specifies that AWS WAF should allow requests by default. Possible values: `allow`, `block`."
-  validation {
-    condition     = contains(["allow", "block"], var.default_action)
-    error_message = "Allowed values: `allow`, `block`."
-  }
 }
 
 variable "custom_response_body" {
