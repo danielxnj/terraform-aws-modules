@@ -1058,7 +1058,7 @@ variable "rules" {
 
 
 variable "ip_sets" {
-  type        = list(any)
-  default     = null
+  type        = map(any)
+  default     = {}
   description = "A list of IP Set configuration objects."
 }
