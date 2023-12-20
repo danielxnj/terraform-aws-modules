@@ -222,9 +222,9 @@ resource "aws_wafv2_web_acl" "default" {
               vendor_name = managed_rule_group_statement.value.vendor_name
               version     = lookup(managed_rule_group_statement.value, "version", "") != "" ? managed_rule_group_statement.value.version : null
 
-              # scope_down_statement {
+              scope_down_statement {
 
-              # }
+              }
 
               # dynamic "rule_action_override" {
               #   for_each = lookup(managed_rule_group_statement.value, "rule_action_override", null) != null ? [1] : []
