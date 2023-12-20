@@ -1042,20 +1042,12 @@ variable "rules" {
     name     = string
     priority = number
     statement = list(object({
-      and_statement              = optional(list(any))
-      byte_match_statement       = optional(list(any))
-      geo_match_statement        = optional(list(any))
-      ip_set_reference_statement = optional(list(any))
-      label_match_statement      = optional(list(any))
-      managed_rule_group_statement = optional(list(object({
-
-
-
-      })))
-
-
-
-
+      and_statement                         = optional(list(any))
+      byte_match_statement                  = optional(list(any))
+      geo_match_statement                   = optional(list(any))
+      ip_set_reference_statement            = optional(list(any))
+      label_match_statement                 = optional(list(any))
+      managed_rule_group_statement          = optional(list(any))
       not_statement                         = optional(list(any))
       or_statement                          = optional(list(any))
       rate_based_statement                  = optional(list(any))
