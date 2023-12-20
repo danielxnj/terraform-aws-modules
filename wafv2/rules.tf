@@ -103,14 +103,13 @@ resource "aws_wafv2_web_acl" "default" {
     for_each = var.default_action
     content {
       dynamic "allow" {
-        for_each = default_action.value == "allow" ? [true] : []
+        for_each = action.value.allow
         content {}
       }
 
       dynamic "block" {
-        for_each = default_action.value == "block" ? [true] : []
-        content {
-        }
+        for_each = action.value.block
+        content {}
       }
     }
   }
