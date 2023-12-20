@@ -39,7 +39,7 @@ resource "aws_iam_instance_profile" "default" {
 # }
 
 resource "aws_iam_role_policy_attachment" "managed" {
-  for_each   = var.enabled ? var.managed_policy_arns : {}
+  for_each   = var.enabled ? { for k, v in var.managed_policy_arns : "${var.role_name}_${k}" => v } : {}
   role       = join("", aws_iam_role.default.*.name)
   policy_arn = each.value
 }
