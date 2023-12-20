@@ -22,7 +22,7 @@ module "ip_set_label" {
 }
 
 resource "aws_wafv2_ip_set" "default" {
-  for_each = var.ip_sets != null ? var.ip_sets : {}
+  for_each = var.ip_sets
 
   name               = each.value.name
   description        = lookup(each.value, "description", null)
