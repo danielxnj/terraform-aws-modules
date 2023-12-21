@@ -217,7 +217,7 @@ resource "aws_api_gateway_resource" "depth_12" {
   parent_id   = aws_api_gateway_resource.depth_11[each.value.parent_path_part].id
 }
 
-# Depth 3 resources
+# Depth 13 resources
 resource "aws_api_gateway_resource" "depth_13" {
   for_each    = local.enabled ? { for path, info in var.resources : path => info if info.depth == 13 } : {}
   rest_api_id = aws_api_gateway_rest_api.this[0].id
@@ -225,7 +225,7 @@ resource "aws_api_gateway_resource" "depth_13" {
   parent_id   = aws_api_gateway_resource.depth_12[each.value.parent_path_part].id
 }
 
-# Depth 4 resources
+# Depth 14 resources
 resource "aws_api_gateway_resource" "depth_14" {
   for_each    = local.enabled ? { for path, info in var.resources : path => info if info.depth == 14 } : {}
   rest_api_id = aws_api_gateway_rest_api.this[0].id
@@ -233,7 +233,7 @@ resource "aws_api_gateway_resource" "depth_14" {
   parent_id   = aws_api_gateway_resource.depth_13[each.value.parent_path_part].id
 }
 
-# Depth 5 resources
+# Depth 15 resources
 resource "aws_api_gateway_resource" "depth_15" {
   for_each    = local.enabled ? { for path, info in var.resources : path => info if info.depth == 15 } : {}
   rest_api_id = aws_api_gateway_rest_api.this[0].id
@@ -241,7 +241,7 @@ resource "aws_api_gateway_resource" "depth_15" {
   parent_id   = aws_api_gateway_resource.depth_14[each.value.parent_path_part].id
 }
 
-# Depth 6 resources
+# Depth 16 resources
 resource "aws_api_gateway_resource" "depth_16" {
   for_each    = local.enabled ? { for path, info in var.resources : path => info if info.depth == 16 } : {}
   rest_api_id = aws_api_gateway_rest_api.this[0].id
@@ -249,7 +249,7 @@ resource "aws_api_gateway_resource" "depth_16" {
   parent_id   = aws_api_gateway_resource.depth_15[each.value.parent_path_part].id
 }
 
-# Depth 7 resources
+# Depth 17 resources
 resource "aws_api_gateway_resource" "depth_17" {
   for_each    = local.enabled ? { for path, info in var.resources : path => info if info.depth == 17 } : {}
   rest_api_id = aws_api_gateway_rest_api.this[0].id
@@ -257,7 +257,7 @@ resource "aws_api_gateway_resource" "depth_17" {
   parent_id   = aws_api_gateway_resource.depth_16[each.value.parent_path_part].id
 }
 
-# Depth 8 resources
+# Depth 18 resources
 resource "aws_api_gateway_resource" "depth_18" {
   for_each    = local.enabled ? { for path, info in var.resources : path => info if info.depth == 18 } : {}
   rest_api_id = aws_api_gateway_rest_api.this[0].id
@@ -265,7 +265,7 @@ resource "aws_api_gateway_resource" "depth_18" {
   parent_id   = aws_api_gateway_resource.depth_17[each.value.parent_path_part].id
 }
 
-# Depth 9 resources
+# Depth 19 resources
 resource "aws_api_gateway_resource" "depth_19" {
   for_each    = local.enabled ? { for path, info in var.resources : path => info if info.depth == 19 } : {}
   rest_api_id = aws_api_gateway_rest_api.this[0].id
@@ -273,10 +273,51 @@ resource "aws_api_gateway_resource" "depth_19" {
   parent_id   = aws_api_gateway_resource.depth_18[each.value.parent_path_part].id
 }
 
-# Depth 10 resources
+# Depth 20 resources
 resource "aws_api_gateway_resource" "depth_20" {
   for_each    = local.enabled ? { for path, info in var.resources : path => info if info.depth == 20 } : {}
   rest_api_id = aws_api_gateway_rest_api.this[0].id
   path_part   = each.value.path_part
   parent_id   = aws_api_gateway_resource.depth_19[each.value.parent_path_part].id
+}
+
+locals {
+  # Step 1: Collect methods for each path.
+  method_paths = merge([
+    for path, info in var.resources : {
+      for method, method_info in info.methods : "${path}/${method}" => {
+        path                 = path
+        method               = method
+        path_part            = info.path_part
+        depth                = info.depth
+        authorization        = method_info.authorization
+        authorizer_id        = method_info.authorizer_id
+        authorization_scopes = method_info.authorization_scopes
+        api_key_required     = method_info.api_key_required
+        operation_name       = method_info.operation_name
+        request_models       = method_info.request_models
+        request_validator_id = method_info.request_validator_id
+        request_parameters   = method_info.request_parameters
+      }
+    }
+  ]...)
+
+  # Step 2: Flatten the structure for the for_each.
+  all_methods = { for k, v in local.method_paths : k => v }
+}
+
+resource "aws_api_gateway_method" "this" {
+  for_each = local.enabled ? local.all_methods : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = try(aws_api_gateway_resource["depth_${each.value.depth}"][each.value.path_part].id, local.root_resource_id)
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
 }
