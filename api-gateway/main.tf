@@ -200,3 +200,83 @@ resource "aws_api_gateway_resource" "depth_10" {
   path_part   = each.value.path_part
   parent_id   = aws_api_gateway_resource.depth_9[each.value.parent_path_part].id
 }
+
+# Depth 11 resources
+resource "aws_api_gateway_resource" "depth_11" {
+  for_each    = local.enabled ? { for path, info in var.resources : path => info if info.depth == 11 } : {}
+  rest_api_id = aws_api_gateway_rest_api.this[0].id
+  path_part   = each.value.path_part
+  parent_id   = aws_api_gateway_resource.depth_10[each.value.parent_path_part].id
+}
+
+# Depth 12 resources
+resource "aws_api_gateway_resource" "depth_12" {
+  for_each    = local.enabled ? { for path, info in var.resources : path => info if info.depth == 12 } : {}
+  rest_api_id = aws_api_gateway_rest_api.this[0].id
+  path_part   = each.value.path_part
+  parent_id   = aws_api_gateway_resource.depth_11[each.value.parent_path_part].id
+}
+
+# Depth 3 resources
+resource "aws_api_gateway_resource" "depth_13" {
+  for_each    = local.enabled ? { for path, info in var.resources : path => info if info.depth == 13 } : {}
+  rest_api_id = aws_api_gateway_rest_api.this[0].id
+  path_part   = each.value.path_part
+  parent_id   = aws_api_gateway_resource.depth_12[each.value.parent_path_part].id
+}
+
+# Depth 4 resources
+resource "aws_api_gateway_resource" "depth_14" {
+  for_each    = local.enabled ? { for path, info in var.resources : path => info if info.depth == 14 } : {}
+  rest_api_id = aws_api_gateway_rest_api.this[0].id
+  path_part   = each.value.path_part
+  parent_id   = aws_api_gateway_resource.depth_13[each.value.parent_path_part].id
+}
+
+# Depth 5 resources
+resource "aws_api_gateway_resource" "depth_15" {
+  for_each    = local.enabled ? { for path, info in var.resources : path => info if info.depth == 15 } : {}
+  rest_api_id = aws_api_gateway_rest_api.this[0].id
+  path_part   = each.value.path_part
+  parent_id   = aws_api_gateway_resource.depth_14[each.value.parent_path_part].id
+}
+
+# Depth 6 resources
+resource "aws_api_gateway_resource" "depth_16" {
+  for_each    = local.enabled ? { for path, info in var.resources : path => info if info.depth == 16 } : {}
+  rest_api_id = aws_api_gateway_rest_api.this[0].id
+  path_part   = each.value.path_part
+  parent_id   = aws_api_gateway_resource.depth_15[each.value.parent_path_part].id
+}
+
+# Depth 7 resources
+resource "aws_api_gateway_resource" "depth_17" {
+  for_each    = local.enabled ? { for path, info in var.resources : path => info if info.depth == 17 } : {}
+  rest_api_id = aws_api_gateway_rest_api.this[0].id
+  path_part   = each.value.path_part
+  parent_id   = aws_api_gateway_resource.depth_16[each.value.parent_path_part].id
+}
+
+# Depth 8 resources
+resource "aws_api_gateway_resource" "depth_18" {
+  for_each    = local.enabled ? { for path, info in var.resources : path => info if info.depth == 18 } : {}
+  rest_api_id = aws_api_gateway_rest_api.this[0].id
+  path_part   = each.value.path_part
+  parent_id   = aws_api_gateway_resource.depth_17[each.value.parent_path_part].id
+}
+
+# Depth 9 resources
+resource "aws_api_gateway_resource" "depth_19" {
+  for_each    = local.enabled ? { for path, info in var.resources : path => info if info.depth == 19 } : {}
+  rest_api_id = aws_api_gateway_rest_api.this[0].id
+  path_part   = each.value.path_part
+  parent_id   = aws_api_gateway_resource.depth_18[each.value.parent_path_part].id
+}
+
+# Depth 10 resources
+resource "aws_api_gateway_resource" "depth_20" {
+  for_each    = local.enabled ? { for path, info in var.resources : path => info if info.depth == 20 } : {}
+  rest_api_id = aws_api_gateway_rest_api.this[0].id
+  path_part   = each.value.path_part
+  parent_id   = aws_api_gateway_resource.depth_19[each.value.parent_path_part].id
+}
