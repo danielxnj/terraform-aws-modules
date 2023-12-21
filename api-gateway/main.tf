@@ -495,7 +495,7 @@ resource "aws_api_gateway_integration" "depth_3" {
   content_handling        = try(each.value.integration.content_handling, null)
   timeout_milliseconds    = try(each.value.integration.timeout_milliseconds, null)
   dynamic "tls_config" {
-    for_each = try(each.value.integration.tls_config, null)
+    for_each = lookup(each.value.integration, "tls_config", [])
 
     content {
       insecure_skip_verification = tls_config.value.insecure_skip_verification
