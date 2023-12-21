@@ -278,10 +278,9 @@ resource "aws_api_gateway_resource" "depth_20" {
 }
 
 locals {
-  # Step 1: Collect methods for each path.
   method_paths = merge([
     for path, info in var.resources : {
-      for method, method_info in info.methods : "${path}/${method}" => {
+      for method, method_info in(info.methods != null ? info.methods : {}) : "${path}/${method}" => {
         path                 = path
         method               = method
         path_part            = info.path_part
@@ -298,9 +297,9 @@ locals {
     }
   ]...)
 
-  # Step 2: Flatten the structure for the for_each.
   all_methods = { for k, v in local.method_paths : k => v }
 }
+
 
 resource "aws_api_gateway_method" "depth_0" {
   for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
