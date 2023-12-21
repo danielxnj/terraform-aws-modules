@@ -113,12 +113,9 @@ locals {
   root_resource_id = aws_api_gateway_rest_api.this[0].root_resource_id
 }
 
-
-
-
 # Root resource
-resource "aws_api_gateway_resource" "root" {
-  count       = local.enabled && contains(keys(var.resources), "/") ? 1 : 0
+resource "aws_api_gateway_resource" "depth_0" {
+  for_each    = local.enabled ? { for path, info in var.resources : path => info if info.depth == 0 } : {}
   rest_api_id = aws_api_gateway_rest_api.this[0].id
   path_part   = ""
   parent_id   = aws_api_gateway_rest_api.this[0].root_resource_id
@@ -129,7 +126,7 @@ resource "aws_api_gateway_resource" "depth_1" {
   for_each    = local.enabled ? { for path, info in var.resources : path => info if info.depth == 1 } : {}
   rest_api_id = aws_api_gateway_rest_api.this[0].id
   path_part   = each.value.path_part
-  parent_id   = aws_api_gateway_resource.root[0].id
+  parent_id   = aws_api_gateway_resource.depth_0[each.value.parent_path_part].id
 }
 
 # Depth 2 resources
