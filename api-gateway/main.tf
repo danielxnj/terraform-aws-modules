@@ -317,7 +317,7 @@ resource "aws_api_gateway_method" "depth_0" {
 }
 
 resource "aws_api_gateway_method" "depth_1" {
-  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 1 } : {}
 
   rest_api_id          = aws_api_gateway_rest_api.this[0].id
   resource_id          = aws_api_gateway_resource.depth_1[each.value.path_part].id
@@ -332,7 +332,7 @@ resource "aws_api_gateway_method" "depth_1" {
   request_parameters   = try(each.value.request_parameters, null)
 }
 resource "aws_api_gateway_method" "depth_2" {
-  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 2 } : {}
 
   rest_api_id          = aws_api_gateway_rest_api.this[0].id
   resource_id          = aws_api_gateway_resource.depth_2[each.value.path_part].id
@@ -347,7 +347,7 @@ resource "aws_api_gateway_method" "depth_2" {
   request_parameters   = try(each.value.request_parameters, null)
 }
 resource "aws_api_gateway_method" "depth_3" {
-  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 3 } : {}
 
   rest_api_id          = aws_api_gateway_rest_api.this[0].id
   resource_id          = aws_api_gateway_resource.depth_3[each.value.path_part].id
@@ -363,7 +363,7 @@ resource "aws_api_gateway_method" "depth_3" {
 }
 
 resource "aws_api_gateway_method" "depth_4" {
-  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 4 } : {}
 
   rest_api_id          = aws_api_gateway_rest_api.this[0].id
   resource_id          = aws_api_gateway_resource.depth_4[each.value.path_part].id
@@ -379,7 +379,7 @@ resource "aws_api_gateway_method" "depth_4" {
 }
 
 resource "aws_api_gateway_method" "depth_5" {
-  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 5 } : {}
 
   rest_api_id          = aws_api_gateway_rest_api.this[0].id
   resource_id          = aws_api_gateway_resource.depth_5[each.value.path_part].id
@@ -395,7 +395,7 @@ resource "aws_api_gateway_method" "depth_5" {
 }
 
 resource "aws_api_gateway_method" "depth_6" {
-  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 6 } : {}
 
   rest_api_id          = aws_api_gateway_rest_api.this[0].id
   resource_id          = aws_api_gateway_resource.depth_6[each.value.path_part].id
@@ -411,7 +411,7 @@ resource "aws_api_gateway_method" "depth_6" {
 }
 
 resource "aws_api_gateway_method" "depth_7" {
-  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 7 } : {}
 
   rest_api_id          = aws_api_gateway_rest_api.this[0].id
   resource_id          = aws_api_gateway_resource.depth_7[each.value.path_part].id
@@ -427,7 +427,7 @@ resource "aws_api_gateway_method" "depth_7" {
 }
 
 resource "aws_api_gateway_method" "depth_8" {
-  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 8 } : {}
 
   rest_api_id          = aws_api_gateway_rest_api.this[0].id
   resource_id          = aws_api_gateway_resource.depth_8[each.value.path_part].id
@@ -443,7 +443,7 @@ resource "aws_api_gateway_method" "depth_8" {
 }
 
 resource "aws_api_gateway_method" "depth_9" {
-  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 9 } : {}
 
   rest_api_id          = aws_api_gateway_rest_api.this[0].id
   resource_id          = aws_api_gateway_resource.depth_9[each.value.path_part].id
@@ -459,7 +459,7 @@ resource "aws_api_gateway_method" "depth_9" {
 }
 
 resource "aws_api_gateway_method" "depth_10" {
-  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 10 } : {}
 
   rest_api_id          = aws_api_gateway_rest_api.this[0].id
   resource_id          = aws_api_gateway_resource.depth_10[each.value.path_part].id
