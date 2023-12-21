@@ -114,16 +114,44 @@ locals {
 }
 
 locals {
-  api_resources = { for path, info in var.resources : path => {
-    path_part   = info.path_part
-    parent_path = info.parent_path_part
+  # Initial resource info without depth
+  api_resources_initial = { for path, info in var.resources : path => {
+    path_part   = info.path_part,
+    parent_path = info.parent_path_part,
+    depth       = 0 # Initialize depth to 0; it will be updated later
+  } }
+
+  # Update resources with calculated depth
+  api_resources = { for path, info in local.api_resources_initial : path => {
+    path_part   = info.path_part,
+    parent_path = info.parent_path_part,
+    depth       = local.api_resources_initial[info.parent_path].depth + 1
   } }
 }
 
-resource "aws_api_gateway_resource" "this" {
-  for_each    = local.enabled ? local.api_resources : {}
+
+# Root resource
+resource "aws_api_gateway_resource" "root" {
+  count       = local.enabled && contains(keys(var.resources), "/") ? 1 : 0
+  rest_api_id = aws_api_gateway_rest_api.this[0].id
+  path_part   = ""
+  parent_id   = local.root_resource_id
+}
+
+# Depth 1 resources
+resource "aws_api_gateway_resource" "depth_1" {
+  for_each    = local.enabled ? { for path, info in local.api_resources : path => info if info.depth == 1 } : {}
   rest_api_id = aws_api_gateway_rest_api.this[0].id
   path_part   = each.value.path_part
-  parent_id   = each.key == "/" ? local.root_resource_id : aws_api_gateway_resource.this[each.value.parent_path].id
-
+  parent_id   = aws_api_gateway_resource.root[0].id
 }
+
+# Depth 2 resources
+resource "aws_api_gateway_resource" "depth_2" {
+  for_each    = local.enabled ? { for path, info in local.api_resources : path => info if info.depth == 2 } : {}
+  rest_api_id = aws_api_gateway_rest_api.this[0].id
+  path_part   = each.value.path_part
+  parent_id   = aws_api_gateway_resource.depth_1[each.value.parent_path].id
+}
+
+
