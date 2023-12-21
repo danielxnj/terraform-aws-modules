@@ -19,12 +19,12 @@ resource "aws_api_gateway_rest_api" "this" {
   }
 }
 
-# resource "aws_api_gateway_rest_api_policy" "this" {
-#   count       = local.create_rest_api_policy ? 1 : 0
-#   rest_api_id = aws_api_gateway_rest_api.this[0].id
+resource "aws_api_gateway_rest_api_policy" "this" {
+  count       = local.create_rest_api_policy ? 1 : 0
+  rest_api_id = aws_api_gateway_rest_api.this[0].id
 
-#   policy = var.rest_api_policy
-# }
+  policy = var.rest_api_policy
+}
 
 # module "cloudwatch_log_group" {
 #   source  = "cloudposse/cloudwatch-logs/aws"
@@ -109,9 +109,9 @@ resource "aws_api_gateway_method_settings" "all" {
   }
 }
 
-# resource "aws_api_gateway_resource" "this" {
-#   for_each    = local.enabled ? var.resources : {}
-#   rest_api_id = aws_api_gateway_rest_api.this[0].id
-#   parent_id   = each.value.parent_path_part != "/" ? aws_api_gateway_resource.this[each.value.parent_path_part].id : aws_api_gateway_rest_api.this[0].root_resource_id
-#   path_part   = each.value.path_part != "" ? each.value.path_part : each.key
-# }
+resource "aws_api_gateway_resource" "this" {
+  for_each    = local.enabled ? var.resources : {}
+  rest_api_id = aws_api_gateway_rest_api.this[0].id
+  parent_id   = each.value.parent_path_part != "/" ? aws_api_gateway_resource.this[each.value.parent_path_part].id : aws_api_gateway_rest_api.this[0].root_resource_id
+  path_part   = each.value.path_part != "" ? each.value.path_part : each.key
+}
