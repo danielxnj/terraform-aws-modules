@@ -302,11 +302,11 @@ locals {
   all_methods = { for k, v in local.method_paths : k => v }
 }
 
-resource "aws_api_gateway_method" "this" {
-  for_each = local.enabled ? local.all_methods : {}
+resource "aws_api_gateway_method" "depth_0" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
 
   rest_api_id          = aws_api_gateway_rest_api.this[0].id
-  resource_id          = aws_api_gateway_resource["depth_${each.value.depth}"][each.value.path_part].id
+  resource_id          = aws_api_gateway_resource.depth_0[each.value.path_part].id
   http_method          = try(each.value.method, null)
   authorization        = try(each.value.authorization, null)
   authorizer_id        = try(each.value.authorizer_id, null)
