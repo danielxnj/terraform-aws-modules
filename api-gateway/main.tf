@@ -505,7 +505,7 @@ resource "aws_api_gateway_integration" "depth_0" {
 
 
 resource "aws_api_gateway_integration" "depth_3" {
-  for_each = local.enabled ? { for path, info in local.all_methods : path => info.method if info.depth == 3 && lookup("integration", info.method.integration, null) != null } : {}
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info.method if info.depth == 3 && lookup(info.method.integration, "integration", null) != null } : {}
 
   rest_api_id             = aws_api_gateway_rest_api.this[0].id
   resource_id             = aws_api_gateway_resource.depth_3[each.value.path].id
