@@ -293,7 +293,7 @@ locals {
         request_models       = method_info.request_models
         request_validator_id = method_info.request_validator_id
         request_parameters   = method_info.request_parameters
-        integration          = try(method_info.integration, null)
+        integration          = method_info.integration
       }
     }
   ]...)
