@@ -476,7 +476,7 @@ resource "aws_api_gateway_method" "depth_10" {
 
 
 resource "aws_api_gateway_integration" "depth_0" {
-  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info.method.integration if info.depth == 0 && try(info.method.integration, null) != null } : {}
 
   rest_api_id             = aws_api_gateway_rest_api.this[0].id
   resource_id             = aws_api_gateway_resource.depth_0[each.value.path].id
