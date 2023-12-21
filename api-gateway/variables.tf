@@ -293,7 +293,22 @@ variable "api_gateway_method_settings" {
 }
 
 variable "resources" {
-  type        = map(any)
   description = "A map of resource objects keyed by resource path"
-  default     = {}
+  type = map(object({
+    path_part : string
+    parent_path_part : string
+    depth : number
+    methods : optional(map(object({
+      authorization : string
+      authorizer_id : optional(string)
+      authorization_scopes : optional(list(string))
+      api_key_required : optional(bool)
+      operation_name : optional(string)
+      request_models : optional(map(any))
+      request_validator_id : optional(string)
+      request_parameters : optional(map(bool))
+    })))
+  }))
+  default = {}
 }
+
