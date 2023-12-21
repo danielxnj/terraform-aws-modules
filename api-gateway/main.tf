@@ -502,3 +502,32 @@ resource "aws_api_gateway_integration" "depth_0" {
     }
   }
 }
+
+
+resource "aws_api_gateway_integration" "depth_3" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info.method.integration if info.depth == 3 && try(info.method.integration, null) != null } : {}
+
+  rest_api_id             = aws_api_gateway_rest_api.this[0].id
+  resource_id             = aws_api_gateway_resource.depth_3[each.value.path].id
+  http_method             = try(each.value.method, null)
+  integration_http_method = try(each.value.integration_http_method, null)
+  type                    = try(each.value.type, null)
+  connection_type         = try(each.value.connection_type, null)
+  connection_id           = try(each.value.connection_id, null)
+  uri                     = try(each.value.uri, null)
+  credentials             = try(each.value.credentials, null)
+  request_templates       = try(each.value.request_templates, null)
+  request_parameters      = try(each.value.request_parameters, null)
+  passthrough_behavior    = try(each.value.passthrough_behavior, null)
+  cache_key_parameters    = try(each.value.cache_key_parameters, null)
+  cache_namespace         = try(each.value.cache_namespace, null)
+  content_handling        = try(each.value.content_handling, null)
+  timeout_milliseconds    = try(each.value.timeout_milliseconds, null)
+  dynamic "tls_config" {
+    for_each = try(each.value.tls_config, null)
+
+    content {
+      insecure_skip_verification = tls_config.value.insecure_skip_verification
+    }
+  }
+}
