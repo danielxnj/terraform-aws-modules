@@ -109,9 +109,9 @@ resource "aws_api_gateway_method_settings" "all" {
   }
 }
 
-resource "aws_api_gateway_resource" "this" {
-  for_each    = local.enabled ? var.resources : {}
-  rest_api_id = aws_api_gateway_rest_api.this[0].id
-  parent_id   = each.value.parent_path_part != "/" ? try(aws_api_gateway_resource.this[each.value.parent_path_part].id) : aws_api_gateway_rest_api.this[0].root_resource_id
-  path_part   = each.value.path_part != "" ? each.value.path_part : each.key
-}
+# resource "aws_api_gateway_resource" "this" {
+#   for_each    = local.enabled ? var.resources : {}
+#   rest_api_id = aws_api_gateway_rest_api.this[0].id
+#   parent_id   = each.value.parent_path_part != "/" ? aws_api_gateway_resource.this[each.value.parent_path_part].id : aws_api_gateway_rest_api.this[0].root_resource_id
+#   path_part   = each.value.path_part != "" ? each.value.path_part : each.key
+# }
