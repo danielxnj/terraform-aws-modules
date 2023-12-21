@@ -293,7 +293,8 @@ locals {
         request_models       = method_info.request_models
         request_validator_id = method_info.request_validator_id
         request_parameters   = method_info.request_parameters
-        integration          = method_info.integration
+        // Check if 'integration' exists and provide a default value if it doesn't
+        integration = lookup(method_info, "integration", {})
       }
     }
   ]...)
