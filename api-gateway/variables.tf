@@ -291,3 +291,9 @@ variable "api_gateway_method_settings" {
   default     = {}
   description = "The API Gateway Method Settings to be created"
 }
+
+variable "resources" {
+  type        = map(any)
+  description = "A map of resource objects keyed by resource path"
+  default     = {}
+}
