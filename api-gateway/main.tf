@@ -109,10 +109,22 @@ resource "aws_api_gateway_method_settings" "all" {
   }
 }
 
+locals {
+  root_resource_id = aws_api_gateway_rest_api.this[0].root_resource_id
+}
+
+locals {
+  api_resources = { for path, info in var.resources : path => {
+    path_part   = info.path_part
+    parent_path = info.parent_path_part
+    parent_id   = path == "/" ? local.root_resource_id : null
+  } }
+}
+
 resource "aws_api_gateway_resource" "this" {
-  for_each    = local.enabled ? var.resources : {}
+  for_each = local.enabled ? local.api_resources : {}
+
   rest_api_id = aws_api_gateway_rest_api.this[0].id
-  # parent_id   = each.value.parent_path_part != "/" ? aws_api_gateway_resource.this[each.value.parent_path_part].id : aws_api_gateway_rest_api.this[0].root_resource_id
-  parent_id = lookup(local.api_resources, each.value.parent_path_part, aws_api_gateway_rest_api.this[0].root_resource_id)
-  path_part = each.value.path_part != "" ? each.value.path_part : each.key
+  parent_id   = each.value.parent_path == "/" ? local.root_resource_id : aws_api_gateway_resource.this[each.value.parent_path].id
+  path_part   = each.value.path_part
 }
