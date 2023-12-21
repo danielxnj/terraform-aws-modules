@@ -477,7 +477,11 @@ resource "aws_api_gateway_method" "depth_10" {
 }
 
 resource "aws_api_gateway_integration" "depth_3" {
-  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 3 } : {}
+  # Adjust the for_each to include an additional check for the existence of 'integration'
+  for_each = local.enabled ? {
+    for path, info in local.all_methods : path => info
+    if info.depth == 3 && try(lookup(info, "integration", null) != null, false)
+  } : {}
 
   rest_api_id             = aws_api_gateway_rest_api.this[0].id
   resource_id             = aws_api_gateway_resource.depth_3[each.value.path].id
@@ -495,8 +499,10 @@ resource "aws_api_gateway_integration" "depth_3" {
   cache_namespace         = try(each.value.integration.cache_namespace, null)
   content_handling        = try(each.value.integration.content_handling, null)
   timeout_milliseconds    = try(each.value.integration.timeout_milliseconds, null)
+
   dynamic "tls_config" {
-    for_each = lookup(each.value.integration, "tls_config", [])
+    # Use a conditional expression to ensure tls_config is only processed if it exists
+    for_each = try(each.value.integration != null && each.value.integration.tls_config != null ? each.value.integration.tls_config : [], [])
 
     content {
       insecure_skip_verification = tls_config.value.insecure_skip_verification
