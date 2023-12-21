@@ -300,12 +300,169 @@ locals {
   all_methods = { for k, v in local.method_paths : k => v }
 }
 
-
 resource "aws_api_gateway_method" "depth_0" {
   for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
 
   rest_api_id          = aws_api_gateway_rest_api.this[0].id
   resource_id          = aws_api_gateway_resource.depth_0[each.value.path_part].id
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
+}
+
+resource "aws_api_gateway_method" "depth_1" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = aws_api_gateway_resource.depth_1[each.value.path_part].id
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
+}
+resource "aws_api_gateway_method" "depth_2" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = aws_api_gateway_resource.depth_2[each.value.path_part].id
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
+}
+resource "aws_api_gateway_method" "depth_3" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = aws_api_gateway_resource.depth_3[each.value.path_part].id
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
+}
+
+resource "aws_api_gateway_method" "depth_4" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = aws_api_gateway_resource.depth_4[each.value.path_part].id
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
+}
+
+resource "aws_api_gateway_method" "depth_5" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = aws_api_gateway_resource.depth_5[each.value.path_part].id
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
+}
+
+resource "aws_api_gateway_method" "depth_6" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = aws_api_gateway_resource.depth_6[each.value.path_part].id
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
+}
+
+resource "aws_api_gateway_method" "depth_7" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = aws_api_gateway_resource.depth_7[each.value.path_part].id
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
+}
+
+resource "aws_api_gateway_method" "depth_8" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = aws_api_gateway_resource.depth_8[each.value.path_part].id
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
+}
+
+resource "aws_api_gateway_method" "depth_9" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = aws_api_gateway_resource.depth_9[each.value.path_part].id
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
+}
+
+resource "aws_api_gateway_method" "depth_10" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 0 } : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = aws_api_gateway_resource.depth_10[each.value.path_part].id
   http_method          = try(each.value.method, null)
   authorization        = try(each.value.authorization, null)
   authorizer_id        = try(each.value.authorizer_id, null)
