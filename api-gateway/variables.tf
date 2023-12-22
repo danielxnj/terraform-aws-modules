@@ -307,9 +307,23 @@ variable "resources" {
       request_models : optional(map(any))
       request_validator_id : optional(string)
       request_parameters : optional(map(bool))
-      integration : optional(map(any))
+      integration : optional(object({
+        integration_http_method : string
+        type : string
+        connection_type : optional(string)
+        connection_id : optional(string)
+        uri : string
+        credentials : optional(string)
+        request_templates : optional(map(string))
+        request_parameters : optional(map(string))
+        passthrough_behavior : optional(string)
+        cache_key_parameters : optional(list(string))
+        cache_namespace : optional(string)
+        content_handling : optional(string)
+        timeout_milliseconds : optional(number)
+        tls_config : optional(list(any)) // Define further if possible
+      }))
     })))
   }))
   default = {}
 }
-
