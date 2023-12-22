@@ -1,9 +1,7 @@
 locals {
-  enabled                = module.this.enabled
-  create_rest_api_policy = local.enabled && var.rest_api_policy != null
+  enabled = module.this.enabled
   # create_log_group       = local.enabled && var.logging_level != "OFF"
   # log_group_arn          = local.create_log_group ? module.cloudwatch_log_group.log_group_arn : null
-  vpc_link_enabled = local.enabled && length(var.private_link_target_arns) > 0
 }
 
 resource "aws_api_gateway_rest_api" "this" {
@@ -20,7 +18,7 @@ resource "aws_api_gateway_rest_api" "this" {
 }
 
 resource "aws_api_gateway_rest_api_policy" "this" {
-  count       = local.create_rest_api_policy ? 1 : 0
+  count       = local.enabled && var.rest_api_policy != null ? 1 : 0
   rest_api_id = aws_api_gateway_rest_api.this[0].id
 
   policy = var.rest_api_policy
