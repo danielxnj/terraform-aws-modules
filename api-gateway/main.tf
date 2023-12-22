@@ -9,12 +9,25 @@ resource "aws_api_gateway_rest_api" "this" {
 
   name        = var.name
   description = var.description
-  body        = try(var.body, null)
-  tags        = var.tags
+  # body        = try(var.body, null)
+  api_key_source               = var.api_key_source
+  binary_media_types           = var.binary_media_types
+  minimum_compression_size     = var.minimum_compression_size
+  disable_execute_api_endpoint = var.disable_execute_api_endpoint
+  fail_on_warnings             = var.fail_on_warnings
+  parameters                   = var.parameters
+  put_rest_api_mode            = var.put_rest_api_mode
 
-  endpoint_configuration {
-    types = var.endpoint_type
+
+  dynamic "endpoint_configuration" {
+    for_each = var.endpoint_configuration
+    content {
+      types            = endpoint_configuration.value.types
+      vpc_endpoint_ids = endpoint_configuration.value.vpc_endpoint_ids
+    }
   }
+
+  tags = var.tags
 }
 
 resource "aws_api_gateway_rest_api_policy" "this" {

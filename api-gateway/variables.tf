@@ -327,3 +327,51 @@ variable "resources" {
   }))
   default = {}
 }
+
+
+variable "api_key_source" {
+  type        = string
+  default     = null
+  description = "The source of the API key for requests. One of - HEADER, AUTHORIZER"
+}
+
+variable "binary_media_types" {
+  type        = list(string)
+  default     = []
+  description = "The list of binary media types supported by the RestApi. By default, the RestApi supports only UTF-8-encoded text payloads."
+}
+
+variable "minimum_compression_size" {
+  type        = number
+  default     = null
+  description = "Minimum response size to compress for the REST API."
+}
+
+variable "disable_execute_api_endpoint" {
+  type        = bool
+  default     = null
+  description = "Whether to disable the execute-api endpoint"
+}
+
+variable "fail_on_warnings" {
+  type        = bool
+  default     = null
+  description = "Whether to fail on warnings"
+}
+
+variable "parameters" {
+  type        = map(string)
+  default     = {}
+  description = "A map of stage variables to be passed to the API"
+}
+
+variable "endpoint_configuration" {
+  type        = list(any)
+  default     = []
+  description = "A list of endpoint types. This resource currently only supports managing a single value. Valid values: EDGE, REGIONAL or PRIVATE"
+}
+
+variable "put_rest_api_mode" {
+  type    = string
+  default = null
+}
