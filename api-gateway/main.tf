@@ -305,7 +305,8 @@ locals {
         request_validator_id = method_info.request_validator_id
         request_parameters   = method_info.request_parameters
         // Set integration to null if it doesn't exist to make it explicit
-        integration = lookup(method_info, "integration", null)
+        integration      = lookup(method_info, "integration", null)
+        method_responses = lookup(method_info, "method_responses", null)
       }
     }
   ]...)
@@ -646,7 +647,6 @@ resource "aws_api_gateway_method" "depth_20" {
 }
 
 resource "aws_api_gateway_integration" "depth_0" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 0 && info.integration != null
@@ -678,7 +678,6 @@ resource "aws_api_gateway_integration" "depth_0" {
 }
 
 resource "aws_api_gateway_integration" "depth_1" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 1 && info.integration != null
@@ -710,7 +709,6 @@ resource "aws_api_gateway_integration" "depth_1" {
 }
 
 resource "aws_api_gateway_integration" "depth_2" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 2 && info.integration != null
@@ -742,7 +740,6 @@ resource "aws_api_gateway_integration" "depth_2" {
 }
 
 resource "aws_api_gateway_integration" "depth_3" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 3 && info.integration != null
@@ -774,7 +771,6 @@ resource "aws_api_gateway_integration" "depth_3" {
 }
 
 resource "aws_api_gateway_integration" "depth_4" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 4 && info.integration != null
@@ -806,7 +802,6 @@ resource "aws_api_gateway_integration" "depth_4" {
 }
 
 resource "aws_api_gateway_integration" "depth_5" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 5 && info.integration != null
@@ -838,7 +833,6 @@ resource "aws_api_gateway_integration" "depth_5" {
 }
 
 resource "aws_api_gateway_integration" "depth_6" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 6 && info.integration != null
@@ -870,7 +864,6 @@ resource "aws_api_gateway_integration" "depth_6" {
 }
 
 resource "aws_api_gateway_integration" "depth_7" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 7 && info.integration != null
@@ -902,7 +895,6 @@ resource "aws_api_gateway_integration" "depth_7" {
 }
 
 resource "aws_api_gateway_integration" "depth_8" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 8 && info.integration != null
@@ -934,7 +926,6 @@ resource "aws_api_gateway_integration" "depth_8" {
 }
 
 resource "aws_api_gateway_integration" "depth_9" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 9 && info.integration != null
@@ -966,7 +957,6 @@ resource "aws_api_gateway_integration" "depth_9" {
 }
 
 resource "aws_api_gateway_integration" "depth_10" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 10 && info.integration != null
@@ -998,7 +988,6 @@ resource "aws_api_gateway_integration" "depth_10" {
 }
 
 resource "aws_api_gateway_integration" "depth_11" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 11 && info.integration != null
@@ -1030,7 +1019,6 @@ resource "aws_api_gateway_integration" "depth_11" {
 }
 
 resource "aws_api_gateway_integration" "depth_12" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 12 && info.integration != null
@@ -1062,7 +1050,6 @@ resource "aws_api_gateway_integration" "depth_12" {
 }
 
 resource "aws_api_gateway_integration" "depth_13" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 13 && info.integration != null
@@ -1094,7 +1081,6 @@ resource "aws_api_gateway_integration" "depth_13" {
 }
 
 resource "aws_api_gateway_integration" "depth_14" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 14 && info.integration != null
@@ -1126,7 +1112,6 @@ resource "aws_api_gateway_integration" "depth_14" {
 }
 
 resource "aws_api_gateway_integration" "depth_15" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 15 && info.integration != null
@@ -1158,7 +1143,6 @@ resource "aws_api_gateway_integration" "depth_15" {
 }
 
 resource "aws_api_gateway_integration" "depth_16" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 16 && info.integration != null
@@ -1190,7 +1174,6 @@ resource "aws_api_gateway_integration" "depth_16" {
 }
 
 resource "aws_api_gateway_integration" "depth_17" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 17 && info.integration != null
@@ -1222,7 +1205,6 @@ resource "aws_api_gateway_integration" "depth_17" {
 }
 
 resource "aws_api_gateway_integration" "depth_18" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 18 && info.integration != null
@@ -1254,7 +1236,6 @@ resource "aws_api_gateway_integration" "depth_18" {
 }
 
 resource "aws_api_gateway_integration" "depth_19" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 19 && info.integration != null
@@ -1286,7 +1267,6 @@ resource "aws_api_gateway_integration" "depth_19" {
 }
 
 resource "aws_api_gateway_integration" "depth_20" {
-  # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
     if info.depth == 20 && info.integration != null
@@ -1315,4 +1295,60 @@ resource "aws_api_gateway_integration" "depth_20" {
       insecure_skip_verification = try(tls_config.value.insecure_skip_verification, null)
     }
   }
+}
+
+resource "aws_api_gateway_method_response" "depth_0" {
+  for_each = local.enabled ? {
+    for path, info in local.all_methods : path => info
+    if info.depth == 0 && info.method_responses != null
+  } : {}
+
+  rest_api_id         = aws_api_gateway_rest_api.this[0].id
+  resource_id         = aws_api_gateway_resource.depth_0[each.value.path].id
+  http_method         = each.value.method
+  status_code         = each.value.method_responses.status_code
+  response_models     = each.value.method_responses.response_models
+  response_parameters = each.value.method_responses.response_parameters
+}
+
+resource "aws_api_gateway_method_response" "depth_1" {
+  for_each = local.enabled ? {
+    for path, info in local.all_methods : path => info
+    if info.depth == 1 && info.method_responses != null
+  } : {}
+
+  rest_api_id         = aws_api_gateway_rest_api.this[0].id
+  resource_id         = aws_api_gateway_resource.depth_1[each.value.path].id
+  http_method         = each.value.method
+  status_code         = each.value.method_responses.status_code
+  response_models     = each.value.method_responses.response_models
+  response_parameters = each.value.method_responses.response_parameters
+}
+
+resource "aws_api_gateway_method_response" "depth_2" {
+  for_each = local.enabled ? {
+    for path, info in local.all_methods : path => info
+    if info.depth == 2 && info.method_responses != null
+  } : {}
+
+  rest_api_id         = aws_api_gateway_rest_api.this[0].id
+  resource_id         = aws_api_gateway_resource.depth_2[each.value.path].id
+  http_method         = each.value.method
+  status_code         = each.value.method_responses.status_code
+  response_models     = each.value.method_responses.response_models
+  response_parameters = each.value.method_responses.response_parameters
+}
+
+resource "aws_api_gateway_method_response" "depth_3" {
+  for_each = local.enabled ? {
+    for path, info in local.all_methods : path => info
+    if info.depth == 3 && info.method_responses != null
+  } : {}
+
+  rest_api_id         = aws_api_gateway_rest_api.this[0].id
+  resource_id         = aws_api_gateway_resource.depth_3[each.value.path].id
+  http_method         = each.value.method
+  status_code         = each.value.method_responses.status_code
+  response_models     = each.value.method_responses.response_models
+  response_parameters = each.value.method_responses.response_parameters
 }
