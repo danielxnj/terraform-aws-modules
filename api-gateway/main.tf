@@ -480,7 +480,7 @@ resource "aws_api_gateway_integration" "depth_3" {
   # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
     for path, info in local.all_methods : path => info
-    if info.depth == 3 && info.integration != null && info.integration.type != null
+    if info.depth == 3 && info.integration != null
   } : {}
 
   rest_api_id             = aws_api_gateway_rest_api.this[0].id
