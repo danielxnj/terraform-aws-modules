@@ -3,7 +3,7 @@ output "alb_name" {
   value       = one(aws_lb.default[*].name)
 }
 
-output "alb_arn" {
+output "arn" {
   description = "The ARN of the ALB"
   value       = one(aws_lb.default[*].arn)
 }
