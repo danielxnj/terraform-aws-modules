@@ -1301,6 +1301,7 @@ locals {
   flattened_method_responses = merge([
     for path_method, details in local.all_methods : {
       for status_code, response in details.method_responses : "${path_method}/${status_code}" => {
+        path                = details.path
         method              = details.method
         status_code         = status_code
         depth               = details.depth
