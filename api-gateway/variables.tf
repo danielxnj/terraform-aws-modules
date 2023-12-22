@@ -308,7 +308,6 @@ variable "resources" {
       request_validator_id : optional(string)
       request_parameters : optional(map(bool))
       method_responses : optional(map(object({
-        status_code : string
         response_models : optional(map(any))
         response_parameters : optional(map(bool))
       })))

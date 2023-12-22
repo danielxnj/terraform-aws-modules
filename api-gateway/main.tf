@@ -1297,58 +1297,31 @@ resource "aws_api_gateway_integration" "depth_20" {
   }
 }
 
-resource "aws_api_gateway_method_response" "depth_0" {
-  for_each = local.enabled ? {
-    for path, info in local.all_methods : path => info
-    if info.depth == 0 && info.method_responses != null
-  } : {}
-
-  rest_api_id         = aws_api_gateway_rest_api.this[0].id
-  resource_id         = aws_api_gateway_resource.depth_0[each.value.path].id
-  http_method         = each.value.method
-  status_code         = each.value.method_responses.status_code
-  response_models     = each.value.method_responses.response_models
-  response_parameters = each.value.method_responses.response_parameters
-}
-
-resource "aws_api_gateway_method_response" "depth_1" {
-  for_each = local.enabled ? {
-    for path, info in local.all_methods : path => info
-    if info.depth == 1 && info.method_responses != null
-  } : {}
-
-  rest_api_id         = aws_api_gateway_rest_api.this[0].id
-  resource_id         = aws_api_gateway_resource.depth_1[each.value.path].id
-  http_method         = each.value.method
-  status_code         = each.value.method_responses.status_code
-  response_models     = each.value.method_responses.response_models
-  response_parameters = each.value.method_responses.response_parameters
-}
-
-resource "aws_api_gateway_method_response" "depth_2" {
-  for_each = local.enabled ? {
-    for path, info in local.all_methods : path => info
-    if info.depth == 2 && info.method_responses != null
-  } : {}
-
-  rest_api_id         = aws_api_gateway_rest_api.this[0].id
-  resource_id         = aws_api_gateway_resource.depth_2[each.value.path].id
-  http_method         = each.value.method
-  status_code         = each.value.method_responses.status_code
-  response_models     = each.value.method_responses.response_models
-  response_parameters = each.value.method_responses.response_parameters
+locals {
+  flattened_resources = merge([
+    for path, resource in var.resources : {
+      for method_type, method in resource.methods : {
+        for status_code, method_response in method.method_responses : {
+          "${path}/${method_type}/${status_code}" => {
+            path              = path
+            method            = method_type
+            status_code       = status_code
+            response_models   = method_response.response_models
+            response_parameters = method_response.response_parameters
+          }
+        }
+      }
+    }
+  ]...)
 }
 
 resource "aws_api_gateway_method_response" "depth_3" {
-  for_each = local.enabled ? {
-    for path, info in local.all_methods : path => info
-    if info.depth == 3 && info.method_responses != null
-  } : {}
+  for_each = local.enabled ? local.flattened_resources : {}
 
   rest_api_id         = aws_api_gateway_rest_api.this[0].id
   resource_id         = aws_api_gateway_resource.depth_3[each.value.path].id
   http_method         = each.value.method
-  status_code         = each.value.method_responses.status_code
-  response_models     = each.value.method_responses.response_models
-  response_parameters = each.value.method_responses.response_parameters
+  status_code         = each.value.status_code
+  response_models     = each.value.response_models
+  response_parameters = each.value.response_parameters
 }
