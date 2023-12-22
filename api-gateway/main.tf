@@ -1312,7 +1312,10 @@ locals {
 }
 
 resource "aws_api_gateway_method_response" "depth_3" {
-  for_each = local.enabled ? local.flattened_resources : {}
+  for_each = local.enabled ? {
+    for path, info in local.flattened_method_responses : path => info
+    if info.depth == 3
+  } : {}
 
   rest_api_id         = aws_api_gateway_rest_api.this[0].id
   resource_id         = aws_api_gateway_resource.depth_3[each.value.path].id
