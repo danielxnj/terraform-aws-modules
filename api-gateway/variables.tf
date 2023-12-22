@@ -307,6 +307,7 @@ variable "resources" {
       request_models : optional(map(any))
       request_validator_id : optional(string)
       request_parameters : optional(map(bool))
+      integration : optional(map(any))
     })))
   }))
   default = {}
