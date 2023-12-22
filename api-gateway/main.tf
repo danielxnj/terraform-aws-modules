@@ -488,17 +488,17 @@ resource "aws_api_gateway_integration" "depth_3" {
   http_method             = each.value.method
   integration_http_method = each.value.integration.integration_http_method
   type                    = each.value.integration.type
-  connection_type         = try(each.value.integration.connection_type, null)
-  connection_id           = try(each.value.integration.connection_id, null)
-  uri                     = try(each.value.integration.uri, null)
-  credentials             = try(each.value.integration.credentials, null)
-  request_templates       = try(each.value.integration.request_templates, null)
-  request_parameters      = try(each.value.integration.request_parameters, null)
-  passthrough_behavior    = try(each.value.integration.passthrough_behavior, null)
-  cache_key_parameters    = try(each.value.integration.cache_key_parameters, null)
-  cache_namespace         = try(each.value.integration.cache_namespace, null)
-  content_handling        = try(each.value.integration.content_handling, null)
-  timeout_milliseconds    = try(each.value.integration.timeout_milliseconds, null)
+  connection_type         = each.value.integration.connection_type
+  connection_id           = each.value.integration.connection_id
+  uri                     = each.value.integration.uri
+  credentials             = each.value.integration.credentials
+  request_templates       = each.value.integration.request_templates
+  request_parameters      = each.value.integration.request_parameters
+  passthrough_behavior    = each.value.integration.passthrough_behavior
+  cache_key_parameters    = each.value.integration.cache_key_parameters
+  cache_namespace         = each.value.integration.cache_namespace
+  content_handling        = each.value.integration.content_handling
+  timeout_milliseconds    = each.value.integration.timeout_milliseconds
 
   dynamic "tls_config" {
     for_each = try(each.value.integration.tls_config != null ? each.value.integration.tls_config : [], [])
