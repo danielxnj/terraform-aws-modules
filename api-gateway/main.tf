@@ -476,6 +476,260 @@ resource "aws_api_gateway_method" "depth_10" {
   request_parameters   = try(each.value.request_parameters, null)
 }
 
+resource "aws_api_gateway_method" "depth_11" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 11 } : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = aws_api_gateway_resource.depth_11[each.value.path].id
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
+}
+resource "aws_api_gateway_method" "depth_12" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 12 } : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = aws_api_gateway_resource.depth_12[each.value.path].id
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
+}
+resource "aws_api_gateway_method" "depth_13" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 13 } : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = aws_api_gateway_resource.depth_13[each.value.path].id
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
+}
+
+resource "aws_api_gateway_method" "depth_14" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 14 } : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = aws_api_gateway_resource.depth_14[each.value.path].id
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
+}
+
+resource "aws_api_gateway_method" "depth_15" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 15 } : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = aws_api_gateway_resource.depth_15[each.value.path].id
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
+}
+
+resource "aws_api_gateway_method" "depth_16" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 16 } : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = aws_api_gateway_resource.depth_16[each.value.path].id
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
+}
+
+resource "aws_api_gateway_method" "depth_17" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 17 } : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = aws_api_gateway_resource.depth_17[each.value.path].id
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
+}
+
+resource "aws_api_gateway_method" "depth_18" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 18 } : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = aws_api_gateway_resource.depth_18[each.value.path].id
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
+}
+
+resource "aws_api_gateway_method" "depth_19" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 19 } : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = aws_api_gateway_resource.depth_19[each.value.path].id
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
+}
+
+resource "aws_api_gateway_method" "depth_20" {
+  for_each = local.enabled ? { for path, info in local.all_methods : path => info if info.depth == 20 } : {}
+
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  resource_id          = aws_api_gateway_resource.depth_20[each.value.path].id
+  http_method          = try(each.value.method, null)
+  authorization        = try(each.value.authorization, null)
+  authorizer_id        = try(each.value.authorizer_id, null)
+  authorization_scopes = try(each.value.authorization_scopes, null)
+  api_key_required     = try(each.value.api_key_required, null)
+  operation_name       = try(each.value.operation_name, null)
+  request_models       = try(each.value.request_models, null)
+  request_validator_id = try(each.value.request_validator_id, null)
+  request_parameters   = try(each.value.request_parameters, null)
+}
+
+resource "aws_api_gateway_integration" "depth_0" {
+  # Ensure that 'integration' and 'integration.type' exist
+  for_each = local.enabled ? {
+    for path, info in local.all_methods : path => info
+    if info.depth == 0 && info.integration != null
+  } : {}
+
+  rest_api_id             = aws_api_gateway_rest_api.this[0].id
+  resource_id             = aws_api_gateway_resource.depth_0[each.value.path].id
+  http_method             = each.value.method
+  integration_http_method = each.value.integration.integration_http_method
+  type                    = each.value.integration.type
+  connection_type         = each.value.integration.connection_type
+  connection_id           = each.value.integration.connection_id
+  uri                     = each.value.integration.uri
+  credentials             = each.value.integration.credentials
+  request_templates       = each.value.integration.request_templates
+  request_parameters      = each.value.integration.request_parameters
+  passthrough_behavior    = each.value.integration.passthrough_behavior
+  cache_key_parameters    = each.value.integration.cache_key_parameters
+  cache_namespace         = each.value.integration.cache_namespace
+  content_handling        = each.value.integration.content_handling != "" ? each.value.integration.content_handling : null
+  timeout_milliseconds    = each.value.integration.timeout_milliseconds
+
+  dynamic "tls_config" {
+    for_each = try(each.value.integration.tls_config != null ? each.value.integration.tls_config : [], [])
+    content {
+      insecure_skip_verification = try(tls_config.value.insecure_skip_verification, null)
+    }
+  }
+}
+
+resource "aws_api_gateway_integration" "depth_1" {
+  # Ensure that 'integration' and 'integration.type' exist
+  for_each = local.enabled ? {
+    for path, info in local.all_methods : path => info
+    if info.depth == 1 && info.integration != null
+  } : {}
+
+  rest_api_id             = aws_api_gateway_rest_api.this[0].id
+  resource_id             = aws_api_gateway_resource.depth_1[each.value.path].id
+  http_method             = each.value.method
+  integration_http_method = each.value.integration.integration_http_method
+  type                    = each.value.integration.type
+  connection_type         = each.value.integration.connection_type
+  connection_id           = each.value.integration.connection_id
+  uri                     = each.value.integration.uri
+  credentials             = each.value.integration.credentials
+  request_templates       = each.value.integration.request_templates
+  request_parameters      = each.value.integration.request_parameters
+  passthrough_behavior    = each.value.integration.passthrough_behavior
+  cache_key_parameters    = each.value.integration.cache_key_parameters
+  cache_namespace         = each.value.integration.cache_namespace
+  content_handling        = each.value.integration.content_handling != "" ? each.value.integration.content_handling : null
+  timeout_milliseconds    = each.value.integration.timeout_milliseconds
+
+  dynamic "tls_config" {
+    for_each = try(each.value.integration.tls_config != null ? each.value.integration.tls_config : [], [])
+    content {
+      insecure_skip_verification = try(tls_config.value.insecure_skip_verification, null)
+    }
+  }
+}
+
+resource "aws_api_gateway_integration" "depth_2" {
+  # Ensure that 'integration' and 'integration.type' exist
+  for_each = local.enabled ? {
+    for path, info in local.all_methods : path => info
+    if info.depth == 2 && info.integration != null
+  } : {}
+
+  rest_api_id             = aws_api_gateway_rest_api.this[0].id
+  resource_id             = aws_api_gateway_resource.depth_2[each.value.path].id
+  http_method             = each.value.method
+  integration_http_method = each.value.integration.integration_http_method
+  type                    = each.value.integration.type
+  connection_type         = each.value.integration.connection_type
+  connection_id           = each.value.integration.connection_id
+  uri                     = each.value.integration.uri
+  credentials             = each.value.integration.credentials
+  request_templates       = each.value.integration.request_templates
+  request_parameters      = each.value.integration.request_parameters
+  passthrough_behavior    = each.value.integration.passthrough_behavior
+  cache_key_parameters    = each.value.integration.cache_key_parameters
+  cache_namespace         = each.value.integration.cache_namespace
+  content_handling        = each.value.integration.content_handling != "" ? each.value.integration.content_handling : null
+  timeout_milliseconds    = each.value.integration.timeout_milliseconds
+
+  dynamic "tls_config" {
+    for_each = try(each.value.integration.tls_config != null ? each.value.integration.tls_config : [], [])
+    content {
+      insecure_skip_verification = try(tls_config.value.insecure_skip_verification, null)
+    }
+  }
+}
+
 resource "aws_api_gateway_integration" "depth_3" {
   # Ensure that 'integration' and 'integration.type' exist
   for_each = local.enabled ? {
@@ -485,6 +739,230 @@ resource "aws_api_gateway_integration" "depth_3" {
 
   rest_api_id             = aws_api_gateway_rest_api.this[0].id
   resource_id             = aws_api_gateway_resource.depth_3[each.value.path].id
+  http_method             = each.value.method
+  integration_http_method = each.value.integration.integration_http_method
+  type                    = each.value.integration.type
+  connection_type         = each.value.integration.connection_type
+  connection_id           = each.value.integration.connection_id
+  uri                     = each.value.integration.uri
+  credentials             = each.value.integration.credentials
+  request_templates       = each.value.integration.request_templates
+  request_parameters      = each.value.integration.request_parameters
+  passthrough_behavior    = each.value.integration.passthrough_behavior
+  cache_key_parameters    = each.value.integration.cache_key_parameters
+  cache_namespace         = each.value.integration.cache_namespace
+  content_handling        = each.value.integration.content_handling != "" ? each.value.integration.content_handling : null
+  timeout_milliseconds    = each.value.integration.timeout_milliseconds
+
+  dynamic "tls_config" {
+    for_each = try(each.value.integration.tls_config != null ? each.value.integration.tls_config : [], [])
+    content {
+      insecure_skip_verification = try(tls_config.value.insecure_skip_verification, null)
+    }
+  }
+}
+
+resource "aws_api_gateway_integration" "depth_4" {
+  # Ensure that 'integration' and 'integration.type' exist
+  for_each = local.enabled ? {
+    for path, info in local.all_methods : path => info
+    if info.depth == 4 && info.integration != null
+  } : {}
+
+  rest_api_id             = aws_api_gateway_rest_api.this[0].id
+  resource_id             = aws_api_gateway_resource.depth_4[each.value.path].id
+  http_method             = each.value.method
+  integration_http_method = each.value.integration.integration_http_method
+  type                    = each.value.integration.type
+  connection_type         = each.value.integration.connection_type
+  connection_id           = each.value.integration.connection_id
+  uri                     = each.value.integration.uri
+  credentials             = each.value.integration.credentials
+  request_templates       = each.value.integration.request_templates
+  request_parameters      = each.value.integration.request_parameters
+  passthrough_behavior    = each.value.integration.passthrough_behavior
+  cache_key_parameters    = each.value.integration.cache_key_parameters
+  cache_namespace         = each.value.integration.cache_namespace
+  content_handling        = each.value.integration.content_handling != "" ? each.value.integration.content_handling : null
+  timeout_milliseconds    = each.value.integration.timeout_milliseconds
+
+  dynamic "tls_config" {
+    for_each = try(each.value.integration.tls_config != null ? each.value.integration.tls_config : [], [])
+    content {
+      insecure_skip_verification = try(tls_config.value.insecure_skip_verification, null)
+    }
+  }
+}
+
+resource "aws_api_gateway_integration" "depth_5" {
+  # Ensure that 'integration' and 'integration.type' exist
+  for_each = local.enabled ? {
+    for path, info in local.all_methods : path => info
+    if info.depth == 5 && info.integration != null
+  } : {}
+
+  rest_api_id             = aws_api_gateway_rest_api.this[0].id
+  resource_id             = aws_api_gateway_resource.depth_5[each.value.path].id
+  http_method             = each.value.method
+  integration_http_method = each.value.integration.integration_http_method
+  type                    = each.value.integration.type
+  connection_type         = each.value.integration.connection_type
+  connection_id           = each.value.integration.connection_id
+  uri                     = each.value.integration.uri
+  credentials             = each.value.integration.credentials
+  request_templates       = each.value.integration.request_templates
+  request_parameters      = each.value.integration.request_parameters
+  passthrough_behavior    = each.value.integration.passthrough_behavior
+  cache_key_parameters    = each.value.integration.cache_key_parameters
+  cache_namespace         = each.value.integration.cache_namespace
+  content_handling        = each.value.integration.content_handling != "" ? each.value.integration.content_handling : null
+  timeout_milliseconds    = each.value.integration.timeout_milliseconds
+
+  dynamic "tls_config" {
+    for_each = try(each.value.integration.tls_config != null ? each.value.integration.tls_config : [], [])
+    content {
+      insecure_skip_verification = try(tls_config.value.insecure_skip_verification, null)
+    }
+  }
+}
+
+resource "aws_api_gateway_integration" "depth_6" {
+  # Ensure that 'integration' and 'integration.type' exist
+  for_each = local.enabled ? {
+    for path, info in local.all_methods : path => info
+    if info.depth == 6 && info.integration != null
+  } : {}
+
+  rest_api_id             = aws_api_gateway_rest_api.this[0].id
+  resource_id             = aws_api_gateway_resource.depth_6[each.value.path].id
+  http_method             = each.value.method
+  integration_http_method = each.value.integration.integration_http_method
+  type                    = each.value.integration.type
+  connection_type         = each.value.integration.connection_type
+  connection_id           = each.value.integration.connection_id
+  uri                     = each.value.integration.uri
+  credentials             = each.value.integration.credentials
+  request_templates       = each.value.integration.request_templates
+  request_parameters      = each.value.integration.request_parameters
+  passthrough_behavior    = each.value.integration.passthrough_behavior
+  cache_key_parameters    = each.value.integration.cache_key_parameters
+  cache_namespace         = each.value.integration.cache_namespace
+  content_handling        = each.value.integration.content_handling != "" ? each.value.integration.content_handling : null
+  timeout_milliseconds    = each.value.integration.timeout_milliseconds
+
+  dynamic "tls_config" {
+    for_each = try(each.value.integration.tls_config != null ? each.value.integration.tls_config : [], [])
+    content {
+      insecure_skip_verification = try(tls_config.value.insecure_skip_verification, null)
+    }
+  }
+}
+
+resource "aws_api_gateway_integration" "depth_7" {
+  # Ensure that 'integration' and 'integration.type' exist
+  for_each = local.enabled ? {
+    for path, info in local.all_methods : path => info
+    if info.depth == 7 && info.integration != null
+  } : {}
+
+  rest_api_id             = aws_api_gateway_rest_api.this[0].id
+  resource_id             = aws_api_gateway_resource.depth_7[each.value.path].id
+  http_method             = each.value.method
+  integration_http_method = each.value.integration.integration_http_method
+  type                    = each.value.integration.type
+  connection_type         = each.value.integration.connection_type
+  connection_id           = each.value.integration.connection_id
+  uri                     = each.value.integration.uri
+  credentials             = each.value.integration.credentials
+  request_templates       = each.value.integration.request_templates
+  request_parameters      = each.value.integration.request_parameters
+  passthrough_behavior    = each.value.integration.passthrough_behavior
+  cache_key_parameters    = each.value.integration.cache_key_parameters
+  cache_namespace         = each.value.integration.cache_namespace
+  content_handling        = each.value.integration.content_handling != "" ? each.value.integration.content_handling : null
+  timeout_milliseconds    = each.value.integration.timeout_milliseconds
+
+  dynamic "tls_config" {
+    for_each = try(each.value.integration.tls_config != null ? each.value.integration.tls_config : [], [])
+    content {
+      insecure_skip_verification = try(tls_config.value.insecure_skip_verification, null)
+    }
+  }
+}
+
+resource "aws_api_gateway_integration" "depth_8" {
+  # Ensure that 'integration' and 'integration.type' exist
+  for_each = local.enabled ? {
+    for path, info in local.all_methods : path => info
+    if info.depth == 8 && info.integration != null
+  } : {}
+
+  rest_api_id             = aws_api_gateway_rest_api.this[0].id
+  resource_id             = aws_api_gateway_resource.depth_8[each.value.path].id
+  http_method             = each.value.method
+  integration_http_method = each.value.integration.integration_http_method
+  type                    = each.value.integration.type
+  connection_type         = each.value.integration.connection_type
+  connection_id           = each.value.integration.connection_id
+  uri                     = each.value.integration.uri
+  credentials             = each.value.integration.credentials
+  request_templates       = each.value.integration.request_templates
+  request_parameters      = each.value.integration.request_parameters
+  passthrough_behavior    = each.value.integration.passthrough_behavior
+  cache_key_parameters    = each.value.integration.cache_key_parameters
+  cache_namespace         = each.value.integration.cache_namespace
+  content_handling        = each.value.integration.content_handling != "" ? each.value.integration.content_handling : null
+  timeout_milliseconds    = each.value.integration.timeout_milliseconds
+
+  dynamic "tls_config" {
+    for_each = try(each.value.integration.tls_config != null ? each.value.integration.tls_config : [], [])
+    content {
+      insecure_skip_verification = try(tls_config.value.insecure_skip_verification, null)
+    }
+  }
+}
+
+resource "aws_api_gateway_integration" "depth_9" {
+  # Ensure that 'integration' and 'integration.type' exist
+  for_each = local.enabled ? {
+    for path, info in local.all_methods : path => info
+    if info.depth == 9 && info.integration != null
+  } : {}
+
+  rest_api_id             = aws_api_gateway_rest_api.this[0].id
+  resource_id             = aws_api_gateway_resource.depth_9[each.value.path].id
+  http_method             = each.value.method
+  integration_http_method = each.value.integration.integration_http_method
+  type                    = each.value.integration.type
+  connection_type         = each.value.integration.connection_type
+  connection_id           = each.value.integration.connection_id
+  uri                     = each.value.integration.uri
+  credentials             = each.value.integration.credentials
+  request_templates       = each.value.integration.request_templates
+  request_parameters      = each.value.integration.request_parameters
+  passthrough_behavior    = each.value.integration.passthrough_behavior
+  cache_key_parameters    = each.value.integration.cache_key_parameters
+  cache_namespace         = each.value.integration.cache_namespace
+  content_handling        = each.value.integration.content_handling != "" ? each.value.integration.content_handling : null
+  timeout_milliseconds    = each.value.integration.timeout_milliseconds
+
+  dynamic "tls_config" {
+    for_each = try(each.value.integration.tls_config != null ? each.value.integration.tls_config : [], [])
+    content {
+      insecure_skip_verification = try(tls_config.value.insecure_skip_verification, null)
+    }
+  }
+}
+
+resource "aws_api_gateway_integration" "depth_10" {
+  # Ensure that 'integration' and 'integration.type' exist
+  for_each = local.enabled ? {
+    for path, info in local.all_methods : path => info
+    if info.depth == 10 && info.integration != null
+  } : {}
+
+  rest_api_id             = aws_api_gateway_rest_api.this[0].id
+  resource_id             = aws_api_gateway_resource.depth_10[each.value.path].id
   http_method             = each.value.method
   integration_http_method = each.value.integration.integration_http_method
   type                    = each.value.integration.type
