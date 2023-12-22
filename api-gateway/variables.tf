@@ -326,7 +326,7 @@ variable "resources" {
         cache_namespace : optional(string)
         content_handling : optional(string)
         timeout_milliseconds : optional(number)
-        tls_config : optional(list(any)) // Define further if possible
+        tls_config : optional(list(any))
       }))
     })))
   }))
