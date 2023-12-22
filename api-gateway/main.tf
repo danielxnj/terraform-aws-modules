@@ -497,6 +497,7 @@ resource "aws_api_gateway_integration" "depth_3" {
   passthrough_behavior    = each.value.integration.passthrough_behavior
   cache_key_parameters    = each.value.integration.cache_key_parameters
   cache_namespace         = each.value.integration.cache_namespace
+  content_handling        = null
   # content_handling        = each.value.integration.content_handling
   timeout_milliseconds = each.value.integration.timeout_milliseconds
 
