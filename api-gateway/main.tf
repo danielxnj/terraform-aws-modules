@@ -1298,22 +1298,6 @@ resource "aws_api_gateway_integration" "depth_20" {
 }
 
 locals {
-  flattened_resources = flatten([
-    for path, resource in var.resources : [
-      for method_type, method_details in resource.methods : [
-        for status_code, response in method_details.method_responses : {
-          path                = path
-          method              = method_type
-          status_code         = status_code
-          response_models     = response.response_models != null ? response.response_models : {}
-          response_parameters = response.response_parameters != null ? response.response_parameters : {}
-        }
-      ]
-    ]
-  ])
-}
-
-locals {
   flattened_method_responses = merge([
     for path_method, details in local.all_methods : {
       for status_code, response in details.method_responses : "${path_method}/${status_code}" => {
