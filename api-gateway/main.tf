@@ -1312,7 +1312,6 @@ locals {
   ]...)
 }
 
-
 resource "aws_api_gateway_method_response" "depth_0" {
   for_each = local.enabled ? {
     for path, info in local.flattened_method_responses : path => info
@@ -1606,5 +1605,23 @@ resource "aws_api_gateway_method_response" "depth_20" {
   http_method         = each.value.method
   status_code         = each.value.status_code
   response_models     = each.value.response_models
-  response_parameters = each.value.response_parameters
+  response_parameters =  each.value.response_parameters
+}
+
+locals {
+  flattened_integration_responses = merge([
+    for path_method, details in local.all_methods : {
+      for status_code, response in (try(details.integration.responses, null) != null ? details.integration.responses : {}) : "${path_method}/${status_code}" => {
+        path                = details.path
+        method              = details.method
+        status_code         = status_code
+        depth               = details.depth
+        response_templates = response.response_templates != null ? response.response_templates : {}
+        response_parameters = response.response_parameters != null ? response.response_parameters : {}
+        content_handling   = response.content_handling != "" ? response.content_handling : null
+        selection_pattern = response.selection_pattern != "" ? response.selection_pattern : null
+        
+      }
+    }
+  ]...)
 }
