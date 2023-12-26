@@ -1635,7 +1635,7 @@ resource "aws_api_gateway_integration_response" "depth_3" {
   rest_api_id         = aws_api_gateway_rest_api.this[0].id
   resource_id         = aws_api_gateway_resource.depth_3[each.value.path].id
   http_method         = each.value.method
-  status_code         = each.value.status_code.
+  status_code         = each.value.status_code
   content_handling   = each.value.content_handling
   selection_pattern = each.value.selection_pattern
   response_templates = each.value.response_templates
