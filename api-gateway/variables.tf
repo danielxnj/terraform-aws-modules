@@ -326,11 +326,18 @@ variable "resources" {
         content_handling : optional(string)
         timeout_milliseconds : optional(number)
         tls_config : optional(list(any))
+        responses : optional(map(object({  // <-- New field added
+          response_templates : optional(map(string))
+          response_parameters : optional(map(bool))
+          content_handling : optional(string)
+          selection_pattern : optional(string)
+        })))
       }))
     })))
   }))
   default = {}
 }
+
 
 
 variable "api_key_source" {
