@@ -41,7 +41,7 @@ resource "aws_api_gateway_gateway_response" "this" {
   for_each = local.enabled ? var.gateway_responses : {}
 
   rest_api_id = aws_api_gateway_rest_api.this[0].id
-  response_type = each.value.key
+  response_type = each.key
 
   response_parameters = try(each.value.response_parameters, null)
   response_templates  = try(each.value.response_templates, null)
