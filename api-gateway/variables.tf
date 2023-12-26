@@ -388,9 +388,10 @@ variable "put_rest_api_mode" {
 variable "gateway_responses" {
   description = "A map of gateway response objects keyed by response type"
   type = map(object({
-    status_code         : optional(number)        
+    status_code         : string
     response_templates  : optional(map(string))   
     response_parameters : optional(map(string))   
   }))
   default = {}
 }
+
