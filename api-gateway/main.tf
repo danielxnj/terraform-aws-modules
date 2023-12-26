@@ -37,6 +37,17 @@ resource "aws_api_gateway_rest_api_policy" "this" {
   policy = var.rest_api_policy
 }
 
+resource "aws_api_gateway_gateway_response" "this" {
+  for_each = local.enabled ? var.gateway_responses : {}
+
+  rest_api_id = aws_api_gateway_rest_api.this[0].id
+  response_type = each.value.key
+
+  response_parameters = try(each.value.response_parameters, null)
+  response_templates  = try(each.value.response_templates, null)
+  status_code         = try(each.value.status_code, null)
+}
+
 # module "cloudwatch_log_group" {
 #   source  = "cloudposse/cloudwatch-logs/aws"
 #   version = "0.6.5"
