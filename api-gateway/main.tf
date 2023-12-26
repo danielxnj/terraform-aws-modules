@@ -1802,3 +1802,163 @@ resource "aws_api_gateway_integration_response" "depth_10" {
   response_templates = each.value.response_templates
   response_parameters = each.value.response_parameters
 }
+
+resource "aws_api_gateway_integration_response" "depth_11" {
+  for_each = local.enabled ? {
+    for path, info in local.flattened_integration_responses : path => info
+    if info.depth == 11
+  } : {}
+
+  rest_api_id         = aws_api_gateway_rest_api.this[0].id
+  resource_id         = aws_api_gateway_resource.depth_11[each.value.path].id
+  http_method         = each.value.method
+  status_code         = each.value.status_code
+  content_handling   = each.value.content_handling
+  selection_pattern = each.value.selection_pattern
+  response_templates = each.value.response_templates
+  response_parameters = each.value.response_parameters
+}
+
+resource "aws_api_gateway_integration_response" "depth_12" {
+  for_each = local.enabled ? {
+    for path, info in local.flattened_integration_responses : path => info
+    if info.depth == 12
+  } : {}
+
+  rest_api_id         = aws_api_gateway_rest_api.this[0].id
+  resource_id         = aws_api_gateway_resource.depth_12[each.value.path].id
+  http_method         = each.value.method
+  status_code         = each.value.status_code
+  content_handling   = each.value.content_handling
+  selection_pattern = each.value.selection_pattern
+  response_templates = each.value.response_templates
+  response_parameters = each.value.response_parameters
+}
+
+resource "aws_api_gateway_integration_response" "depth_13" {
+  for_each = local.enabled ? {
+    for path, info in local.flattened_integration_responses : path => info
+    if info.depth == 13
+  } : {}
+
+  rest_api_id         = aws_api_gateway_rest_api.this[0].id
+  resource_id         = aws_api_gateway_resource.depth_13[each.value.path].id
+  http_method         = each.value.method
+  status_code         = each.value.status_code
+  content_handling   = each.value.content_handling
+  selection_pattern = each.value.selection_pattern
+  response_templates = each.value.response_templates
+  response_parameters = each.value.response_parameters
+}
+
+resource "aws_api_gateway_integration_response" "depth_14" {
+  for_each = local.enabled ? {
+    for path, info in local.flattened_integration_responses : path => info
+    if info.depth == 14
+  } : {}
+
+  rest_api_id         = aws_api_gateway_rest_api.this[0].id
+  resource_id         = aws_api_gateway_resource.depth_14[each.value.path].id
+  http_method         = each.value.method
+  status_code         = each.value.status_code
+  content_handling   = each.value.content_handling
+  selection_pattern = each.value.selection_pattern
+  response_templates = each.value.response_templates
+  response_parameters = each.value.response_parameters
+}
+
+resource "aws_api_gateway_integration_response" "depth_15" {
+  for_each = local.enabled ? {
+    for path, info in local.flattened_integration_responses : path => info
+    if info.depth == 15
+  } : {}
+
+  rest_api_id         = aws_api_gateway_rest_api.this[0].id
+  resource_id         = aws_api_gateway_resource.depth_15[each.value.path].id
+  http_method         = each.value.method
+  status_code         = each.value.status_code
+  content_handling   = each.value.content_handling
+  selection_pattern = each.value.selection_pattern
+  response_templates = each.value.response_templates
+  response_parameters = each.value.response_parameters
+}
+
+resource "aws_api_gateway_integration_response" "depth_16" {
+  for_each = local.enabled ? {
+    for path, info in local.flattened_integration_responses : path => info
+    if info.depth == 16
+  } : {}
+
+  rest_api_id         = aws_api_gateway_rest_api.this[0].id
+  resource_id         = aws_api_gateway_resource.depth_16[each.value.path].id
+  http_method         = each.value.method
+  status_code         = each.value.status_code
+  content_handling   = each.value.content_handling
+  selection_pattern = each.value.selection_pattern
+  response_templates = each.value.response_templates
+  response_parameters = each.value.response_parameters
+}
+
+resource "aws_api_gateway_integration_response" "depth_17" {
+  for_each = local.enabled ? {
+    for path, info in local.flattened_integration_responses : path => info
+    if info.depth == 17
+  } : {}
+
+  rest_api_id         = aws_api_gateway_rest_api.this[0].id
+  resource_id         = aws_api_gateway_resource.depth_17[each.value.path].id
+  http_method         = each.value.method
+  status_code         = each.value.status_code
+  content_handling   = each.value.content_handling
+  selection_pattern = each.value.selection_pattern
+  response_templates = each.value.response_templates
+  response_parameters = each.value.response_parameters
+}
+
+resource "aws_api_gateway_integration_response" "depth_18" {
+  for_each = local.enabled ? {
+    for path, info in local.flattened_integration_responses : path => info
+    if info.depth == 18
+  } : {}
+
+  rest_api_id         = aws_api_gateway_rest_api.this[0].id
+  resource_id         = aws_api_gateway_resource.depth_18[each.value.path].id
+  http_method         = each.value.method
+  status_code         = each.value.status_code
+  content_handling   = each.value.content_handling
+  selection_pattern = each.value.selection_pattern
+  response_templates = each.value.response_templates
+  response_parameters = each.value.response_parameters
+}
+
+resource "aws_api_gateway_integration_response" "depth_19" {
+  for_each = local.enabled ? {
+    for path, info in local.flattened_integration_responses : path => info
+    if info.depth == 19
+  } : {}
+
+  rest_api_id         = aws_api_gateway_rest_api.this[0].id
+  resource_id         = aws_api_gateway_resource.depth_19[each.value.path].id
+  http_method         = each.value.method
+  status_code         = each.value.status_code
+  content_handling   = each.value.content_handling
+  selection_pattern = each.value.selection_pattern
+  response_templates = each.value.response_templates
+  response_parameters = each.value.response_parameters
+}
+
+resource "aws_api_gateway_integration_response" "depth_20" {
+  for_each = local.enabled ? {
+    for path, info in local.flattened_integration_responses : path => info
+    if info.depth == 20
+  } : {}
+
+  rest_api_id         = aws_api_gateway_rest_api.this[0].id
+  resource_id         = aws_api_gateway_resource.depth_20[each.value.path].id
+  http_method         = each.value.method
+  status_code         = each.value.status_code
+  content_handling   = each.value.content_handling
+  selection_pattern = each.value.selection_pattern
+  response_templates = each.value.response_templates
+  response_parameters = each.value.response_parameters
+}
