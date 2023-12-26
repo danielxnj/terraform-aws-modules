@@ -395,3 +395,13 @@ variable "gateway_responses" {
   default = {}
 }
 
+variable "models" {
+  description = "A map of model objects keyed by model name"
+  type = map(object({
+    content_type : string
+    description  : optional(string)
+    schema       : string
+  }))
+  default = {}
+}
+

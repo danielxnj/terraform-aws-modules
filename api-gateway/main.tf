@@ -48,6 +48,16 @@ resource "aws_api_gateway_gateway_response" "this" {
   status_code         = try(each.value.status_code, null)
 }
 
+resource "aws_api_gateway_model" "this" {
+  for_each = local.enabled ? var.models : {}
+
+  rest_api_id = aws_api_gateway_rest_api.this[0].id
+  name        = each.value.name
+  description = try(each.value.description, null)
+  content_type = each.value.content_type
+  schema      = try(each.value.schema, null)
+}
+
 # module "cloudwatch_log_group" {
 #   source  = "cloudposse/cloudwatch-logs/aws"
 #   version = "0.6.5"
