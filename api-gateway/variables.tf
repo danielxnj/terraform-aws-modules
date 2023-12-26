@@ -338,8 +338,6 @@ variable "resources" {
   default = {}
 }
 
-
-
 variable "api_key_source" {
   type        = string
   default     = null
