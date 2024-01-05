@@ -52,7 +52,7 @@ resource "aws_api_gateway_model" "this" {
   for_each = local.enabled ? var.models : {}
 
   rest_api_id = aws_api_gateway_rest_api.this[0].id
-  name        = each.value.name
+  name        = each.key
   description = try(each.value.description, null)
   content_type = each.value.content_type
   schema      = try(each.value.schema, null)
