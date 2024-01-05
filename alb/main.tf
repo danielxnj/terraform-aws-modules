@@ -26,9 +26,7 @@ resource "aws_lb" "default" {
   load_balancer_type     = var.load_balancer_type
   enable_xff_client_port = var.enable_xff_client_port
 
-  security_groups = compact(
-    concat([for sg in data.aws_security_group.selected : sg.id]),
-  )
+  security_groups = var.security_groups
 
   subnets = coalesce(var.subnet_ids, data.aws_subnet.default[*].id, [])
 

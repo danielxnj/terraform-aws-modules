@@ -39,6 +39,12 @@ variable "security_group_names" {
   description = "A list of additional security group names to allow access to ALB"
 }
 
+variable "security_groups" {
+  type        = list(string)
+  default     = []
+  description = "A list of additional security group ids to allow access to ALB"
+}
+
 variable "internal" {
   type        = bool
   default     = false
