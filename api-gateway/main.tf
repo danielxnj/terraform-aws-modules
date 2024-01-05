@@ -58,17 +58,6 @@ resource "aws_api_gateway_model" "this" {
   schema      = try(each.value.schema, null)
 }
 
-# module "cloudwatch_log_group" {
-#   source  = "cloudposse/cloudwatch-logs/aws"
-#   version = "0.6.5"
-
-#   enabled              = local.create_log_group
-#   iam_tags_enabled     = var.iam_tags_enabled
-#   permissions_boundary = var.permissions_boundary
-
-#   context = module.this.context
-# }
-
 resource "aws_api_gateway_deployment" "this" {
   for_each    = var.deployments
   rest_api_id = aws_api_gateway_rest_api.this[0].id
