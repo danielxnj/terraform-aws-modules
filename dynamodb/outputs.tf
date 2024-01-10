@@ -1,12 +1,12 @@
-output "dynamodb_table_arn" {
-  description = "ARN of the DynamoDB table"
-  value       = try(aws_dynamodb_table.this[0].arn, aws_dynamodb_table.autoscaled[0].arn, aws_dynamodb_table.autoscaled_gsi_ignore[0].arn, "")
-}
+# output "dynamodb_table_arn" {
+#   description = "ARN of the DynamoDB table"
+#   value       = try(aws_dynamodb_table.this[0].arn, aws_dynamodb_table.autoscaled[0].arn, aws_dynamodb_table.autoscaled_gsi_ignore[0].arn, "")
+# }
 
-output "dynamodb_table_id" {
-  description = "ID of the DynamoDB table"
-  value       = try(aws_dynamodb_table.this[0].id, aws_dynamodb_table.autoscaled[0].id, aws_dynamodb_table.autoscaled_gsi_ignore[0].id, "")
-}
+# output "dynamodb_table_id" {
+#   description = "ID of the DynamoDB table"
+#   value       = try(aws_dynamodb_table.this[0].id, aws_dynamodb_table.autoscaled[0].id, aws_dynamodb_table.autoscaled_gsi_ignore[0].id, "")
+# }
 
 output "dynamodb_table_stream_arn" {
   description = "The ARN of the Table Stream. Only available when var.stream_enabled is true"
