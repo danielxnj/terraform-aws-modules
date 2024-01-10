@@ -3,7 +3,7 @@ resource "aws_appautoscaling_target" "this" {
 
   max_capacity       = each.value.max_capacity
   min_capacity       = each.value.min_capacity
-  resource_id        = "table/${try(aws_dynamodb_table.autoscaled[0].name, aws_dynamodb_table.autoscaled_gsi_ignore[0].name)}"
+  resource_id        = "table/${try(aws_dynamodb_table.autoscaled_gsi_ignore[0].name)}"
   scalable_dimension = each.value.scalable_dimension
   service_namespace  = "dynamodb"
 }
