@@ -128,31 +128,7 @@ variable "public_repository_catalog_data" {
   default     = {}
 }
 
-################################################################################
-# Registry Policy
-################################################################################
 
-variable "create_registry_policy" {
-  description = "Determines whether a registry policy will be created"
-  type        = bool
-  default     = false
-}
-
-variable "registry_policy" {
-  description = "The policy document. This is a JSON formatted string"
-  type        = string
-  default     = null
-}
-
-################################################################################
-# Registry Pull Through Cache Rule
-################################################################################
-
-variable "registry_pull_through_cache_rules" {
-  description = "List of pull through cache rules to create"
-  type        = map(map(string))
-  default     = {}
-}
 
 ################################################################################
 # Registry Scanning Configuration
@@ -176,18 +152,4 @@ variable "registry_scan_rules" {
   default     = []
 }
 
-################################################################################
-# Registry Replication Configuration
-################################################################################
 
-variable "create_registry_replication_configuration" {
-  description = "Determines whether a registry replication configuration will be created"
-  type        = bool
-  default     = false
-}
-
-variable "registry_replication_rules" {
-  description = "The replication rules for a replication configuration. A maximum of 10 are allowed"
-  type        = any
-  default     = []
-}

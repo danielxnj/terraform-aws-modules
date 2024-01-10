@@ -211,26 +211,8 @@ resource "aws_ecrpublic_repository_policy" "example" {
   policy          = var.create_repository_policy ? data.aws_iam_policy_document.repository[0].json : var.repository_policy
 }
 
-################################################################################
-# Registry Policy
-################################################################################
 
-resource "aws_ecr_registry_policy" "this" {
-  count = var.create && var.create_registry_policy ? 1 : 0
 
-  policy = var.registry_policy
-}
-
-################################################################################
-# Registry Pull Through Cache Rule
-################################################################################
-
-resource "aws_ecr_pull_through_cache_rule" "this" {
-  for_each = { for k, v in var.registry_pull_through_cache_rules : k => v if var.create }
-
-  ecr_repository_prefix = each.value.ecr_repository_prefix
-  upstream_registry_url = each.value.upstream_registry_url
-}
 
 ################################################################################
 # Registry Scanning Configuration
@@ -258,37 +240,4 @@ resource "aws_ecr_registry_scanning_configuration" "this" {
   }
 }
 
-################################################################################
-# Registry Replication Configuration
-################################################################################
 
-resource "aws_ecr_replication_configuration" "this" {
-  count = var.create && var.create_registry_replication_configuration ? 1 : 0
-
-  replication_configuration {
-
-    dynamic "rule" {
-      for_each = var.registry_replication_rules
-
-      content {
-        dynamic "destination" {
-          for_each = rule.value.destinations
-
-          content {
-            region      = destination.value.region
-            registry_id = destination.value.registry_id
-          }
-        }
-
-        dynamic "repository_filter" {
-          for_each = try(rule.value.repository_filters, [])
-
-          content {
-            filter      = repository_filter.value.filter
-            filter_type = repository_filter.value.filter_type
-          }
-        }
-      }
-    }
-  }
-}
