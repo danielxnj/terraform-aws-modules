@@ -24,63 +24,6 @@ locals {
   # )
 }
 
-data "aws_caller_identity" "default" {
-}
-
-data "aws_region" "default" {
-}
-
-data "aws_partition" "default" {
-}
-
-data "aws_subnet" "default" {
-  id = var.subnet
-}
-
-data "aws_iam_policy_document" "default" {
-  statement {
-    sid = ""
-
-    actions = [
-      "sts:AssumeRole",
-    ]
-
-    principals {
-      type        = "Service"
-      identifiers = ["ec2.amazonaws.com"]
-    }
-
-    effect = "Allow"
-  }
-}
-data "aws_ami" "default" {
-  count       = var.ami == "" ? 1 : 0
-  most_recent = "true"
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"]
-}
-
-data "aws_ami" "info" {
-  count = var.root_volume_type != "" ? 0 : 1
-
-  filter {
-    name   = "image-id"
-    values = [local.ami]
-  }
-
-  owners = [local.ami_owner]
-}
-
 # data "aws_iam_instance_profile" "given" {
 #   count = local.enabled && var.instance_profile != "" ? 1 : 0
 #   name  = var.instance_profile
@@ -117,7 +60,7 @@ resource "aws_instance" "default" {
   instance_initiated_shutdown_behavior = var.instance_initiated_shutdown_behavior
   associate_public_ip_address          = var.external_network_interface_enabled ? null : var.associate_public_ip_address
   key_name                             = var.ssh_key_pair
-  subnet_id                            = var.external_network_interface_enabled ? null : var.subnet
+  subnet_id                            = var.subnet_name != "" ? data.aws_subnet.default[0].id : var.subnet_id
   monitoring                           = var.monitoring
   private_ip                           = var.private_ip
   secondary_private_ips                = var.external_network_interface_enabled ? null : var.secondary_private_ips

@@ -91,6 +91,7 @@ variable "security_group_rules" {
 variable "subnet" {
   type        = string
   description = "VPC Subnet ID the instance is launched in"
+  default     = ""
 }
 
 variable "region" {
@@ -464,4 +465,16 @@ variable "launch_template" {
   type        = list(any)
   description = "Launch template to use for the instance"
   default     = []
+}
+
+variable "subnet_name" {
+  type        = string
+  description = "VPC Subnet name the instance is launched in"
+  default     = ""
+}
+
+variable "subnet_id" {
+  type        = string
+  description = "VPC Subnet ID the instance is launched in"
+  default     = ""
 }
