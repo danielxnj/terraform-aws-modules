@@ -104,7 +104,7 @@ variable "listener_tags" {
 
 variable "listener_default_action" {
   description = "Default action to use on listener created"
-  type        = map(any)
+  type        = any
   default     = {}
 }
 
