@@ -20,11 +20,11 @@ locals {
   is_fargate             = var.launch_type == "FARGATE"
 
   # Flattened `network_configuration`
-  network_configuration = {
-    assign_public_ip = var.assign_public_ip
-    security_groups  = flatten(concat([try(aws_security_group.this[0].id, [])], var.security_group_ids))
-    subnets          = var.subnet_ids
-  }
+  # network_configuration = {
+  #   assign_public_ip = var.assign_public_ip
+  #   security_groups  = flatten(concat([try(aws_security_group.this[0].id, [])], var.security_group_ids))
+  #   subnets          = var.subnet_ids
+  # }
 }
 
 
@@ -103,7 +103,7 @@ resource "aws_ecs_service" "this" {
     content {
       assign_public_ip = network_configuration.value.assign_public_ip
       security_groups  = network_configuration.value.security_groups
-      subnets          = network_configuration.value.subnets
+      subnets          = network_configuration.value.subnet_names != null ? data.aws_subnet.default[*].id : network_configuration.value.subnets
     }
   }
 
@@ -284,7 +284,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
     content {
       assign_public_ip = network_configuration.value.assign_public_ip
       security_groups  = network_configuration.value.security_groups
-      subnets          = network_configuration.value.subnets
+      subnets          = network_configuration.value.subnet_names != null ? data.aws_subnet.default[*].id : network_configuration.value.subnets
     }
   }
 
