@@ -271,7 +271,7 @@ resource "aws_vpc_security_group_ingress_rule" "dbc" {
   cidr_ipv4                    = try(each.value.cidr_ipv4, null)
   cidr_ipv6                    = try(each.value.cidr_ipv6, null)
   prefix_list_id               = try(each.value.prefix_list_id, null)
-  referenced_security_group_id = try(each.value.referenced_security_group_id, null)
+  referenced_security_group_id = try(each.value.referenced_security_group_id, null) == "self" ? aws_security_group.default[0].id : try(each.value.referenced_security_group_id, null)
   tags                         = try(each.value.tags, null)
 }
 
@@ -290,7 +290,7 @@ resource "aws_vpc_security_group_egress_rule" "dbc" {
   cidr_ipv4                    = try(each.value.cidr_ipv4, null)
   cidr_ipv6                    = try(each.value.cidr_ipv6, null)
   prefix_list_id               = try(each.value.prefix_list_id, null)
-  referenced_security_group_id = try(each.value.referenced_security_group_id, null)
+  referenced_security_group_id = try(each.value.referenced_security_group_id, null) == "self" ? aws_security_group.default[0].id : try(each.value.referenced_security_group_id, null)
   tags                         = try(each.value.tags, null)
 }
 
