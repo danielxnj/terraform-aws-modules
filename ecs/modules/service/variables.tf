@@ -815,8 +815,8 @@ variable "vpc_id" {
   default     = null
 }
 
-variable "target_group_arn" {
-  description = "ARN of the target group to attach the listener rule to"
-  type        = string
-  default     = null
-}
+# variable "target_group_arn" {
+#   description = "ARN of the target group to attach the listener rule to"
+#   type        = string
+#   default     = null
+# }

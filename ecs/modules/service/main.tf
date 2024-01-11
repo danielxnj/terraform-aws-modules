@@ -274,7 +274,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
       container_name   = load_balancer.value.container_name
       container_port   = load_balancer.value.container_port
       elb_name         = try(load_balancer.value.elb_name, null)
-      target_group_arn = var.target_group_arn
+      target_group_arn = load_balancer.value.target_group_arn
     }
   }
 
