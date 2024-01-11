@@ -100,8 +100,8 @@ variable "launch_type" {
 
 variable "load_balancer" {
   description = "Configuration block for load balancers"
-  type        = any
-  default     = {}
+  type        = list
+  default     = []
 }
 
 variable "name" {

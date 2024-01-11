@@ -84,7 +84,8 @@ resource "aws_ecs_service" "this" {
 
   dynamic "load_balancer" {
     # Set by task set if deployment controller is external
-    for_each = { for k, v in var.load_balancer : k => v if !local.is_external_deployment }
+    # for_each = { for k, v in var.load_balancer : k => v if !local.is_external_deployment }
+    for_each = var.load_balancer
 
     content {
       container_name   = load_balancer.value.container_name
@@ -93,6 +94,8 @@ resource "aws_ecs_service" "this" {
       target_group_arn = load_balancer.value.target_group_arn
     }
   }
+
+  
 
   name = var.name
 
