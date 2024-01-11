@@ -62,12 +62,25 @@ data "aws_lb_listener" "listener_rule" {
 # }
 
 
+# data "aws_subnet" "default" {
+#   count = length(lookup(var.network_configuration, "subnet_names", []))
+#   # count  = var.subnet_names != null ? length(var.subnet_names) : 0
+#   vpc_id = var.vpc_name != null ? data.aws_vpc.default[0].id : var.vpc_id
+#   filter {
+#     name   = "tag:Name"
+#     values = [var.subnet_names[count.index]]
+#   }
+# }
+
+locals {
+  is_valid_network_config = length(var.network_configuration) > 0 && alltrue([for config in var.network_configuration : can(config.subnet_names)])
+}
+
 data "aws_subnet" "default" {
-  count = length(lookup(var.network_configuration, "subnet_names", []))
-  # count  = var.subnet_names != null ? length(var.subnet_names) : 0
+  count = local.is_valid_network_config ? length(var.network_configuration[0].subnet_names) : 0
   vpc_id = var.vpc_name != null ? data.aws_vpc.default[0].id : var.vpc_id
   filter {
     name   = "tag:Name"
-    values = [var.subnet_names[count.index]]
+    values = local.is_valid_network_config ? [var.network_configuration[0].subnet_names[count.index]] : []
   }
 }
