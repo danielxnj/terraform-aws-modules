@@ -46,11 +46,15 @@ resource "aws_lb_listener" "this" {
 
   certificate_arn = var.listener_certificate_arn
 
-  default_action {
-    target_group_arn = aws_lb_target_group.this[0].arn
-    type             = "forward"
-  }
+  dynamic "default_action" {
+    for_each = length(var.listener_default_action) > 0 ? [var.listener_default_action] : []
 
+    content {
+      order                = try(default_action.value.order, null)
+      target_group_arn     = try(default_action.value.target_group_arn, null)
+      type                 = try(default_action.value.type, null)
+    }
+  }
   tags = var.listener_tags
 }
 

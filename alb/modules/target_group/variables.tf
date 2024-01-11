@@ -102,6 +102,12 @@ variable "listener_tags" {
   default     = {}
 }
 
+variable "listener_default_action" {
+  description = "Default action to use on listener created"
+  type        = map(any)
+  default     = {}
+}
+
 variable "vpc_name" {
   description = "Name of the VPC to use"
   type        = string
