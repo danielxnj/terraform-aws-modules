@@ -61,3 +61,13 @@ data "aws_lb_listener" "listener_rule" {
 #   name  = var.task_exec_iam_role_name
 # }
 
+
+data "aws_subnet" "default" {
+  count = length(lookup(var.network_configuration, "subnet_names", []))
+  # count  = var.subnet_names != null ? length(var.subnet_names) : 0
+  vpc_id = var.vpc_name != null ? data.aws_vpc.default[0].id : var.vpc_id
+  filter {
+    name   = "tag:Name"
+    values = [var.subnet_names[count.index]]
+  }
+}

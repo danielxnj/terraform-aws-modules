@@ -915,3 +915,9 @@ variable "cloudwatch_log_group_name" {
   type        = string
   default     = null
 }
+
+variable "vpc_id" {
+  description = "VPC ID to use on security group created"
+  type        = string
+  default     = null
+}
