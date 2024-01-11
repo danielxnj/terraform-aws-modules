@@ -21,15 +21,15 @@ output "iam_role_name" {
   value       = try(var.iam_role_name, null)
 }
 
-output "iam_role_arn" {
-  description = "Service IAM role ARN"
-  value       = try(data.aws_iam_role.service[0].arn, null)
-}
+# output "iam_role_arn" {
+#   description = "Service IAM role ARN"
+#   value       = try(data.aws_iam_role.service[0].arn, null)
+# }
 
-output "iam_role_unique_id" {
-  description = "Stable and unique string identifying the service IAM role"
-  value       = try(data.aws_iam_role.service[0].unique_id, null)
-}
+# output "iam_role_unique_id" {
+#   description = "Stable and unique string identifying the service IAM role"
+#   value       = try(data.aws_iam_role.service[0].unique_id, null)
+# }
 
 ################################################################################
 # Task Definition
@@ -60,35 +60,35 @@ output "task_exec_iam_role_name" {
   value       = try(var.task_exec_iam_role_name, null)
 }
 
-output "task_exec_iam_role_arn" {
-  description = "Task execution IAM role ARN"
-  value       = try(data.aws_iam_role.task_exec[0].arn, null)
-}
+# output "task_exec_iam_role_arn" {
+#   description = "Task execution IAM role ARN"
+#   value       = try(data.aws_iam_role.task_exec[0].arn, null)
+# }
 
-output "task_exec_iam_role_unique_id" {
-  description = "Stable and unique string identifying the task execution IAM role"
-  value       = try(data.aws_iam_role.task_exec[0].unique_id, null)
-}
+# output "task_exec_iam_role_unique_id" {
+#   description = "Stable and unique string identifying the task execution IAM role"
+#   value       = try(data.aws_iam_role.task_exec[0].unique_id, null)
+# }
 
 ################################################################################
 # Tasks - IAM role
 # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html
 ################################################################################
 
-output "tasks_iam_role_name" {
-  description = "Tasks IAM role name"
-  value       = try(var.tasks_iam_role_name, null)
-}
+# output "tasks_iam_role_name" {
+#   description = "Tasks IAM role name"
+#   value       = try(var.tasks_iam_role_name, null)
+# }
 
-output "tasks_iam_role_arn" {
-  description = "Tasks IAM role ARN"
-  value       = try(data.aws_iam_role.tasks[0].arn, null)
-}
+# output "tasks_iam_role_arn" {
+#   description = "Tasks IAM role ARN"
+#   value       = try(var.task_role_arn, null)
+# }
 
-output "tasks_iam_role_unique_id" {
-  description = "Stable and unique string identifying the tasks IAM role"
-  value       = try(data.aws_iam_role.tasks[0].unique_id, null)
-}
+# output "tasks_iam_role_unique_id" {
+#   description = "Stable and unique string identifying the tasks IAM role"
+#   value       = try(data.aws_iam_role.tasks[0].unique_id, null)
+# }
 
 ################################################################################
 # Task Set
