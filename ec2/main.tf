@@ -11,7 +11,7 @@ locals {
   ebs_iops               = contains(["io1", "io2", "gp3"], var.ebs_volume_type) ? var.ebs_iops : null
   root_throughput        = var.root_volume_type == "gp3" ? var.root_throughput : null
   ebs_throughput         = var.ebs_volume_type == "gp3" ? var.ebs_throughput : null
-  availability_zone      = var.availability_zone != "" ? var.availability_zone : data.aws_subnet.default.availability_zone
+  # availability_zone      = var.availability_zone != "" ? var.availability_zone : data.aws_subnet.default.availability_zone
   ami                    = var.ami != "" ? var.ami : one(data.aws_ami.default[*].image_id)
   ami_owner              = var.ami != "" ? var.ami_owner : one(data.aws_ami.default[*].owner_id)
   root_volume_type       = var.root_volume_type != "" ? var.root_volume_type : one(data.aws_ami.info[*].root_device_type)
@@ -49,7 +49,7 @@ resource "aws_instance" "default" {
   #bridgecrew:skip=BC_AWS_NETWORKING_47: Skiping `Ensure AWS EC2 instance is configured with VPC` because it is incorrectly flagging that this instance does not belong to a VPC even though subnet_id is configured.
   count                   = local.instance_count
   ami                     = local.ami
-  availability_zone       = local.availability_zone
+  availability_zone       = var.availability_zone
   instance_type           = var.instance_type
   ebs_optimized           = var.ebs_optimized
   disable_api_termination = var.disable_api_termination
@@ -138,7 +138,7 @@ resource "aws_eip" "default" {
 
 resource "aws_ebs_volume" "default" {
   for_each          = var.device_name_list
-  availability_zone = local.availability_zone
+  availability_zone = var.availability_zone
   size              = each.value.size
   iops              = each.value.iops
   throughput        = each.value.throughput
