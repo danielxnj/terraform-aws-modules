@@ -67,7 +67,6 @@ variable "listener_rule_port" {
   default     = null
 }
 
-
 variable "listener_rules" {
   description = "List of listener rules to create on the load balancer"
   type        = map(any)

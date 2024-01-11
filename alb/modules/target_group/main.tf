@@ -39,7 +39,7 @@ resource "aws_lb_target_group" "this" {
 }
 
 resource "aws_lb_listener" "this" {
-  for_each          = var.create && var.listener_port != null ? 1 : 0
+  count          = var.create && length(var.listener_rules) > 0 ? 1 : 0
   load_balancer_arn = var.load_balancer_arn
   port              = var.listener_port
   protocol          = var.listener_protocol
