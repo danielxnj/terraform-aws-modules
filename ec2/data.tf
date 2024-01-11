@@ -2,7 +2,7 @@
 data "aws_region" "default" {}
 
 data "aws_subnet" "default" {
-  count = var.subnet_name == "" ? 1 : 0
+  count = var.subnet_name != "" ? 1 : 0
   id = var.subnet_name
 }
 
