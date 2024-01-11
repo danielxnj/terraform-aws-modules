@@ -1184,7 +1184,7 @@ resource "aws_ecs_task_set" "ignore_task_definition" {
     content {
       assign_public_ip = network_configuration.value.assign_public_ip
       security_groups  = network_configuration.value.security_groups
-      subnets          = network_configuration.value.subnets
+      subnets          = network_configuration.value.subnet_names != null ? data.aws_subnet.default[*].id : network_configuration.value.subnets
     }
   }
 
