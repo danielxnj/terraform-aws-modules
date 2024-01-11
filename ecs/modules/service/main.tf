@@ -1370,14 +1370,14 @@ locals {
   security_group_name   = try(coalesce(var.security_group_name, var.name), "")
 }
 
-data "aws_subnet" "default" {
-  count  = local.create_security_group ? length(var.subnet_names) : 0
-  vpc_id = data.aws_vpc.default[0].id
-  filter {
-    name   = "tag:Name"
-    values = [var.subnet_names[count.index]]
-  }
-}
+# data "aws_subnet" "default" {
+#   count  = local.create_security_group ? length(var.subnet_names) : 0
+#   vpc_id = data.aws_vpc.default[0].id
+#   filter {
+#     name   = "tag:Name"
+#     values = [var.subnet_names[count.index]]
+#   }
+# }
 
 resource "aws_security_group" "this" {
   count = local.create_security_group ? 1 : 0
