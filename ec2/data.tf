@@ -1,9 +1,17 @@
 # data "aws_caller_identity" "current" {}
 data "aws_region" "default" {}
 
+# data "aws_subnet" "default" {
+#   count = var.subnet_name != "" ? 1 : 0
+#   id = var.subnet_name
+# }
+
 data "aws_subnet" "default" {
   count = var.subnet_name != "" ? 1 : 0
-  id = var.subnet_name
+  filter {
+    name   = "tag:Name"
+    values = [var.subnet_name]
+  }
 }
 
 data "aws_iam_policy_document" "default" {
