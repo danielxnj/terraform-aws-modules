@@ -1,3 +1,6 @@
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+
 data "aws_subnet" "default" {
   count = var.subnet_name == "" ? 1 : 0
   id = var.subnet_name
