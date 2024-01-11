@@ -79,7 +79,7 @@ resource "aws_ecs_service" "this" {
   enable_execute_command             = var.enable_execute_command
   force_new_deployment               = local.is_external_deployment ? null : var.force_new_deployment
   health_check_grace_period_seconds  = var.health_check_grace_period_seconds
-  iam_role                           = try(data.aws_iam_role.service[0].arn, null)
+  iam_role                           = var.iam_role
   launch_type                        = local.is_external_deployment || length(var.capacity_provider_strategy) > 0 ? null : var.launch_type
 
   dynamic "load_balancer" {
@@ -260,7 +260,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
   enable_execute_command             = var.enable_execute_command
   force_new_deployment               = local.is_external_deployment ? null : var.force_new_deployment
   health_check_grace_period_seconds  = var.health_check_grace_period_seconds
-  iam_role                           = local.iam_role_arn
+  iam_role                           = var.iam_role_arn
   launch_type                        = local.is_external_deployment || length(var.capacity_provider_strategy) > 0 ? null : var.launch_type
 
   dynamic "load_balancer" {
@@ -519,7 +519,7 @@ resource "aws_lb_listener_rule" "this" {
 locals {
   create_iam_role   = var.create && var.create_iam_role
   create_iam_policy = var.create && var.create_iam_policy
-  iam_role_arn      = try(var.iam_role, data.aws_iam_role.service[0].arn, var.iam_role_arn)
+  # iam_role_arn      = try(var.iam_role_arn, data.aws_iam_role.service[0].arn, var.iam_role_arn)
 
   iam_role_name   = try(coalesce(var.iam_role_name, var.name), "")
   iam_policy_name = try(coalesce(var.iam_policy_name, var.name), "")
@@ -684,7 +684,7 @@ resource "aws_ecs_task_definition" "this" {
     }
   }
 
-  execution_role_arn = try(data.aws_iam_role.task_exec[0].arn, null)
+  execution_role_arn = var.execution_role_arn
   family             = coalesce(var.family, var.name)
 
   dynamic "inference_accelerator" {
@@ -732,7 +732,7 @@ resource "aws_ecs_task_definition" "this" {
   }
 
   skip_destroy  = var.skip_destroy
-  task_role_arn = try(data.aws_iam_role.tasks[0].arn, null)
+  task_role_arn = var.task_role_arn
 
   dynamic "volume" {
     for_each = var.volume

@@ -228,6 +228,23 @@ variable "iam_role_name" {
   default     = null
 }
 
+# variable "iam_role_arn" {
+#   description = "Existing IAM role ARN"
+#   type        = string
+#   default     = null
+# }
+
+variable "task_role_arn" {
+  description = "Existing IAM role ARN"
+  type        = string
+}
+
+variable "execution_role_arn" {
+  description = "Existing IAM role ARN"
+  type        = string
+  default     = null
+}
+
 variable "iam_policy_name" {
   description = "Name to use on IAM policy created"
   type        = string
