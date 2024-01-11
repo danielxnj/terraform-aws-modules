@@ -716,56 +716,6 @@ variable "tasks_assume_role_policy" {
 }
 
 
-variable "create_target_group" {
-  description = "Determines if a target group is created"
-  type        = bool
-  default     = false
-}
-
-variable "target_group_name" {
-  description = "Name to use on target group created"
-  type        = string
-  default     = null
-}
-
-variable "target_group_port" {
-  description = "Port to use on target group created"
-  type        = number
-  default     = 80
-}
-
-variable "target_group_protocol" {
-  description = "Protocol to use on target group created"
-  type        = string
-  default     = "HTTP"
-}
-
-variable "target_group_health_check" {
-  description = "Health check configuration for the target group"
-  type        = map(any)
-  default = {
-    enabled             = true
-    interval            = 30
-    path                = "/"
-    port                = "traffic-port"
-    protocol            = "HTTP"
-    healthy_threshold   = 3
-    unhealthy_threshold = 3
-    timeout             = 5
-  }
-}
-
-variable "target_group_stickiness" {
-  description = "Stickiness configuration for the target group"
-  type        = map(any)
-  default     = {}
-}
-
-variable "target_group_tags" {
-  description = "A map of additional tags to add to the target group created"
-  type        = map(string)
-  default     = {}
-}
 
 variable "vpc_name" {
   description = "Name of the VPC"
@@ -809,52 +759,6 @@ variable "listener_rule_tags" {
   default     = {}
 }
 
-variable "create_aws_lb_listener_rule" {
-  description = "Determines if a listener rule is created"
-  type        = bool
-  default     = false
-}
-
-variable "create_aws_lb_listener" {
-  description = "Determines if a listener is created"
-  type        = bool
-  default     = false
-}
-
-variable "listener_rule_port" {
-  description = "Port to use on listener rule created"
-  type        = number
-  default     = null
-}
-
-variable "listener_rule_lb_name" {
-  description = "Name of the load balancer to attach the listener rule to"
-  type        = string
-  default     = null
-}
-
-variable "lb_name" {
-  description = "Name of the load balancer to attach the listener to"
-  type        = string
-  default     = null
-}
-
-variable "listeners" {
-  description = "A map of listeners"
-  type = map(object({
-    port            = number
-    protocol        = string
-    certificate_arn = optional(string)
-    tags            = map(string)
-  }))
-  default = {}
-}
-
-variable "listener_rules" {
-  description = "List of listener rules to create on the load balancer"
-  type        = map(any)
-  default     = {}
-}
 
 variable "iam_role_inline_policies" {
   type        = list(any)
@@ -886,17 +790,6 @@ variable "network_configuration" {
   default     = []
 }
 
-variable "target_type" {
-  description = "The type of target that you must specify when registering targets with this target group. The possible values are `instance` (targets are specified by instance ID) or `ip` (targets are specified by IP address). The default is `ip`"
-  type        = string
-  default     = null
-}
-
-variable "deregistration_delay" {
-  description = "The amount of time for Elastic Load Balancing to wait before changing the state of a deregistering target from draining to unused. The range is 0-3600 seconds. The default value is 300 seconds"
-  type        = number
-  default     = null
-}
 
 variable "create_cloudwatch_log_group" {
   description = "Determines whether to create a CloudWatch log group"
@@ -918,6 +811,12 @@ variable "cloudwatch_log_group_name" {
 
 variable "vpc_id" {
   description = "VPC ID to use on security group created"
+  type        = string
+  default     = null
+}
+
+variable "target_group_arn" {
+  description = "ARN of the target group to attach the listener rule to"
   type        = string
   default     = null
 }
