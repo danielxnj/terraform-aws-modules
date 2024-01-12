@@ -1,4 +1,4 @@
-output "name" {
-  description = "Instance name"
+output "id" {
+  description = "Instance id"
   value       = aws_iam_instance_profile.this[0].name
 }
