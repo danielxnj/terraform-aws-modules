@@ -169,24 +169,29 @@ variable "security_group_rules" {
 
 variable "aws_lb_listeners" {
   description = "A map of listener configurations where the key is the port number"
-  type = map(object({
-    port : number
-    protocol : string
-    ssl_policy : optional(string)
-    certificate_arn : optional(string)
-    additional_certificates : optional(list(object({
-      certificate_arn : string
-      domain_name : string
-    })))
-    listener_fixed_response : optional(list(object({
-      content_type : optional(string)
-      message_body : optional(string)
-      status_code : optional(string)
-    })))
-    listener_redirect : optional(list(map(string)))
-    listener_additional_tags : optional(map(string))
-  }))
-  default = {}
+  type = any
+  # type = map(object({
+  #   port : number
+  #   protocol : string
+  #   ssl_policy : optional(string)
+  #   certificate_arn : optional(string)
+  #   # additional_certificates : optional(list(object({
+  #   #   certificate_arn : string
+  #   #   domain_name : string
+  #   # })))
+  #   # listener_fixed_response : optional(list(object({
+  #   #   content_type : optional(string)
+  #   #   message_body : optional(string)
+  #   #   status_code : optional(string)
+  #   # })))
+  #   # listener_redirect : optional(list(map(string)))
+  #   default_action : optional(object({
+  #     type : string
+  #     target_group_arn : optional(string)
+  #   }))
+  #   tags : optional(map(string))
+  # }))
+  default = []
 }
 
 variable "load_balancer_type" {
