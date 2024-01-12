@@ -7,7 +7,7 @@ variable "create" {
 variable "tags" {
   description = "A map of tags to add to all resources"
   type        = map(string)
-  default     = {}
+  default     = null
 }
 
 ################################################################################
@@ -23,19 +23,19 @@ variable "cluster_name" {
 variable "cluster_configuration" {
   description = "The execute command configuration for the cluster"
   type        = any
-  default     = {}
+  default     = null
 }
 
 variable "cluster_settings" {
   description = "Configuration block(s) with cluster settings. For example, this can be used to enable CloudWatch Container Insights for a cluster"
   type        = map(string)
-  default     = {}
+  default     = null
 }
 
 variable "cluster_service_connect_defaults" {
   description = "Configures a default Service Connect namespace"
   type        = map(string)
-  default     = {}
+  default     = null
 }
 
 ################################################################################
