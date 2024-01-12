@@ -15,7 +15,7 @@ variable "path" {
   default     = "/"
 }
 
-variable "role_name" {
+variable "role" {
   type        = string
   description = "The role name to attach to the instance profile"
 }
