@@ -13,7 +13,7 @@ output "arn" {
   description = "The Amazon Resource Name (ARN) specifying the role"
 }
 
-output "instance_profiles" {
+output "profiles" {
   value       = aws_iam_instance_profile.default
   description = "The instance profiles associated with the role"
 }
