@@ -58,3 +58,8 @@ data "aws_ami" "info" {
 
   owners = [local.ami_owner]
 }
+
+data "aws_kms_key" "ebs" {
+    for_each          =  {for key, value in var.device_name_list : key => value if value.kms_key_alias != null}
+    key_id = each.value.kms_key_alias
+}

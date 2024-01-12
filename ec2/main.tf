@@ -145,7 +145,7 @@ resource "aws_ebs_volume" "default" {
   type              = each.value.type
   tags              = each.value.tags
   encrypted         = each.value.encrypted
-  kms_key_id        = each.value.kms_key_id
+  kms_key_id        = each.value.kms_key_alias != null ? data.aws_kms_key.ebs[each.key].arn : each.value.kms_key_id
 }
 
 resource "aws_volume_attachment" "default" {

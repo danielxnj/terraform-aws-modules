@@ -438,6 +438,7 @@ variable "device_name_list" {
     tags       = optional(map(string))
     encrypted  = optional(bool)
     kms_key_id = optional(string)
+    kms_key_alias= optional(string)
   }))
 
   default = {}
