@@ -16,7 +16,7 @@ resource "aws_lb_target_group" "this" {
       enabled             = try(health_check.value.enabled, true)
       healthy_threshold   = try(health_check.value.healthy_threshold, null)
       interval            = try(health_check.value.interval, null)
-      matcher             = try(health_check.value.matcher, null)
+      matcher             = try(health_check.value.matcher != "" ? health_check.value.matcher : null, null) 
       path                = try(health_check.value.path != "" ? health_check.value.path : null, null) 
       port                = try(health_check.value.port, null)
       protocol            = try(health_check.value.protocol, null)
