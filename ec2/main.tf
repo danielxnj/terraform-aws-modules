@@ -102,7 +102,7 @@ resource "aws_instance" "default" {
     throughput            = local.root_throughput
     delete_on_termination = var.delete_on_termination
     encrypted             = var.root_block_device_encrypted
-    kms_key_id            = var.root_block_device_kms_key_alias != null ? data.aws_kms_alias.root_ebs[0].arn : var.root_block_device_kms_key_id
+    kms_key_id            = var.root_block_device_kms_key_alias != null ? data.aws_kms_key.root_ebs[0].arn : var.root_block_device_kms_key_id
     tags                  = var.root_block_device_tags
   }
 
