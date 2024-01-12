@@ -63,3 +63,8 @@ data "aws_kms_key" "ebs" {
     for_each          =  {for key, value in var.device_name_list : key => value if value.kms_key_alias != null}
     key_id = each.value.kms_key_alias
 }
+
+data "aws_kms_key" "root_ebs" {
+    count = var.root_block_device_kms_key_alias != null ? 1 : 0
+    key_id = var.root_block_device_kms_key_alias
+}

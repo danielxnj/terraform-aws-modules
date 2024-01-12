@@ -479,3 +479,9 @@ variable "subnet_id" {
   description = "VPC Subnet ID the instance is launched in"
   default     = ""
 }
+
+variable "root_block_device_kms_key_alias" {
+  type        = string
+  default     = null
+  description = "KMS key alias used to encrypt EBS volume. When specifying root_block_device_kms_key_alias, root_block_device_encrypted needs to be set to true"
+}
