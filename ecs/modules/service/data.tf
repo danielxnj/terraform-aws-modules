@@ -11,12 +11,12 @@ data "aws_service_discovery_service" "selected" {
 }
 
 
-data "aws_vpc" "default" {
-  count = 1
-  tags = {
-    Name = var.vpc_name
-  }
-}
+# data "aws_vpc" "default" {
+#   count = 1
+#   tags = {
+#     Name = var.vpc_name
+#   }
+# }
 
 # data "aws_lb" "default" {
 #   count = var.create_aws_lb_listener ? 1 : 0
