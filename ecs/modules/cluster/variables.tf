@@ -29,13 +29,13 @@ variable "cluster_configuration" {
 variable "cluster_settings" {
   description = "Configuration block(s) with cluster settings. For example, this can be used to enable CloudWatch Container Insights for a cluster"
   type        = map(string)
-  default     = null
+  default     = {}
 }
 
 variable "cluster_service_connect_defaults" {
   description = "Configures a default Service Connect namespace"
   type        = map(string)
-  default     = null
+  default     = {}
 }
 
 ################################################################################
