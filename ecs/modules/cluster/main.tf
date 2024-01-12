@@ -46,7 +46,7 @@ resource "aws_ecs_cluster" "this" {
   # }
 
   dynamic "configuration" {
-    for_each = [var.cluster_configuration]
+    for_each = length(var.cluster_configuration) > 0 ? [var.cluster_configuration] : []
 
     content {
       dynamic "execute_command_configuration" {

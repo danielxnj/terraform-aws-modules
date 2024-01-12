@@ -23,7 +23,7 @@ variable "cluster_name" {
 variable "cluster_configuration" {
   description = "The execute command configuration for the cluster"
   type        = any
-  default     = null
+  default     = {}
 }
 
 variable "cluster_settings" {
