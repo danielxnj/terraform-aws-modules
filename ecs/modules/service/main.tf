@@ -95,8 +95,6 @@ resource "aws_ecs_service" "this" {
     }
   }
 
-  
-
   name = var.name
 
   dynamic "network_configuration" {
