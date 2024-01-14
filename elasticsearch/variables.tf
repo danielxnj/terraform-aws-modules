@@ -58,7 +58,7 @@ variable "dns_zone_id" {
   description = "Route53 DNS Zone ID to add hostname records for Elasticsearch domain and Kibana"
 }
 
-variable "engine_version" {
+variable "elasticsearch_version" {
   type        = string
   default     = "7.4"
   description = "Version of Elasticsearch to deploy (_e.g._ `7.4`, `7.1`, `6.8`, `6.7`, `6.5`, `6.4`, `6.3`, `6.2`, `6.0`, `5.6`, `5.5`, `5.3`, `5.1`, `2.3`, `1.5`"
@@ -430,3 +430,8 @@ variable "auto_tune" {
   }
 }
 
+variable "security_group_ids" {
+  type        = list(string)
+  description = "List of security group IDs to be allowed to connect to the cluster or the security group IDs to apply to the cluster when the `create_security_group` variable is set to false."
+  default     = []
+}
