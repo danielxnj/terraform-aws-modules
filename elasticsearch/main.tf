@@ -187,7 +187,7 @@ dynamic "encrypt_at_rest" {
   }
 
   dynamic "auto_tune_options" {
-    for_each = vlength(auto_tune_options) > 0 ? [var.auto_tune_options] : []
+    for_each = length(var.auto_tune_options) > 0 ? [var.auto_tune_options] : []
     content {
       desired_state = auto_tune_options.value.desired_state
       dynamic "maintenance_schedule" {
