@@ -243,7 +243,7 @@ dynamic "encrypt_at_rest" {
     }
   }
 
-  tags = module.this.tags
+  tags = var.tags
 
   # depends_on = [aws_iam_service_linked_role.default]
 }
