@@ -117,7 +117,7 @@ resource "aws_elasticsearch_domain" "default" {
       internal_user_database_enabled = advanced_security_options.value.internal_user_database_enabled
 
       dynamic "master_user_options" {
-        for_each = length(advanced_security_options.value.master_user_options) > 0 ? [advanced_security_options.value.master_user_options] : []
+        for_each = length(advanced_security_options.value.master_user_options) > 0 ? advanced_security_options.value.master_user_options : []
         content {
           master_user_arn      = try(master_user_options.value.master_user_arn, null)
           master_user_name     = try(master_user_options.value.master_user_name, null)
@@ -171,14 +171,14 @@ dynamic "encrypt_at_rest" {
       warm_type                = cluster_config.value.warm_enabled ? cluster_config.value.warm_type : null
 
       dynamic "zone_awareness_config" {
-        for_each = length(cluster_config.value.zone_awareness_config) > 0 ? [cluster_config.value.zone_awareness_config] : []
+        for_each = length(cluster_config.value.zone_awareness_config) > 0 ? cluster_config.value.zone_awareness_config : []
         content {
           availability_zone_count = zone_awareness_config.value.availability_zone_count
         }
       }
 
       dynamic "cold_storage_options" {
-        for_each = length(cluster_config.value.cold_storage_options) > 0 ? [cluster_config.value.cold_storage_options] : []
+        for_each = length(cluster_config.value.cold_storage_options) > 0 ? cluster_config.value.cold_storage_options : []
         content {
           enabled = cold_storage_options.value.enabled
         }
@@ -191,7 +191,7 @@ dynamic "encrypt_at_rest" {
     content {
       desired_state = auto_tune_options.value.desired_state
       dynamic "maintenance_schedule" {
-        for_each = length(auto_tune_options.value.maintenance_schedule) > 0 ? [auto_tune_options.value.maintenance_schedule] : []
+        for_each = length(auto_tune_options.value.maintenance_schedule) > 0 ? auto_tune_options.value.maintenance_schedule : []
         content {
           cron_expression_for_recurrence = maintenance_schedule.value.cron_expression_for_recurrence
           duration {
