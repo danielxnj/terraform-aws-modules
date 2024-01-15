@@ -1,3 +1,7 @@
+variable "domain_name" {
+  type        = string
+  description = "Name of the Elasticsearch domain"
+}
 variable "security_groups" {
   type        = list(string)
   default     = []
