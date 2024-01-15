@@ -1,0 +1,52 @@
+---
+name: Validate Modules
+
+on:
+  pull_request:
+    # paths_ignore:
+    #   - README.md
+  push:
+
+jobs:
+  list_modules:
+    name: List Modules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: List all folders
+        id: list-folders
+        run: |
+          echo "directories=$({find . -maxdepth 1 -mindepth 1 -type d -exec basename {} \;;find . -type d -name modules -exec bash -c 'ls -d "$0"/*/' {} \; | sed 's|^\./||';} | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
+    outputs:
+      directories: ${{ steps.list-folders.outputs.directories }}
+
+  validate_modules:
+    needs: list_modules
+    runs-on: ubuntu-latest
+    name: ${{ matrix.module }} Validation
+    strategy:
+      fail-fast: false
+      matrix:
+        module: ${{ fromJson(needs.list_modules.outputs.directories) }}
+    defaults:
+      run:
+        working-directory: ${{ matrix.module }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: setup terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.3
+      - name: validate
+        run: |
+          terraform init
+          terraform validate
+      - name: Setup TFLint
+        run: |
+          wget https://github.com/terraform-linters/tflint/releases/download/v0.46.1/tflint_linux_amd64.zip
+          unzip tflint_linux_amd64.zip
+          sudo mv tflint /usr/bin/
+      - name: Run TFLint
+        run: tflint
