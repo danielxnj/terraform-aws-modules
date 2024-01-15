@@ -463,7 +463,7 @@ variable "ebs_options" {
     iops = number
     throughput = number
   })
-  default = {}
+  default = null
 }
 
 variable "encrypt_at_rest" {
@@ -471,7 +471,7 @@ variable "encrypt_at_rest" {
     enabled = bool
     kms_key_id = optional(string)
   })
-  default = {}
+  default = null
 }
 
 variable "domain_endpoint_options" {
@@ -482,7 +482,7 @@ variable "domain_endpoint_options" {
     custom_endpoint = optional(string)
     custom_endpoint_certificate_arn = optional(string)
   })
-  default = {}
+  default = null
 }
 
 variable "cluster_config" {
@@ -504,7 +504,7 @@ variable "cluster_config" {
       storage_type = string
     }))
   })
-  default = {}
+  default = null
 }
 
 variable "auto_tune_options" {
@@ -520,7 +520,7 @@ variable "auto_tune_options" {
     }))
     rollback_on_disable = optional(string)
   })
-  default = {}
+  default = null
 }
 
 variable "vpc_options" {
@@ -528,7 +528,7 @@ variable "vpc_options" {
     subnet_ids = list(string)
     security_group_ids = list(string)
   })
-  default = {}
+  default = null
 }
 
 variable "cognito_options" {
@@ -538,7 +538,7 @@ variable "cognito_options" {
     role_arn = optional(string)
     user_pool_id = optional(string)
   })
-  default = {}
+  default = null
 }
 
 variable "log_publishing_options" {
@@ -547,5 +547,5 @@ variable "log_publishing_options" {
     enabled = optional(bool)
     log_type = optional(string)
   })
-  default = {}
+  default = null
 }
