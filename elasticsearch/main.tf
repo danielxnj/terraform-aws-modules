@@ -214,7 +214,7 @@ dynamic "encrypt_at_rest" {
     for_each = var.vpc_options != null ? [var.vpc_options] : []
     content {
       security_group_ids = vpc_options.value.security_group_ids
-      subnet_ids          = vpc_options.value.subnet_names != null ? data.aws_subnet.default[*].id : vpc_options.value.subnet_ids
+      subnet_ids          = lookup(vpc_options.value, "subnet_names", null) != null ? data.aws_subnet.default[*].id : vpc_options.value.subnet_ids
     }
   }
 
