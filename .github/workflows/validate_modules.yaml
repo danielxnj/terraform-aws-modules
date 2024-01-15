@@ -5,7 +5,7 @@ on:
   pull_request:
     # paths_ignore:
     #   - README.md
-  push:
+#   push:
 
 jobs:
   list_modules:
