@@ -498,7 +498,7 @@ variable "cluster_config" {
     dedicated_master_count = number
     dedicated_master_type = string
     zone_awareness_enabled = bool
-    zone_awareness_config = optional(object({
+    zone_awareness_config = list(object({
       availability_zone_count = number
     }))
     warm_enabled = bool
@@ -515,7 +515,7 @@ variable "cluster_config" {
 variable "auto_tune_options" {
   type = object({
     desired_state = string
-    maintenance_schedule = optional(object({
+    maintenance_schedule = list(object({
       cron_expression_for_recurrence = optional(string)
       duration = object ({
         value = number
