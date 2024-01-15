@@ -195,8 +195,8 @@ dynamic "encrypt_at_rest" {
         content {
           cron_expression_for_recurrence = maintenance_schedule.value.cron_expression_for_recurrence
           duration {
-            value     = maintenance_schedule.value.duration.value
-            unit     = maintenance_schedule.value.duration.unit
+            value     = maintenance_schedule.value.duration[0].value
+            unit     = maintenance_schedule.value.duration[0].unit
           }
           start_at = maintenance_schedule.value.start_at
         }
