@@ -111,7 +111,7 @@ resource "aws_elasticsearch_domain" "default" {
   advanced_options = var.advanced_options
 
   dynamic "advanced_security_options" {
-    for_each = length(var.advanced_security_options) > 0 ? [advanced_security_options] : []
+    for_each = length(var.advanced_security_options) > 0 ? [var.advanced_security_options] : []
     content {
       enabled                        = advanced_security_options.value.enabled
       internal_user_database_enabled = advanced_security_options.value.internal_user_database_enabled
@@ -128,7 +128,7 @@ resource "aws_elasticsearch_domain" "default" {
   }
 
   dynamic "ebs_options" {
-    for_each = length(var.ebs_options) > 0 ? [ebs_options] : []
+    for_each = length(var.ebs_options) > 0 ? [var.ebs_options] : []
     content {
       ebs_enabled = ebs_options.value.ebs_enabled
       volume_size = try(ebs_options.value.volume_size, null)
@@ -139,7 +139,7 @@ resource "aws_elasticsearch_domain" "default" {
   }
 
 dynamic "encrypt_at_rest" {
-    for_each = length(var.encrypt_at_rest) > 0 ? [encrypt_at_rest] : []
+    for_each = length(var.encrypt_at_rest) > 0 ? [var.encrypt_at_rest] : []
     content {
       enabled    = encrypt_at_rest.value.enabled
       kms_key_id = try(encrypt_at_rest.value.kms_key_id, null)
@@ -147,7 +147,7 @@ dynamic "encrypt_at_rest" {
   }
 
   dynamic "domain_endpoint_options" {
-    for_each = length(var.domain_endpoint_options) > 0 ? [domain_endpoint_options] : []
+    for_each = length(var.domain_endpoint_options) > 0 ? [var.domain_endpoint_options] : []
     content {
       enforce_https                   = domain_endpoint_options.value.enforce_https
       tls_security_policy             = try(domain_endpoint_options.value.tls_security_policy, null)
@@ -158,7 +158,7 @@ dynamic "encrypt_at_rest" {
   }
 
   dynamic "cluster_config" {
-    for_each = length(var.cluster_config) > 0 ? [cluster_config] : []
+    for_each = length(var.cluster_config) > 0 ? [var.cluster_config] : []
     content {
       instance_count           = cluster_config.value.instance_count
       instance_type            = cluster_config.value.instance_type
@@ -187,7 +187,7 @@ dynamic "encrypt_at_rest" {
   }
 
   dynamic "auto_tune_options" {
-    for_each = vlength(auto_tune_options) > 0 ? [auto_tune_options] : []
+    for_each = vlength(auto_tune_options) > 0 ? [var.auto_tune_options] : []
     content {
       desired_state = auto_tune_options.value.desired_state
       dynamic "maintenance_schedule" {
@@ -209,7 +209,7 @@ dynamic "encrypt_at_rest" {
   }
 
   dynamic "vpc_options" {
-    for_each = length(var.vpc_options) > 0 ? [vpc_options] : []
+    for_each = length(var.vpc_options) > 0 ? [var.vpc_options] : []
     content {
       security_group_ids = vpc_options.value.security_group_ids
       subnet_ids         = vpc_options.value.subnet_ids
@@ -222,7 +222,7 @@ dynamic "encrypt_at_rest" {
   }
 
   dynamic "cognito_options" {
-    for_each = length(var.cognito_options) > 0 ? [cognito_options] : []
+    for_each = length(var.cognito_options) > 0 ? [var.cognito_options] : []
     content {
       enabled          = cognito_options.value.enabled
       user_pool_id     = cognito_options.value.user_pool_id
@@ -232,7 +232,7 @@ dynamic "encrypt_at_rest" {
   }
 
   dynamic "log_publishing_options" {
-    for_each = length(var.log_publishing_options) > 0 ? [log_publishing_options] : []
+    for_each = length(var.log_publishing_options) > 0 ? [var.log_publishing_options] : []
     content {
       cloudwatch_log_group_arn = log_publishing_options.value.cloudwatch_log_group_arn
       enabled                  = log_publishing_options.value.enabled
