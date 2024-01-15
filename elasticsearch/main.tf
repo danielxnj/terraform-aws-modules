@@ -233,7 +233,7 @@ dynamic "encrypt_at_rest" {
   }
 
   dynamic "log_publishing_options" {
-    for_each = var.log_publishing_options != null ? [var.log_publishing_options] : []
+    for_each = var.log_publishing_options != null ? var.log_publishing_options : []
     content {
       cloudwatch_log_group_arn = log_publishing_options.value.cloudwatch_log_group_arn
       enabled                  = log_publishing_options.value.enabled

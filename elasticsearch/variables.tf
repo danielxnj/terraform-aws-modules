@@ -549,11 +549,11 @@ variable "cognito_options" {
 }
 
 variable "log_publishing_options" {
-  type = object({
+  type = list(object({
     cloudwatch_log_group_arn = optional(string)
     enabled = optional(bool)
     log_type = optional(string)
-  })
+  }))
   default = null
 }
 
