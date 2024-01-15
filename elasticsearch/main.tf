@@ -133,8 +133,8 @@ resource "aws_elasticsearch_domain" "default" {
       ebs_enabled = ebs_options.value.ebs_enabled
       volume_size = try(ebs_options.value.volume_size, null)
       volume_type = try(ebs_options.value.volume_type, null)
-      iops = try(ebs_options.value.iops, null)
-      throughput = try(ebs_options.value.throughput, null)
+      iops = ebs_options.value.iops > 0 ? ebs_options.value.iops : null
+      throughput = ebs_options.value.throughput > 125 ? ebs_options.value.throughput : null
     }
   }
 
