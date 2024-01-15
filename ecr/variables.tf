@@ -75,7 +75,7 @@ variable "repository_force_delete" {
 variable "attach_repository_policy" {
   description = "Determines whether a repository policy will be attached to the repository"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "create_repository_policy" {
@@ -109,7 +109,7 @@ variable "repository_read_write_access_arns" {
 variable "create_lifecycle_policy" {
   description = "Determines whether a lifecycle policy will be created"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "repository_lifecycle_policy" {
