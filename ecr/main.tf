@@ -143,7 +143,7 @@ resource "aws_ecr_repository" "this" {
 
   encryption_configuration {
     encryption_type = var.repository_encryption_type
-    kms_key         = var.repository_kms_key
+    kms_key         = var.repository_kms_key_alias != null ? data.aws_kms_key.kms[0].arn : var.repository_kms_key
   }
 
   force_delete = var.repository_force_delete

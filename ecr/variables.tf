@@ -152,4 +152,9 @@ variable "registry_scan_rules" {
   default     = []
 }
 
+variable "repository_kms_key_alias" {
+  description = "The alias of the KMS key to use when encryption_type is `KMS`. If not specified, uses the default AWS managed key for ECR"
+  type        = string
+  default     = null
+}
 
