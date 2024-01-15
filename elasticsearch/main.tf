@@ -110,6 +110,8 @@ resource "aws_elasticsearch_domain" "default" {
 
   advanced_options = var.advanced_options
 
+  access_policies = var.access_policies
+
   dynamic "advanced_security_options" {
     for_each = var.advanced_security_options != null ? [var.advanced_security_options] : []
     content {
@@ -292,11 +294,11 @@ dynamic "encrypt_at_rest" {
 #   }
 # }
 
-resource "aws_elasticsearch_domain_policy" "default" {
-  count           = module.this.enabled && var.access_policies != null ? 1 : 0
-  domain_name     = module.this.id
-  access_policies = var.access_policies
-}
+# resource "aws_elasticsearch_domain_policy" "default" {
+#   count           = module.this.enabled && var.access_policies != null ? 1 : 0
+#   domain_name     = module.this.id
+#   access_policies = var.access_policies
+# }
 
 # module "domain_hostname" {
 #   source  = "cloudposse/route53-cluster-hostname/aws"
