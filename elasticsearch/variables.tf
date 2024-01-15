@@ -530,10 +530,8 @@ variable "auto_tune_options" {
 
 variable "vpc_options" {
   type = object({
-    availability_zones = list(string)
     subnet_ids = list(string)
     security_group_ids = list(string)
-    vpc_id = string
   })
   default = null
 }

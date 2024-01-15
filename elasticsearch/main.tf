@@ -213,10 +213,8 @@ dynamic "encrypt_at_rest" {
   dynamic "vpc_options" {
     for_each = var.vpc_options != null ? [var.vpc_options] : []
     content {
-      availability_zones = vpc_options.value.availability_zones
       security_group_ids = vpc_options.value.security_group_ids
       subnet_ids         = vpc_options.value.subnet_ids
-      vpc_id             = vpc_options.value.vpc_id
     }
   }
 
