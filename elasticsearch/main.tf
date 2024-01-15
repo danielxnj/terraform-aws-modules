@@ -144,7 +144,7 @@ dynamic "encrypt_at_rest" {
     for_each = var.encrypt_at_rest != null ? [var.encrypt_at_rest] : []
     content {
       enabled    = encrypt_at_rest.value.enabled
-      kms_key_id = try(encrypt_at_rest.value.kms_key_id, null)
+      kms_key_id = lookup(var.encrypt_at_rest, "kms_key_alias", null) != null ? data.aws_kms_key.kms[0].id : try(encrypt_at_rest.value.kms_key_id, null)
     }
   }
 

@@ -13,3 +13,8 @@ data "aws_subnet" "default" {
     values =  [var.vpc_options.subnet_names[count.index]]
   }
 }
+
+data "aws_kms_key" "kms" {
+    count = lookup(var.encrypt_at_rest, "kms_key_alias", null) != null ? 1 : 0
+    key_id = lookup(var.encrypt_at_rest, "kms_key_alias", null)
+}
