@@ -475,6 +475,7 @@ variable "encrypt_at_rest" {
   type = object({
     enabled = bool
     kms_key_id = optional(string)
+    kms_key_alias = optional(string)
   })
   default = null
 }
