@@ -504,7 +504,7 @@ variable "cluster_config" {
     warm_enabled = bool
     warm_count = number
     warm_type = string
-    cold_storage_options = optional(object({
+    cold_storage_options = list(object({
       enabled = bool
       storage_type = string
     }))
@@ -517,10 +517,10 @@ variable "auto_tune_options" {
     desired_state = string
     maintenance_schedule = list(object({
       cron_expression_for_recurrence = optional(string)
-      duration = object ({
+      duration = list(object({
         value = number
         unit = string
-      })
+      }))
       start_at = optional(string)
     }))
     rollback_on_disable = optional(string)
