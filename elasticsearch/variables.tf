@@ -450,7 +450,7 @@ variable "advanced_security_options" {
   type = object({
     enabled = bool
     internal_user_database_enabled = bool
-    master_user_options = optional(object({
+    master_user_options = list(object({
       master_user_arn = optional(string)
       master_user_name = optional(string)
       master_user_password = optional(string)
@@ -458,6 +458,7 @@ variable "advanced_security_options" {
   })
   default = null
 }
+
 
 variable "ebs_options" {
   type = object({
