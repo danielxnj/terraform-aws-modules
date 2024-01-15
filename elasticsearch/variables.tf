@@ -452,7 +452,7 @@ variable "advanced_security_options" {
       master_user_password = optional(string)
     }))
   })
-  default = {}
+  default = null
 }
 
 variable "ebs_options" {
