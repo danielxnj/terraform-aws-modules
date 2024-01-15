@@ -171,16 +171,16 @@ dynamic "encrypt_at_rest" {
       warm_type                = cluster_config.value.warm_enabled ? cluster_config.value.warm_type : null
 
       dynamic "zone_awareness_config" {
-        for_each = cluster_config.value.availability_zone_count > 1 && cluster_config.value.zone_awareness_enabled ? [true] : []
+        for_each = length(cluster_config.value.zone_awareness_config) > 0 ? [cluster_config.value.zone_awareness_config] : []
         content {
-          availability_zone_count = cluster_config.value.availability_zone_count
+          availability_zone_count = zone_awareness_config.value.availability_zone_count
         }
       }
 
       dynamic "cold_storage_options" {
-        for_each = cluster_config.value.cold_storage_enabled ? [true] : []
+        for_each = length(cluster_config.cold_storage_options) > 0 ? [cluster_config.cold_storage_options] : []
         content {
-          enabled = cluster_config.value.cold_storage_enabled
+          enabled = cold_storage_options.value.enabled
         }
       }
     }
@@ -215,7 +215,6 @@ dynamic "encrypt_at_rest" {
       subnet_ids         = vpc_options.value.subnet_ids
     }
   }
-
 
   snapshot_options {
     automated_snapshot_start_hour = var.automated_snapshot_start_hour
