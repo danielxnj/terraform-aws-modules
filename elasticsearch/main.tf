@@ -139,7 +139,7 @@ resource "aws_elasticsearch_domain" "default" {
   }
 
 dynamic "encrypt_at_rest" {
-    for_each = var.encrypt_at_rest!= null ? [var.encrypt_at_rest] : []
+    for_each = var.encrypt_at_rest != null ? [var.encrypt_at_rest] : []
     content {
       enabled    = encrypt_at_rest.value.enabled
       kms_key_id = try(encrypt_at_rest.value.kms_key_id, null)
@@ -158,7 +158,7 @@ dynamic "encrypt_at_rest" {
   }
 
   dynamic "cluster_config" {
-    for_each = lvar.cluster_config != null ? [var.cluster_config] : []
+    for_each = var.cluster_config != null ? [var.cluster_config] : []
     content {
       instance_count           = cluster_config.value.instance_count
       instance_type            = cluster_config.value.instance_type
