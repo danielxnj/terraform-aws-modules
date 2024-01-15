@@ -178,7 +178,7 @@ dynamic "encrypt_at_rest" {
       }
 
       dynamic "cold_storage_options" {
-        for_each = length(cluster_config.cold_storage_options) > 0 ? [cluster_config.cold_storage_options] : []
+        for_each = length(cluster_config.value.cold_storage_options) > 0 ? [cluster_config.value.cold_storage_options] : []
         content {
           enabled = cold_storage_options.value.enabled
         }
