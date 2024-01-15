@@ -554,3 +554,9 @@ variable "log_publishing_options" {
   })
   default = null
 }
+
+variable "vpc_name" {
+  type        = string
+  description = "VPC Name"
+  default     = null
+}
