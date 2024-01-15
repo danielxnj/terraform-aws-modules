@@ -435,3 +435,117 @@ variable "security_group_ids" {
   description = "List of security group IDs to be allowed to connect to the cluster or the security group IDs to apply to the cluster when the `create_security_group` variable is set to false."
   default     = []
 }
+
+variable "access_policies" {
+  type        = string
+  description = "IAM policy document specifying the access policies for the domain"
+  default     = null
+}
+
+variable "advanced_security_options" {
+  type = object({
+    enabled = bool
+    internal_user_database_enabled = bool
+    master_user_options = optional(object({
+      master_user_arn = optional(string)
+      master_user_name = optional(string)
+      master_user_password = optional(string)
+    }))
+  })
+  default = {}
+}
+
+variable "ebs_options" {
+  type = object({
+    ebs_enabled = bool
+    volume_size = number
+    volume_type = string
+    iops = number
+    throughput = number
+  })
+  default = {}
+}
+
+variable "encrypt_at_rest" {
+  type = object({
+    enabled = bool
+    kms_key_id = optional(string)
+  })
+  default = {}
+}
+
+variable "domain_endpoint_options" {
+  type = object({
+    enforce_https = bool
+    tls_security_policy = optional(string)
+    custom_endpoint_enabled = bool
+    custom_endpoint = optional(string)
+    custom_endpoint_certificate_arn = optional(string)
+  })
+  default = {}
+}
+
+variable "cluster_config" {
+  type = object({
+    instance_type = string
+    instance_count = number
+    dedicated_master_enabled = bool
+    dedicated_master_count = number
+    dedicated_master_type = string
+    zone_awareness_enabled = bool
+    zone_awareness_config = optional(object({
+      availability_zone_count = number
+    }))
+    warm_enabled = bool
+    warm_count = number
+    warm_type = string
+    cold_storage_options = optional(object({
+      enabled = bool
+      storage_type = string
+    }))
+  })
+  default = {}
+}
+
+variable "auto_tune_options" {
+  type = object({
+    desired_state = string
+    maintenance_schedule = optional(object({
+      cron_expression_for_recurrence = optional(string)
+      duration = object ({
+        value = number
+        unit = string
+      })
+      start_at = optional(string)
+    }))
+    rollback_on_disable = optional(string)
+  })
+  default = {}
+}
+
+variable "vpc_options" {
+  type = object({
+    subnet_ids = list(string)
+    security_group_ids = list(string)
+  })
+  default = {}
+}
+
+variable "cognito_options" {
+  type = object({
+    enabled = bool
+    identity_pool_id = optional(string)
+    role_arn = optional(string)
+    user_pool_id = optional(string)
+  })
+  default = {}
+}
+
+variable "log_publishing_options" {
+  type = object({
+    cloudwatch_log_group_arn = optional(string)
+    enabled = bool
+    log_type = optional(string)
+  })
+  default = {}
+}

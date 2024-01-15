@@ -62,11 +62,11 @@
 # }
 
 # https://github.com/terraform-providers/terraform-provider-aws/issues/5218
-resource "aws_iam_service_linked_role" "default" {
-  count            = module.this.enabled && var.create_iam_service_linked_role ? 1 : 0
-  aws_service_name = "es.amazonaws.com"
-  description      = "AWSServiceRoleForAmazonElasticsearchService Service-Linked Role"
-}
+# resource "aws_iam_service_linked_role" "default" {
+#   count            = module.this.enabled && var.create_iam_service_linked_role ? 1 : 0
+#   aws_service_name = "es.amazonaws.com"
+#   description      = "AWSServiceRoleForAmazonElasticsearchService Service-Linked Role"
+# }
 
 # Role that pods can assume for access to elasticsearch and kibana
 # resource "aws_iam_role" "elasticsearch_user" {
@@ -110,76 +110,96 @@ resource "aws_elasticsearch_domain" "default" {
 
   advanced_options = var.advanced_options
 
-  advanced_security_options {
-    enabled                        = var.advanced_security_options_enabled
-    internal_user_database_enabled = var.advanced_security_options_internal_user_database_enabled
-    master_user_options {
-      master_user_arn      = var.advanced_security_options_master_user_arn
-      master_user_name     = var.advanced_security_options_master_user_name
-      master_user_password = var.advanced_security_options_master_user_password
-    }
-  }
+  dynamic "advanced_security_options" {
+    for_each = length(var.advanced_security_options) > 0 ? [advanced_security_options] : []
+    content {
+      enabled                        = advanced_security_options.value.enabled
+      internal_user_database_enabled = advanced_security_options.value.internal_user_database_enabled
 
-  ebs_options {
-    ebs_enabled = var.ebs_volume_size > 0 ? true : false
-    volume_size = var.ebs_volume_size
-    volume_type = var.ebs_volume_type
-    iops        = var.ebs_iops
-    throughput  = var.ebs_throughput
-  }
-
-  encrypt_at_rest {
-    enabled    = var.encrypt_at_rest_enabled
-    kms_key_id = var.encrypt_at_rest_kms_key_id
-  }
-
-  domain_endpoint_options {
-    enforce_https                   = var.domain_endpoint_options_enforce_https
-    tls_security_policy             = var.domain_endpoint_options_tls_security_policy
-    custom_endpoint_enabled         = var.custom_endpoint_enabled
-    custom_endpoint                 = var.custom_endpoint_enabled ? var.custom_endpoint : null
-    custom_endpoint_certificate_arn = var.custom_endpoint_enabled ? var.custom_endpoint_certificate_arn : null
-  }
-
-  cluster_config {
-    instance_count           = var.instance_count
-    instance_type            = var.instance_type
-    dedicated_master_enabled = var.dedicated_master_enabled
-    dedicated_master_count   = var.dedicated_master_enabled ? var.dedicated_master_count : null
-    dedicated_master_type    = var.dedicated_master_enabled ? var.dedicated_master_type : null
-    zone_awareness_enabled   = var.zone_awareness_enabled
-    warm_enabled             = var.warm_enabled
-    warm_count               = var.warm_enabled ? var.warm_count : null
-    warm_type                = var.warm_enabled ? var.warm_type : null
-
-    dynamic "zone_awareness_config" {
-      for_each = var.availability_zone_count > 1 && var.zone_awareness_enabled ? [true] : []
-      content {
-        availability_zone_count = var.availability_zone_count
+      dynamic "master_user_options" {
+        for_each = length(advanced_security_options.value.master_user_options) > 0 ? [advanced_security_options.value.master_user_options] : []
+        content {
+          master_user_arn      = try(master_user_options.value.master_user_arn, null)
+          master_user_name     = try(master_user_options.value.master_user_name, null)
+          master_user_password = try(master_user_options.value.master_user_password, null)
+        }
       }
     }
+  }
 
-    dynamic "cold_storage_options" {
-      for_each = var.cold_storage_enabled ? [true] : []
-      content {
-        enabled = var.cold_storage_enabled
+  dynamic "ebs_options" {
+    for_each = length(var.ebs_options) > 0 ? [ebs_options] : []
+    content {
+      ebs_enabled = ebs_options.value.ebs_enabled
+      volume_size = try(ebs_options.value.volume_size, null)
+      volume_type = try(ebs_options.value.volume_type, null)
+      iops = try(ebs_options.value.iops, null)
+      throughput = try(ebs_options.value.throughput, null)
+    }
+  }
+
+dynamic "encrypt_at_rest" {
+    for_each = length(var.encrypt_at_rest) > 0 ? [encrypt_at_rest] : []
+    content {
+      enabled    = encrypt_at_rest.value.enabled
+      kms_key_id = try(encrypt_at_rest.value.kms_key_id, null)
+    }
+  }
+
+  dynamic "domain_endpoint_options" {
+    for_each = length(var.domain_endpoint_options) > 0 ? [domain_endpoint_options] : []
+    content {
+      enforce_https                   = domain_endpoint_options.value.enforce_https
+      tls_security_policy             = try(domain_endpoint_options.value.tls_security_policy, null)
+      custom_endpoint_enabled         = domain_endpoint_options.value.custom_endpoint_enabled
+      custom_endpoint                 = try(domain_endpoint_options.value.custom_endpoint, null)
+      custom_endpoint_certificate_arn = try(domain_endpoint_options.value.custom_endpoint_certificate_arn, null)
+    }
+  }
+
+  dynamic "cluster_config" {
+    for_each = length(var.cluster_config) > 0 ? [cluster_config] : []
+    content {
+      instance_count           = cluster_config.value.instance_count
+      instance_type            = cluster_config.value.instance_type
+      dedicated_master_enabled = cluster_config.value.dedicated_master_enabled
+      dedicated_master_count   = cluster_config.value.dedicated_master_enabled ? cluster_config.value.dedicated_master_count : null
+      dedicated_master_type    = cluster_config.value.dedicated_master_enabled ? cluster_config.value.dedicated_master_type : null
+      zone_awareness_enabled   = cluster_config.value.zone_awareness_enabled
+      warm_enabled             = cluster_config.value.warm_enabled
+      warm_count               = cluster_config.value.warm_enabled ? cluster_config.value.warm_count : null
+      warm_type                = cluster_config.value.warm_enabled ? cluster_config.value.warm_type : null
+
+      dynamic "zone_awareness_config" {
+        for_each = cluster_config.value.availability_zone_count > 1 && cluster_config.value.zone_awareness_enabled ? [true] : []
+        content {
+          availability_zone_count = cluster_config.value.availability_zone_count
+        }
+      }
+
+      dynamic "cold_storage_options" {
+        for_each = cluster_config.value.cold_storage_enabled ? [true] : []
+        content {
+          enabled = cluster_config.value.cold_storage_enabled
+        }
       }
     }
   }
 
   dynamic "auto_tune_options" {
-    for_each = var.auto_tune.enabled ? [true] : []
+    for_each = vlength(auto_tune_options) > 0 ? [auto_tune_options] : []
     content {
-      desired_state       = "ENABLED"
-      rollback_on_disable = var.auto_tune.rollback_on_disable
-      maintenance_schedule {
-        # Required until https://github.com/hashicorp/terraform-provider-aws/issues/22239 would be resolved
-        start_at = var.auto_tune.starting_time == null ? timeadd(timestamp(), "1h") : var.auto_tune.starting_time
-        duration {
-          value = var.auto_tune.duration
-          unit  = "HOURS"
+      desired_state = auto_tune_options.value.desired_state
+      dynamic "maintenance_schedule" {
+        for_each = length(auto_tune_options.value.maintenance_schedule) > 0 ? [auto_tune_options.value.maintenance_schedule] : []
+        content {
+          cron_expression_for_recurrence = maintenance_schedule.value.cron_expression_for_recurrence
+          duration {
+            value     = maintenance_schedule.value.duration.value
+            unit     = maintenance_schedule.value.duration.unit
+          }
+          start_at = maintenance_schedule.value.start_at
         }
-        cron_expression_for_recurrence = var.auto_tune.cron_schedule
       }
     }
   }
@@ -189,109 +209,94 @@ resource "aws_elasticsearch_domain" "default" {
   }
 
   dynamic "vpc_options" {
-    for_each = var.vpc_enabled ? [true] : []
-
+    for_each = length(var.vpc_options) > 0 ? [vpc_options] : []
     content {
-      security_group_ids = var.security_group_ids
-      subnet_ids         = var.subnet_ids
+      security_group_ids = vpc_options.value.security_group_ids
+      subnet_ids         = vpc_options.value.subnet_ids
     }
   }
+
 
   snapshot_options {
     automated_snapshot_start_hour = var.automated_snapshot_start_hour
   }
 
   dynamic "cognito_options" {
-    for_each = var.cognito_authentication_enabled ? [true] : []
+    for_each = length(var.cognito_options) > 0 ? [cognito_options] : []
     content {
-      enabled          = true
-      user_pool_id     = var.cognito_user_pool_id
-      identity_pool_id = var.cognito_identity_pool_id
-      role_arn         = var.cognito_iam_role_arn
+      enabled          = cognito_options.value.enabled
+      user_pool_id     = cognito_options.value.user_pool_id
+      identity_pool_id = cognito_options.value.identity_pool_id
+      role_arn         = cognito_options.value.role_arn
     }
   }
 
-  log_publishing_options {
-    enabled                  = var.log_publishing_index_enabled
-    log_type                 = "INDEX_SLOW_LOGS"
-    cloudwatch_log_group_arn = var.log_publishing_index_cloudwatch_log_group_arn
-  }
-
-  log_publishing_options {
-    enabled                  = var.log_publishing_search_enabled
-    log_type                 = "SEARCH_SLOW_LOGS"
-    cloudwatch_log_group_arn = var.log_publishing_search_cloudwatch_log_group_arn
-  }
-
-  log_publishing_options {
-    enabled                  = var.log_publishing_audit_enabled
-    log_type                 = "AUDIT_LOGS"
-    cloudwatch_log_group_arn = var.log_publishing_audit_cloudwatch_log_group_arn
-  }
-
-  log_publishing_options {
-    enabled                  = var.log_publishing_application_enabled
-    log_type                 = "ES_APPLICATION_LOGS"
-    cloudwatch_log_group_arn = var.log_publishing_application_cloudwatch_log_group_arn
+  dynamic "log_publishing_options" {
+    for_each = length(var.log_publishing_options) > 0 ? [log_publishing_options] : []
+    content {
+      cloudwatch_log_group_arn = log_publishing_options.value.cloudwatch_log_group_arn
+      enabled                  = log_publishing_options.value.enabled
+      log_type                 = log_publishing_options.value.log_type
+    }
   }
 
   tags = module.this.tags
 
-  depends_on = [aws_iam_service_linked_role.default]
+  # depends_on = [aws_iam_service_linked_role.default]
 }
 
-data "aws_iam_policy_document" "default" {
-  count = module.this.enabled && (length(var.iam_authorizing_role_arns) > 0 || length(var.iam_role_arns) > 0) ? 1 : 0
+# data "aws_iam_policy_document" "default" {
+#   count = module.this.enabled && (length(var.iam_authorizing_role_arns) > 0 || length(var.iam_role_arns) > 0) ? 1 : 0
 
-  statement {
-    effect = "Allow"
+#   statement {
+#     effect = "Allow"
 
-    actions = distinct(compact(var.iam_actions))
+#     actions = distinct(compact(var.iam_actions))
 
-    resources = [
-      join("", aws_elasticsearch_domain.default[*].arn),
-      "${join("", aws_elasticsearch_domain.default[*].arn)}/*"
-    ]
+#     resources = [
+#       join("", aws_elasticsearch_domain.default[*].arn),
+#       "${join("", aws_elasticsearch_domain.default[*].arn)}/*"
+#     ]
 
-    principals {
-      type        = "AWS"
-      identifiers = distinct(compact(concat(var.iam_role_arns, aws_iam_role.elasticsearch_user[*].arn)))
-    }
-  }
+#     principals {
+#       type        = "AWS"
+#       identifiers = distinct(compact(concat(var.iam_role_arns, aws_iam_role.elasticsearch_user[*].arn)))
+#     }
+#   }
 
-  # This statement is for non VPC ES to allow anonymous access from whitelisted IP ranges without requests signing
-  # https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-ac.html#es-ac-types-ip
-  # https://aws.amazon.com/premiumsupport/knowledge-center/anonymous-not-authorized-elasticsearch/
-  dynamic "statement" {
-    for_each = length(var.allowed_cidr_blocks) > 0 && !var.vpc_enabled ? [true] : []
-    content {
-      effect = "Allow"
+#   # This statement is for non VPC ES to allow anonymous access from whitelisted IP ranges without requests signing
+#   # https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-ac.html#es-ac-types-ip
+#   # https://aws.amazon.com/premiumsupport/knowledge-center/anonymous-not-authorized-elasticsearch/
+#   dynamic "statement" {
+#     for_each = length(var.allowed_cidr_blocks) > 0 && !var.vpc_enabled ? [true] : []
+#     content {
+#       effect = "Allow"
 
-      actions = distinct(compact(var.iam_actions))
+#       actions = distinct(compact(var.iam_actions))
 
-      resources = [
-        join("", aws_elasticsearch_domain.default[*].arn),
-        "${join("", aws_elasticsearch_domain.default[*].arn)}/*"
-      ]
+#       resources = [
+#         join("", aws_elasticsearch_domain.default[*].arn),
+#         "${join("", aws_elasticsearch_domain.default[*].arn)}/*"
+#       ]
 
-      principals {
-        type        = "AWS"
-        identifiers = ["*"]
-      }
+#       principals {
+#         type        = "AWS"
+#         identifiers = ["*"]
+#       }
 
-      condition {
-        test     = "IpAddress"
-        values   = var.allowed_cidr_blocks
-        variable = "aws:SourceIp"
-      }
-    }
-  }
-}
+#       condition {
+#         test     = "IpAddress"
+#         values   = var.allowed_cidr_blocks
+#         variable = "aws:SourceIp"
+#       }
+#     }
+#   }
+# }
 
 resource "aws_elasticsearch_domain_policy" "default" {
-  count           = module.this.enabled && (length(var.iam_authorizing_role_arns) > 0 || length(var.iam_role_arns) > 0) ? 1 : 0
+  count           = module.this.enabled && var.access_policies != null ? 1 : 0
   domain_name     = module.this.id
-  access_policies = join("", data.aws_iam_policy_document.default[*].json)
+  access_policies = var.access_policies
 }
 
 # module "domain_hostname" {

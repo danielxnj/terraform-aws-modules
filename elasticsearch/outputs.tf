@@ -3,12 +3,12 @@ output "security_group_id" {
   description = "Security Group ID to control access to the Elasticsearch domain"
 }
 
-output "domain_arn" {
+output "arn" {
   value       = join("", aws_elasticsearch_domain.default[*].arn)
   description = "ARN of the Elasticsearch domain"
 }
 
-output "domain_id" {
+output "id" {
   value       = join("", aws_elasticsearch_domain.default[*].domain_id)
   description = "Unique identifier for the Elasticsearch domain"
 }
