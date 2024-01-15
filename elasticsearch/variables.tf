@@ -506,7 +506,7 @@ variable "cluster_config" {
     warm_type = string
     cold_storage_options = list(object({
       enabled = bool
-      storage_type = string
+      storage_type = optional(string)
     }))
   })
   default = null
