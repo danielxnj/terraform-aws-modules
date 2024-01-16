@@ -59,7 +59,7 @@ variable "policy" {
 variable "ip_address_type" {
   type        = string
   description = "The type of IP addresses to associate with the endpoint"
-  default     = "Private"
+  default     = null
 }
 
 variable "route_table_ids" {
