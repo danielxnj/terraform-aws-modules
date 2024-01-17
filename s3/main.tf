@@ -943,7 +943,7 @@ resource "aws_s3_bucket_intelligent_tiering_configuration" "this" {
     for_each = each.value.tiering
 
     content {
-      access_tier = tiering.value.key
+      access_tier = tiering.value.access_tier
       days        = tiering.value.days
     }
   }
