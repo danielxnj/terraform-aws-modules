@@ -189,7 +189,7 @@ resource "aws_rds_cluster_endpoint" "this" {
   for_each = { for k, v in var.cluster_endpoint : k => v if local.create && !local.is_serverless }
 
   cluster_endpoint_identifier = each.key
-  cluster_identifier          = aws_rds_cluster.this[0].id
+  cluster_identifier          = var.cluster_identifier
   custom_endpoint_type        = each.value.type
   excluded_members            = try(each.value.excluded_members, null)
   static_members              = try(each.value.static_members, null)
