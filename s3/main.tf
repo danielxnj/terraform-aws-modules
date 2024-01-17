@@ -931,7 +931,7 @@ resource "aws_s3_bucket_intelligent_tiering_configuration" "this" {
 
   # Max 1 block - filter
   dynamic "filter" {
-    for_each = try(length(each.value.filter),0) >= 0 ? each.value.filter : []
+    for_each = lookup(each.value, "filter", null) != null ? each.value.filter : []
 
     content {
       prefix = try(filter.value.prefix, null)
