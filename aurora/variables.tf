@@ -405,7 +405,7 @@ variable "instance_timeouts" {
 # Cluster Endpoint(s)
 ################################################################################
 
-variable "endpoints" {
+variable "cluster_endpoint" {
   description = "Map of additional cluster endpoints and their attributes to be created"
   type        = any
   default     = {}

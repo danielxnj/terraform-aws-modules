@@ -186,14 +186,14 @@ resource "aws_rds_cluster_instance" "this" {
 ################################################################################
 
 resource "aws_rds_cluster_endpoint" "this" {
-  for_each = { for k, v in var.endpoints : k => v if local.create && !local.is_serverless }
+  for_each = { for k, v in var.cluster_endpoint : k => v if local.create && !local.is_serverless }
 
-  cluster_endpoint_identifier = each.value.identifier
+  cluster_endpoint_identifier = each.key
   cluster_identifier          = aws_rds_cluster.this[0].id
   custom_endpoint_type        = each.value.type
   excluded_members            = try(each.value.excluded_members, null)
   static_members              = try(each.value.static_members, null)
-  tags                        = merge(var.tags, try(each.value.tags, {}))
+  tags                        = try(each.value.tags, {})
 
   depends_on = [
     aws_rds_cluster_instance.this
