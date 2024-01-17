@@ -923,19 +923,19 @@ resource "aws_s3_bucket_ownership_controls" "this" {
 }
 
 resource "aws_s3_bucket_intelligent_tiering_configuration" "this" {
-  for_each = { for k, v in local.intelligent_tiering : k => v if local.create_bucket }
+  for_each = local.create_bucket ? var.intelligent_tiering : {}
 
   name   = each.key
   bucket = aws_s3_bucket.this[0].id
-  status = try(tobool(each.value.status) ? "Enabled" : "Disabled", title(lower(each.value.status)), null)
+  status = each.value.status
 
   # Max 1 block - filter
   dynamic "filter" {
-    for_each = length(try(flatten([each.value.filter]), [])) == 0 ? [] : [true]
+    for_each = each.value.filter
 
     content {
-      prefix = try(each.value.filter.prefix, null)
-      tags   = try(each.value.filter.tags, null)
+      prefix = try(filter.value.prefix, null)
+      tags   = try(filter.value.tags, null)
     }
   }
 
@@ -943,11 +943,10 @@ resource "aws_s3_bucket_intelligent_tiering_configuration" "this" {
     for_each = each.value.tiering
 
     content {
-      access_tier = tiering.key
+      access_tier = tiering.value.key
       days        = tiering.value.days
     }
   }
-
 }
 
 resource "aws_s3_bucket_metric" "this" {
