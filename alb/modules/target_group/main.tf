@@ -41,7 +41,7 @@ resource "aws_lb_target_group" "this" {
 resource "aws_lb_listener_rule" "this" {
   for_each = var.create ? var.listener_rules : {}
 
-  listener_arn = var.listener_arn
+  listener_arn = each.value.listener_arn
   priority     = each.value.priority
 
   action {
