@@ -12,7 +12,7 @@ data "aws_service_discovery_service" "selected" {
 
 
 data "aws_vpc" "default" {
-  count = 1
+  count = var.vpc_name != null ? 1 : 0
   tags = {
     Name = var.vpc_name
   }
