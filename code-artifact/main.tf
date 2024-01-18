@@ -30,11 +30,10 @@ resource "aws_codeartifact_repository" "this" {
     }
     }
 
-    dynamic "upstreams" {
+    dynamic "upstream" {
     for_each = var.upstreams
     content {
-      repository_name = upstreams.value.repository_name
-      external_connection_name = upstreams.value.external_connection_name
+      repository_name = upstream.value.repository_name
     }
     }
 
