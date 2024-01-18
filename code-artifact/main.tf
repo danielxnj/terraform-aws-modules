@@ -7,7 +7,7 @@ resource "aws_codeartifact_domain" "this" {
 
 resource "aws_codeartifact_domain_permissions_policy" "this" {
   count = var.enabled && var.domain_policy_document != null ? 1 : 0
-  domain = aws_codeartifact_domain[0].this.domain
+  domain = aws_codeartifact_domain.this[0].domain
   policy_document = var.domain_policy_document
   domain_owner = var.domain_policy_domain_owner
   policy_revision = var.domain_policy_revision
