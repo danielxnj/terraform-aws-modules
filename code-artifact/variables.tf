@@ -36,10 +36,9 @@ variable "domain_policy_document" {
 
 variable "repositories" {
   description = "A list of repositories to create in the domain."
-  type = list(object({
+  type = object({
     repository = string
     description = string
-    repository_domain_owner = string
     external_connections = list(object({
       external_connection_name = string
       package_format = string
@@ -50,7 +49,6 @@ variable "repositories" {
     }))
     tags = map(string)
     policy_document = string
-    policy_domain_owner = string
-  }))
-  default = []
+  })
+  default = null
 }
