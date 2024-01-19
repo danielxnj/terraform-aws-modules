@@ -39,14 +39,14 @@ variable "repositories" {
   type = object({
     repository = string
     description = optional(string)
-    external_connections = list(object({
+    external_connections = optional(list(object({
       external_connection_name = optional(string)
       package_format = optional(string)
       status = optional(string)
-    }))
-    upstreams = list(object({
+    })))
+    upstreams = optional(list(object({
       repository_name = string
-    }))
+    })))
     tags = optional(map(string))
     policy_document = optional(string)
   })
