@@ -37,7 +37,7 @@ resource "aws_codeartifact_repository" "this" {
 }
 
 resource "aws_codeartifact_repository_permissions_policy" "this" {
-  for_each = var.enabled ? {for k, v in var.repositories : k => v if v != null && v.policy_document != null} : null
+  for_each = var.enabled ? { for k, v in var.repositories : k => v if v != null && v.policy_document != null } : {}
   domain = aws_codeartifact_domain.this[0].domain
   repository = aws_codeartifact_repository.this[each.key].repository
   policy_document = each.value.policy_document
