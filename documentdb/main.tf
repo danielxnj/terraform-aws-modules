@@ -43,7 +43,7 @@ resource "aws_docdb_cluster" "default" {
   deletion_protection             = var.deletion_protection
   apply_immediately               = var.apply_immediately
   storage_encrypted               = var.storage_encrypted
-  kms_key_id                      = var.create_kms_key ? aws_kms_key.default[0].arn : null
+  kms_key_id                      = var.kms_key_id
   port                            = var.db_port
   snapshot_identifier             = var.snapshot_identifier
   vpc_security_group_ids          = var.vpc_security_group_ids
@@ -103,18 +103,18 @@ resource "aws_docdb_cluster_parameter_group" "default" {
   tags = var.cluster_parameter_group_tags
 }
 
-resource "aws_kms_key" "default" {
-  count                   = module.this.enabled && var.create_kms_key ? 1 : 0
-  description             = var.kms_description
-  enable_key_rotation     = var.kms_enable_key_rotation
-  deletion_window_in_days = var.kms_deletion_window_in_days
-  tags                    = var.kms_tags
-}
+# resource "aws_kms_key" "default" {
+#   count                   = module.this.enabled && var.create_kms_key ? 1 : 0
+#   description             = var.kms_description
+#   enable_key_rotation     = var.kms_enable_key_rotation
+#   deletion_window_in_days = var.kms_deletion_window_in_days
+#   tags                    = var.kms_tags
+# }
 
-resource "aws_kms_key_policy" "default" {
-  count = module.this.enabled && var.create_kms_key ? 1 : 0
+# resource "aws_kms_key_policy" "default" {
+#   count = module.this.enabled && var.create_kms_key ? 1 : 0
 
-  key_id = aws_kms_key.default[0].key_id
-  policy = var.kms_policy
-}
+#   key_id = aws_kms_key.default[0].key_id
+#   policy = var.kms_policy
+# }
 
