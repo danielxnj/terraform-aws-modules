@@ -15,10 +15,10 @@ resource "aws_codeartifact_repository" "this" {
   for_each = var.enabled ? var.repositories : null
   repository = each.key
   domain     = aws_codeartifact_domain.this[0].domain
-  description = each.value.description
+  description = try(each.value.description, null)
 
   dynamic "external_connections" {
-    for_each = each.value.external_connections
+    for_each = try(each.value.external_connections, null)
     content {
       external_connection_name = external_connections.value.external_connection_name
       package_format = external_connections.value.package_format
@@ -27,17 +27,17 @@ resource "aws_codeartifact_repository" "this" {
     }
 
     dynamic "upstream" {
-    for_each = each.value.upstreams
+    for_each = try(each.value.upstreams)
     content {
       repository_name = upstream.value.repository_name
     }
     }
 
-    tags = each.value.tags
+    tags = try(each.value.tags)
 }
 
 resource "aws_codeartifact_repository_permissions_policy" "this" {
-  for_each = var.enabled ? var.repositories : null
+  for_each = var.enabled ? {for k, v in var.repositories : k => v if v.policy_document != null} : null
   domain = aws_codeartifact_domain.this[0].domain
   repository = aws_codeartifact_repository.this[each.key].repository
   policy_document = each.value.policy_document
