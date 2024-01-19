@@ -196,7 +196,7 @@ variable "db_cluster_parameter_group_name" {
 variable "create_random_password" {
   type        = bool
   description = "Whether to create a random password for the DocumentDB cluster"
-  default     = true
+  default     = false
 }
 
 
@@ -359,6 +359,18 @@ variable "vpc_security_group_ids" {
 
 variable "kms_key_id" {
   description = "The ARN for the KMS encryption key. When specifying `kms_key_id`, `storage_encrypted` needs to be set to `true`"
+  type        = string
+  default     = ""
+}
+
+variable "subnet_ids" {
+  description = "List of VPC subnet IDs to place DocumentDB instances in"
+  type        = list(string)
+  default     = []
+}
+
+variable "vpc_id" {
+  description = "VPC ID to create the cluster in (e.g. `vpc-a22222ee`)"
   type        = string
   default     = ""
 }

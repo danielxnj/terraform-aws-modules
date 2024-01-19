@@ -1,34 +1,8 @@
-# resource "aws_security_group" "default" {
-#   count       = module.this.enabled && var.create_security_group ? 1 : 0
-#   name        = var.security_group_name
-#   description = var.security_group_description
-#   vpc_id      = data.aws_vpc.default[0].id
-#   tags        = var.security_group_tags
-# }
-
-# resource "aws_security_group_rule" "default" {
-#   for_each = var.security_group_rules
-
-#   type              = each.value.type
-#   description       = try(each.value.description, "")
-#   from_port         = try(each.value.from_port, -1)
-#   to_port           = try(each.value.to_port, -1)
-#   protocol          = each.value.protocol
-#   cidr_blocks       = each.value.cidr_blocks
-#   security_group_id = var.create_security_group ? aws_security_group.default[0].id : data.aws_security_group.default[0].id
-
-# }
-
 resource "random_password" "password" {
   count   = module.this.enabled && var.create_random_password ? 1 : 0
   length  = 16
   special = false
 }
-
-# data "aws_security_group" "default" {
-#   count = module.this.enabled && var.create_security_group == false ? 1 : 0
-#   name  = var.security_group_name
-# }
 
 resource "aws_docdb_cluster" "default" {
   count                           = module.this.enabled ? 1 : 0
@@ -80,7 +54,7 @@ resource "aws_docdb_subnet_group" "default" {
   count       = module.this.enabled && var.enable_aws_docdb_subnet_group ? 1 : 0
   name        = var.db_subnet_group_name
   description = var.db_subnet_group_description
-  subnet_ids  = data.aws_subnet.default[*].id
+  subnet_ids  = var.subnet_names != [] ? data.aws_subnet.default[*].id: var.subnet_ids
   tags        = var.db_subnet_group_tags
 }
 
@@ -102,19 +76,3 @@ resource "aws_docdb_cluster_parameter_group" "default" {
 
   tags = var.cluster_parameter_group_tags
 }
-
-# resource "aws_kms_key" "default" {
-#   count                   = module.this.enabled && var.create_kms_key ? 1 : 0
-#   description             = var.kms_description
-#   enable_key_rotation     = var.kms_enable_key_rotation
-#   deletion_window_in_days = var.kms_deletion_window_in_days
-#   tags                    = var.kms_tags
-# }
-
-# resource "aws_kms_key_policy" "default" {
-#   count = module.this.enabled && var.create_kms_key ? 1 : 0
-
-#   key_id = aws_kms_key.default[0].key_id
-#   policy = var.kms_policy
-# }
-

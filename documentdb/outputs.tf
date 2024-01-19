@@ -3,12 +3,6 @@ output "master_username" {
   description = "Username for the master DB user"
 }
 
-# output "master_password" {
-#   value       = join("", aws_docdb_cluster.default[*].master_password)
-#   description = "Password for the master DB user"
-#   sensitive   = true
-# }
-
 output "cluster_name" {
   value       = join("", aws_docdb_cluster.default[*].cluster_identifier)
   description = "Cluster Identifier"
@@ -29,17 +23,3 @@ output "reader_endpoint" {
   description = "A read-only endpoint of the DocumentDB cluster, automatically load-balanced across replicas"
 }
 
-# output "security_group_id" {
-#   description = "ID of the DocumentDB cluster Security Group"
-#   value       = join("", aws_security_group.default[*].id)
-# }
-
-# output "security_group_arn" {
-#   description = "ARN of the DocumentDB cluster Security Group"
-#   value       = join("", aws_security_group.default[*].arn)
-# }
-
-# output "security_group_name" {
-#   description = "Name of the DocumentDB cluster Security Group"
-#   value       = join("", aws_security_group.default[*].name)
-# }
