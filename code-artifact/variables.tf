@@ -43,7 +43,6 @@ variable "domain_policy_document" {
 variable "repositories" {
   description = "A list of repositories to create in the domain."
   type = object({
-    repository = string
     description = optional(string)
     external_connections = optional(list(object({
       external_connection_name = optional(string)
