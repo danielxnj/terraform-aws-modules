@@ -15,6 +15,13 @@ variable "encryption_key" {
   default = null
 }
 
+variable "domain_policy_domain_owner" {
+    description = "The account number of the domain owner."
+    type = string
+    default = null
+}
+
+
 variable "tags" {
   description = "A map of tags to assign to the resource."
   type = map(string)
@@ -27,67 +34,23 @@ variable "domain_policy_document" {
     default = null
 }
 
-variable "repository" {
-  description = "The name of the repository."
-  type = string
-}
-
-variable "repository_policy_document" {
-    description = "The policy document."
-    type = string
-    default = null
-}
-
-variable "domain_policy_domain_owner" {
-    description = "The account number of the domain owner."
-    type = string
-    default = null
-}
-
-variable "domain_policy_revision" {
-    description = "The current revision of the policy."
-    type = string
-    default = null
-}
-
-variable "description" {
-  description = "The description of the repository."
-  type = string
-  default = null
-}
-
-variable "repository_domain_owner" {
-    description = "The account number of the repository owner."
-    type = string
-    default = null
-}
-
-variable "external_connections" {
-    description = "A list of external connections for the repository."
-    type = list(string)
-    default = []
-}
-
-variable "upstreams" {
-    description = "A list of upstream repositories to associate with the repository."
-    type = list(string)
-    default = []
-}
-
-variable "repository_tags" {
-    description = "A map of tags to assign to the resource."
-    type = map(string)
-    default = {}
-}
-
-variable "repository_policy_domain_owner" {
-    description = "The account number of the repository owner."
-    type = string
-    default = null
-}
-
-variable "repository_policy_revision" {
-    description = "The current revision of the policy."
-    type = string
-    default = null
+variable "repositories" {
+  description = "A list of repositories to create in the domain."
+  type = list(object({
+    repository = string
+    description = string
+    repository_domain_owner = string
+    external_connections = list(object({
+      external_connection_name = string
+      package_format = string
+      status = string
+    }))
+    upstreams = list(object({
+      repository_name = string
+    }))
+    tags = map(string)
+    policy_document = string
+    policy_domain_owner = string
+  }))
+  default = []
 }
