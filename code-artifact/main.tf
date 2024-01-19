@@ -12,7 +12,7 @@ resource "aws_codeartifact_domain_permissions_policy" "this" {
 }
 
 resource "aws_codeartifact_repository" "this" {
-  for_each = var.enabled ? var.repositories : {}
+  for_each = var.enabled ? var.repositories : null
   repository = each.key
   domain     = aws_codeartifact_domain.this[0].domain
   description = each.value.description
