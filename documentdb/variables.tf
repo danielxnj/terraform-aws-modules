@@ -219,17 +219,17 @@ variable "security_group_tags" {
   default     = {}
 }
 
-variable "security_group_rules" {
-  description = "Map of security group rules"
-  type = map(object({
-    cidr_blocks = list(string)
-    protocol    = string
-    type        = string
-    description = optional(string)
-    from_port   = optional(number)
-    to_port     = optional(number)
-  }))
-}
+# variable "security_group_rules" {
+#   description = "Map of security group rules"
+#   type = map(object({
+#     cidr_blocks = list(string)
+#     protocol    = string
+#     type        = string
+#     description = optional(string)
+#     from_port   = optional(number)
+#     to_port     = optional(number)
+#   }))
+# }
 
 ### cluster instance ### 
 
