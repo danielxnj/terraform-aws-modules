@@ -29,17 +29,17 @@ output "reader_endpoint" {
   description = "A read-only endpoint of the DocumentDB cluster, automatically load-balanced across replicas"
 }
 
-output "security_group_id" {
-  description = "ID of the DocumentDB cluster Security Group"
-  value       = join("", aws_security_group.default[*].id)
-}
+# output "security_group_id" {
+#   description = "ID of the DocumentDB cluster Security Group"
+#   value       = join("", aws_security_group.default[*].id)
+# }
 
-output "security_group_arn" {
-  description = "ARN of the DocumentDB cluster Security Group"
-  value       = join("", aws_security_group.default[*].arn)
-}
+# output "security_group_arn" {
+#   description = "ARN of the DocumentDB cluster Security Group"
+#   value       = join("", aws_security_group.default[*].arn)
+# }
 
-output "security_group_name" {
-  description = "Name of the DocumentDB cluster Security Group"
-  value       = join("", aws_security_group.default[*].name)
-}
+# output "security_group_name" {
+#   description = "Name of the DocumentDB cluster Security Group"
+#   value       = join("", aws_security_group.default[*].name)
+# }
