@@ -1,7 +1,7 @@
 resource "aws_codeartifact_domain" "this" {
   count = var.enabled ? 1 : 0
   domain = var.domain
-  encryption_key = var.encryption_key
+  encryption_key = var.encryption_key_alias != null? data.aws_kms_key.kms[0].arn :  var.encryption_key
   tags = var.tags
 }
 

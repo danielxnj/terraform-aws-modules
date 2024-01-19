@@ -15,6 +15,12 @@ variable "encryption_key" {
   default = null
 }
 
+variable "encryption_key_alias" {
+  description = "The encryption key alias for the domain."
+  type = string
+  default = null
+}
+
 variable "domain_policy_domain_owner" {
     description = "The account number of the domain owner."
     type = string
