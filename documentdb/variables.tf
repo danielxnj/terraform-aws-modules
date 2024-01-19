@@ -350,3 +350,9 @@ variable "create_security_group" {
   type        = bool
   default     = false
 }
+
+variable "vpc_security_group_ids" {
+  description = "List of VPC security group IDs to associate with the cluster"
+  type        = list(string)
+  default     = []
+}
