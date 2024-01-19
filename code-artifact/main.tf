@@ -27,13 +27,13 @@ resource "aws_codeartifact_repository" "this" {
     }
 
     dynamic "upstream" {
-    for_each = try(each.value.upstreams)
+    for_each = try(each.value.upstreams, null)
     content {
       repository_name = upstream.value.repository_name
     }
     }
 
-    tags = try(each.value.tags)
+    tags = try(each.value.tags, null)
 }
 
 resource "aws_codeartifact_repository_permissions_policy" "this" {
