@@ -18,7 +18,7 @@ resource "aws_codeartifact_repository" "this" {
   description = try(each.value.description, null)
 
   dynamic "external_connections" {
-    for_each = lookup(each.value, "external_connections", null) != null ? each.value.external_connections : []
+    for_each = try(each.value.external_connections, null) != null ? each.value.external_connections : []
     content {
       external_connection_name = external_connections.value.external_connection_name
       package_format = external_connections.value.package_format
