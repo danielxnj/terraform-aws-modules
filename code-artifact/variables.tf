@@ -42,7 +42,7 @@ variable "domain_policy_document" {
 
 variable "repositories" {
   description = "A list of repositories to create in the domain."
-  type = map({
+  type = map(object({
     description = optional(string)
     external_connections = optional(list(object({
       external_connection_name = optional(string)
@@ -54,6 +54,6 @@ variable "repositories" {
     })))
     tags = optional(map(string))
     policy_document = optional(string)
-  })
+  }))
   default = null
 }
