@@ -27,7 +27,7 @@ resource "aws_codeartifact_repository" "this" {
     }
 
     dynamic "upstream" {
-    for_each = try(each.value.upstreams, null)
+    for_each = try(each.value.upstreams, null) != null ? each.value.upstreams : []
     content {
       repository_name = upstream.value.repository_name
     }
