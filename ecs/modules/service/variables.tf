@@ -179,7 +179,7 @@ variable "service_registries" {
 variable "timeouts" {
   description = "Create, update, and delete timeout configurations for the service"
   type        = map(string)
-  default     = {}
+  default     = null
 }
 
 variable "triggers" {
@@ -336,7 +336,7 @@ variable "container_definition_defaults" {
 variable "cpu" {
   description = "Number of cpu units used by the task. If the `requires_compatibilities` is `FARGATE` this field is required"
   type        = number
-  default     = 1024
+  default     = null
 }
 
 variable "ephemeral_storage" {
@@ -366,7 +366,7 @@ variable "ipc_mode" {
 variable "memory" {
   description = "Amount (in MiB) of memory used by the task. If the `requires_compatibilities` is `FARGATE` this field is required"
   type        = number
-  default     = 2048
+  default     = null
 }
 
 variable "network_mode" {
@@ -396,7 +396,7 @@ variable "proxy_configuration" {
 variable "requires_compatibilities" {
   description = "Set of launch types required by the task. The valid values are `EC2` and `FARGATE`"
   type        = list(string)
-  default     = ["FARGATE"]
+  default     = []
 }
 
 variable "runtime_platform" {
