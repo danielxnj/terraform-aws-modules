@@ -104,12 +104,12 @@ resource "aws_elasticache_parameter_group" "default" {
 #   name  = var.security_group_name
 # }
 
-data "aws_security_group" "default" {
-  for_each = module.this.enabled ? toset(var.security_groups) : []
+# data "aws_security_group" "default" {
+#   for_each = module.this.enabled ? toset(var.security_groups) : []
 
-  name   = each.key
-  vpc_id = var.vpc_name != null ? data.aws_vpc.default[0].id : var.vpc_id
-}
+#   name   = each.key
+#   vpc_id = var.vpc_name != null ? data.aws_vpc.default[0].id : var.vpc_id
+# }
 
 # data "aws_security_group" "default" {
 #   name = "dev-redis-allow-ec2"
@@ -132,7 +132,7 @@ resource "aws_elasticache_replication_group" "default" {
   # It would be nice to remove null or duplicate security group IDs, if there are any, using `compact`,
   # but that causes problems, and having duplicates does not seem to cause problems.
   # See https://github.com/hashicorp/terraform/issues/29799
-  security_group_ids         = [for sg in data.aws_security_group.default : split("/", sg.arn)[length(split("/", sg.arn)) - 1]]
+  security_group_ids         = var.security_groups
   security_group_names       = var.security_group_names
   maintenance_window         = var.maintenance_window
   notification_topic_arn     = var.notification_topic_arn
