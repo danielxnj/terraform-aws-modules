@@ -168,9 +168,7 @@ resource "aws_msk_cluster" "default" {
     instance_type  = var.broker_instance_type
     client_subnets = coalesce(var.subnet_ids, data.aws_subnet.default[*].id, [])
 
-    security_groups = compact(
-      concat([for sg in data.aws_security_group.selected : sg.id]),
-    )
+    security_groups = var.security_groups
 
     # security_groups = var.create_security_group ? concat(var.associated_security_group_ids, [module.security_group.id]) : var.associated_security_group_ids
 

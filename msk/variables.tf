@@ -339,3 +339,9 @@ variable "config_kafka_versions" {
   description = "The config kafka versions of the cluster"
   default     = []
 }
+
+variable "security_groups" {
+  type        = list(any)
+  description = "The security groups of the cluster"
+  default     = []
+}
